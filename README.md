@@ -113,12 +113,12 @@ python -m unittest discover tests -v
   - [x] Conception du MCD sur Looping
   - [x] Organigramme WBS et planning Gantt (tâches $\le 2$ jours)
   - [x] Initialisation du tableau Kanban Trello
-- [ ] **Sprint 2 (19/10 - 22/10) : Authentification & Stockage** — 🟡 *en cours*
-  - [ ] Architecture du code et modèles (`User`, `Quiz`, `Question`, `Reponse`, `Resultat`)
-  - [ ] Sécurité : hachage SHA-256 avec sel
-  - [ ] Stockage JSON des utilisateurs
-  - [ ] Menu console de connexion / inscription
-  - [ ] Tests unitaires
+- [x] **Sprint 2 (19/10 - 22/10) : Authentification & Stockage** — 🟢 *Terminé*
+  - [x] Architecture du code et modèles (`User`, `Quiz`, `Question`, `Reponse`, `Resultat`)
+  - [x] Sécurité : hachage SHA-256 avec sel cryptographique
+  - [x] Stockage JSON des utilisateurs (`data/users.json`)
+  - [x] Menu console de connexion / inscription (`src/cli.py`)
+  - [x] Suite de 15 tests unitaires automatisés validés à 100%
 - [ ] **Sprint 3 (26/10 - 30/10) : Cœur du Jeu & Création de Quiz**
   - [ ] Création manuelle d'un quiz par l'administrateur
   - [ ] Importation de quiz depuis un fichier texte
