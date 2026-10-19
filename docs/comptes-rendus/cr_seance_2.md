@@ -20,14 +20,14 @@ Conformément au WBS (lot 2) et au diagramme de Gantt, le Sprint 2 vise à :
 
 ## 2. Avancement des tâches
 
-| Tâche WBS / Gantt | Responsable prévu | Description | Temps estimé | Temps réel | Statut |
+| Tâche WBS / Gantt | Responsable | Description | Temps estimé | Temps réel | Statut |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| **2.0 Architecture & structure du code** | Bilal Draoui | Arborescence `src/` (models, services, utils) et `tests/`, point d'entrée unique `main.py`. | 1h00 | _à compléter_ | 🟡 En cours |
-| **2.1 Gestion des utilisateurs (inscription / connexion)** | Bilal Draoui & Sabrine Kawiche | Modèle `User`, service `AuthService`, validation des entrées, gestion des rôles. | 2h30 | _à compléter_ | 🟡 En cours |
-| **2.1.bis Sécurité des mots de passe** | Chadi Kharchoufa | Hachage SHA-256 avec sel aléatoire (`security.py`). | 1h30 | _à compléter_ | 🟡 En cours |
-| **2.2 Stockage des données (JSON)** | Gabrien Vaz | Service `StorageService` : lecture/écriture JSON, création automatique des fichiers. | 1h30 | _à compléter_ | 🟡 En cours |
-| **2.3 Menu console (CLI)** | Sabrine Kawiche | Menus d'inscription, de connexion et espaces Joueur / Admin. | 1h30 | _à compléter_ | ⚪ À faire |
-| **2.4 Tests unitaires** | Gabrien Vaz & Chadi Kharchoufa | Tests de l'authentification, de la sécurité et du stockage. | 1h30 | _à compléter_ | ⚪ À faire |
+| **2.0 Architecture & structure du code** | Bilal Draoui & Équipe | Arborescence `src/` (models, services, utils) et `tests/`, point d'entrée unique `main.py`. | 1h00 | 0h45 | 🟢 **Terminé** |
+| **2.1.bis Sécurité des mots de passe** | Chadi Kharchoufa & Bilal Draoui | Hachage SHA-256 avec sel aléatoire (`src/security.py`) et tests unitaires (`test_security.py`). | 1h30 | 1h15 | 🟢 **Terminé** |
+| **2.1 Gestion des utilisateurs (inscription / connexion)** | Sabrine Kawiche & Bilal Draoui | Modèle `User` initialisé, service `AuthService`, validation des entrées et gestion des rôles. | 2h30 | 2h00 | 🟡 En cours |
+| **2.2 Stockage des données (JSON)** | Gabrien Vaz | Service `StorageService` : lecture/écriture JSON, gestion automatique du dossier `data/`. | 1h30 | 1h15 | 🟡 En cours |
+| **2.3 Menu console (CLI)** | Sabrine Kawiche & Équipe | Menus d'inscription, de connexion et espaces Joueur / Admin dans `src/cli.py`. | 1h30 | 1h00 | 🟡 En cours |
+| **2.4 Tests unitaires automatisés** | Gabrien Vaz & Bilal Draoui | Tests de la sécurité validés (4/4 tests OK sur Git), tests auth et stockage en finalisation. | 1h30 | 1h00 | 🟡 En cours |
 
 > Le code du Sprint 2 est en cours de développement et sera poussé sur GitHub une fois relu et testé par l'équipe.
 
