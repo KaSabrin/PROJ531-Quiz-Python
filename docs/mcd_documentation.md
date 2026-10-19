@@ -1,6 +1,6 @@
 # Documentation du Modèle Conceptuel de Données (MCD)
 
-Le modèle conceptuel de données modélise les entités et relations nécessaires au fonctionnement de l'application de quiz. Il a été conçu sous l'outil **Looping** (fichier source : [`docs/quiz.mdc`](file:///c:/Users/Admin/Desktop/PROJ531-Quiz-Python/docs/quiz.mdc)).
+Le modèle conceptuel de données modélise les entités et relations nécessaires au fonctionnement de l'application de quiz. Il a été conçu sous l'outil **Looping** (fichier source : [`docs/quiz.mdc`](quiz.mdc)).
 
 ---
 

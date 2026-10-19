@@ -1,50 +1,52 @@
 # Compte-Rendu de Séance n°2 - Lancement du Sprint 2 (Authentification & Stockage)
 **Date :** Lundi 19 Octobre 2026  
 **Module :** PROJ531 - Gestion de projet informatique  
-**Équipe :** Groupe Quiz Python (4 membres)  
+**Équipe :** Groupe Quizora (4 membres)  
 - **Product Owner :** Bilal Draoui  
 - **Développeurs / Collaborateurs :** Sabrine Kawiche, Chadi Kharchoufa, Gabrien Vaz  
 
----
-
-## 1. Objectifs de la séance
-L'objectif de cette deuxième séance est le développement du **Sprint 2 : Authentification et Stockage des données**, conformément au WBS (lot 2) et au diagramme de Gantt :
-- Structuration de l'architecture logicielle modulaire (`src/models`, `src/services`, `src/utils`).
-- Implémentation de la persistance JSON pour les utilisateurs (`data/users.json`).
-- Gestion sécurisée des comptes utilisateurs (inscription, connexion, hachage SHA-256 avec sel, distinction Joueur / Admin).
-- Écriture d'une suite de tests unitaires pour garantir un code sans bug (« version propre » exigée par le sujet).
+**Statut du sprint :** 🟡 **En cours** (Sprint 2 : du 19/10 au 22/10)
 
 ---
 
-## 2. Tâches réalisées lors de la séance
+## 1. Objectifs du Sprint 2
+Conformément au WBS (lot 2) et au diagramme de Gantt, le Sprint 2 vise à :
+- Structurer l'architecture logicielle modulaire (`src/models`, `src/services`, `src/utils`).
+- Mettre en place la persistance JSON des utilisateurs (`data/users.json`).
+- Gérer les comptes utilisateurs de façon sécurisée (inscription, connexion, hachage des mots de passe, distinction Joueur / Admin).
+- Écrire des tests unitaires pour livrer une version sans bug en fin de sprint.
 
-| Tâche WBS / Gantt | Responsable | Description | Temps estimé | Temps réel | Statut |
+---
+
+## 2. Avancement des tâches
+
+| Tâche WBS / Gantt | Responsable prévu | Description | Temps estimé | Temps réel | Statut |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| **2.0 Architecture modulaire & structure** | Bilal Draoui & Équipe | Mise en place de l'arborescence standardisée (`src/`, `data/`, `tests/`), configuration `.gitignore`. | 1h00 | 0h45 | **Terminé** |
-| **2.1 Gestion des utilisateurs (Auth)** | Bilal Draoui & Sabrine Kawiche | Création du modèle `User`, du service `AuthService`, validation des entrées (email, pseudo) et gestion des rôles. | 2h30 | 2h15 | **Terminé** |
-| **2.1.bis Sécurité & Hachage des MDP** | Chadi Kharchoufa | Module `security.py` : hachage cryptographique SHA-256 avec sel aléatoire (`secrets.token_hex`) et comparaison à temps constant. | 1h30 | 1h15 | **Terminé** |
-| **2.2 Stockage JSON (StorageService)** | Gabrien Vaz | Module `storage_service.py` : sérialisation/désérialisation JSON, création automatique des répertoires et fichiers par défaut. | 1h30 | 1h30 | **Terminé** |
-| **2.3 Interface CLI d'authentification** | Sabrine Kawiche & Bilal Draoui | Menu console ergonomique permettant l'inscription, la connexion et l'accès aux espaces Joueur / Admin. | 1h30 | 1h15 | **Terminé** |
-| **2.4 Tests unitaires automatisés** | Gabrien Vaz & Chadi Kharchoufa | Suite de tests dans `tests/test_auth.py` et `tests/test_storage.py` validant tous les cas nominaux et d'erreur. | 1h30 | 1h30 | **Terminé** |
+| **2.0 Architecture & structure du code** | Bilal Draoui | Arborescence `src/` (models, services, utils) et `tests/`, point d'entrée unique `main.py`. | 1h00 | _à compléter_ | 🟡 En cours |
+| **2.1 Gestion des utilisateurs (inscription / connexion)** | Bilal Draoui & Sabrine Kawiche | Modèle `User`, service `AuthService`, validation des entrées, gestion des rôles. | 2h30 | _à compléter_ | 🟡 En cours |
+| **2.1.bis Sécurité des mots de passe** | Chadi Kharchoufa | Hachage SHA-256 avec sel aléatoire (`security.py`). | 1h30 | _à compléter_ | 🟡 En cours |
+| **2.2 Stockage des données (JSON)** | Gabrien Vaz | Service `StorageService` : lecture/écriture JSON, création automatique des fichiers. | 1h30 | _à compléter_ | 🟡 En cours |
+| **2.3 Menu console (CLI)** | Sabrine Kawiche | Menus d'inscription, de connexion et espaces Joueur / Admin. | 1h30 | _à compléter_ | ⚪ À faire |
+| **2.4 Tests unitaires** | Gabrien Vaz & Chadi Kharchoufa | Tests de l'authentification, de la sécurité et du stockage. | 1h30 | _à compléter_ | ⚪ À faire |
+
+> Le code du Sprint 2 est en cours de développement et sera poussé sur GitHub une fois relu et testé par l'équipe.
 
 ---
 
-## 3. Tâches restantes pour la prochaine séance (Séance 3 - Sprint 3)
-- Création manuelle de quiz par l'administrateur (Tâche 3.1).
-- Importation de quiz via un fichier texte structuré (Tâche 3.2).
-- Moteur de passation de quiz pour les joueurs autorisés (Tâche 3.3).
-
----
-
-## 4. Difficultés rencontrées et solutions apportées
+## 3. Choix techniques décidés pendant la séance
 1. **Stockage sécurisé des mots de passe :**
-   - *Difficulté :* Le MCD initial mentionnait un attribut `mdp`. Stocker les mots de passe en clair dans un fichier JSON constitue une faille de sécurité majeure.
-   - *Solution :* Adoption d'une fonction de hachage SHA-256 salée avec `salt$hash` stocké dans `mdp_hash`. Un mot de passe volé ne peut ainsi pas être inversé ni attaqué par tables arc-en-ciel.
-2. **Encodage et persistance JSON sous Windows :**
-   - *Difficulté :* Gestion des caractères accentués français dans les fichiers JSON.
-   - *Solution :* Forcer systématiquement l'encodage `utf-8` avec `ensure_ascii=False` dans le service de stockage.
+   - *Constat :* Le MCD initial prévoyait un attribut `mdp`. Stocker les mots de passe en clair dans un fichier JSON serait une faille de sécurité.
+   - *Décision :* Renommer le champ en `mdp_hash` et stocker un hachage SHA-256 salé au format `sel$hash`.
+2. **Encodage des fichiers JSON :**
+   - *Constat :* Risque de mauvais affichage des caractères accentués sous Windows.
+   - *Décision :* Lire et écrire systématiquement en `utf-8` avec `ensure_ascii=False`.
+3. **Point d'entrée unique :**
+   - *Décision :* Conserver le `main.py` à la racine du dépôt (créé lors de l'initialisation du projet) comme unique point d'entrée ; le menu est placé dans `src/cli.py`.
+4. **Données locales non versionnées :**
+   - *Décision :* Le dossier `data/` est exclu de Git (`.gitignore`) pour ne pas publier les comptes utilisateurs ; il est recréé automatiquement au lancement.
 
 ---
 
-## 5. Bilan technique de fin de séance
-Le dépôt contient désormais une version fonctionnelle, testée et sans bug du système d'authentification et de persistance des données. Tous les tests unitaires passent avec succès (`Ran X tests in X.XXXs OK`).
+## 4. Prochaine séance
+- Terminer et tester les tâches 2.0 à 2.4, puis pousser le code du Sprint 2 sur GitHub.
+- Démarrer le Sprint 3 (26/10) : création manuelle de quiz (3.1), import depuis un fichier texte (3.2), passation d'un quiz par un joueur (3.3).
