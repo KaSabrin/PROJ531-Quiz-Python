@@ -58,8 +58,26 @@
             <task id="15" uid="9d0fb7a5e3fd448c8c38834bc21baeaa" name="4.3 Préparation de la soutenance et de la démo" color="#99cc99" meeting="false" start="2026-11-05" duration="2" complete="0" thirdDate="2026-11-05" thirdDate-constraint="0" expand="false"/>
         </task>
     </tasks>
-    <resources/>
-    <allocations/>
+    <resources>
+        <resource id="0" name="Bilal Draoui" function="Default:1" contacts="" phone=""/>
+        <resource id="1" name="Sabrine Kawiche" function="Default:0" contacts="sabrin.kaaouiche@etu.univ-smb.fr" phone=""/>
+        <resource id="2" name="Chadi Kharchoufa" function="Default:0" contacts="chadi.kharchoufa.pro74@gmail.com" phone=""/>
+        <resource id="3" name="Gabrien Vaz" function="Default:0" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="1" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="2" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="3" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="5" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="6" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="8" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="9" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="10" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="12" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="13" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="14" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="15" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+    </allocations>
     <vacations/>
     <previous/>
     <roles roleset-name="Default"/>
