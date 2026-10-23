@@ -34,53 +34,90 @@ class QuizService:
         auteur: User,
         questions_data: list[dict],
     ) -> tuple[bool, str, Quiz | None]:
-        """
-        Crée un quiz complet avec ses questions et réponses et l'enregistre dans quizzes.json.
-        """
-        if not auteur.is_admin():
-            return False, "Accès refusé : seul un administrateur peut créer un quiz.", None
+        """Crée et sauvegarde un quiz avec ses questions et réponses."""
 
+        # Vérifier les droits administrateur
+        if not auteur.is_admin():
+            return False, "Accès réservé à l'administrateur.", None
+
+        # Vérifier le titre
         titre = titre.strip()
         if not titre:
             return False, "Le titre du quiz est obligatoire.", None
 
+        # Vérifier la présence des questions
         if not questions_data:
-            return False, "Un quiz doit comporter au moins une question.", None
+            return False, "Le quiz doit contenir au moins une question.", None
 
+        # Créer le quiz
         quiz = Quiz(
             titre=titre,
             description=description.strip(),
-            auteur_id=auteur.id_utilisateur,
+            auteur_id=auteur.id_utilisateur
         )
 
-        for q_dict in questions_data:
+        # Ajouter les questions
+        for numero, q_dict in enumerate(questions_data, start=1):
             enonce = q_dict.get("enonce", "").strip()
-            points = int(q_dict.get("points", 1))
-            if not enonce:
-                continue
 
-            question = Question(enonce=enonce, points=points, id_quiz=quiz.id_quiz)
+            if not enonce:
+                return False, f"La question {numero} est vide.", None
+
+            # Vérifier les points
+            try:
+                points = int(q_dict.get("points", 1))
+            except (ValueError, TypeError):
+                return False, "Nombre de points invalide.", None
+
+            if points < 1:
+                return False, "Les points doivent être positifs.", None
+
+            question = Question(enonce=enonce, points=points)
 
             reponses_list = q_dict.get("reponses", [])
+
+            # Vérifier le nombre de réponses
+            if len(reponses_list) < 2:
+                return False, "Il faut au moins deux réponses.", None
+
+            # Ajouter les réponses
             for rep_dict in reponses_list:
                 texte = rep_dict.get("texte", "").strip()
-                est_correct = bool(rep_dict.get("est_correct", False))
-                if texte:
-                    question.ajouter_reponse(texte, est_correct=est_correct)
 
-            # Vérifier qu'il y a au moins 2 réponses et une bonne réponse
-            if len(question.reponses) >= 2 and len(question.get_bonnes_reponses()) >= 1:
-                quiz.ajouter_question(question)
+                if not texte:
+                    return False, "Une réponse ne peut pas être vide.", None
 
-        if not quiz.questions:
-            return False, "Le quiz doit comporter au moins une question valide avec ses réponses.", None
+                question.ajouter_reponse(
+                    text_reponse=texte,
+                    est_correct=bool(rep_dict.get("est_correct", False))
+                )
 
-        # Sauvegarde
+            # Vérifier qu'il y a exactement une bonne réponse
+            if len(question.get_bonnes_reponses()) != 1:
+                return False, "Il faut exactement une bonne réponse par question.", None
+
+            quiz.ajouter_question(question)
+
+        # Récupérer les quiz enregistrés
         quizzes = self.storage_service.load_quizzes()
+
+        # Éviter un doublon d'identifiant
+        for quiz_existant in quizzes:
+            if quiz_existant.id_quiz == quiz.id_quiz:
+                return False, "Ce quiz existe déjà.", None
+
+        # Ajouter et enregistrer le quiz
         quizzes.append(quiz)
-        if self.storage_service.save_quizzes(quizzes):
-            return True, f"Quiz '{quiz.titre}' créé avec succès ({len(quiz.questions)} questions).", quiz
-        return False, "Erreur lors de la sauvegarde du quiz.", None
+
+        if not self.storage_service.save_quizzes(quizzes):
+            return False, "Erreur lors de la sauvegarde du quiz.", None
+
+        return (
+            True,
+            f"Quiz '{quiz.titre}' créé avec succès ({len(quiz.questions)} questions).",
+            quiz
+        )
+
 
     def importer_quiz_depuis_fichier(
         self,
