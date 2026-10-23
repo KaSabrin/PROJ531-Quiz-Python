@@ -157,11 +157,11 @@ class QuizAppCLI:
         """Permet à un joueur de choisir et de passer un quiz interactif (Tâche 3.3)."""
         quizzes = self.quiz_service.lister_quiz()
         if not quizzes:
-            print("\n⚠️ Aucun quiz n'est disponible pour le moment. Demandez à un administrateur d'en créer un.")
+            print("\nAucun quiz n'est disponible pour le moment. Demandez à un administrateur d'en créer un.")
             input("Appuyez sur [Entrée] pour continuer...")
             return
         print("\n" + "=" * 55)
-        print("🎯 CATALOGUE DES QUIZ DISPONIBLES")
+        print("CATALOGUE DES QUIZ DISPONIBLES")
         print("=" * 55)
         for idx, q in enumerate(quizzes, 1):
             print(f"{idx}. {q.titre} ({len(q.questions)} questions - {q.total_points()} points)")
@@ -173,13 +173,13 @@ class QuizAppCLI:
             return
         quiz = quizzes[int(choix) - 1]
         print("\n" + "=" * 55)
-        print(f"🚀 DÉMARRAGE DU QUIZ : {quiz.titre.upper()}")
+        print(f"DÉMARRAGE DU QUIZ : {quiz.titre.upper()}")
         print("=" * 55)
         score_obtenu = 0
         reponses_incorrectes = []
         for idx_q, question in enumerate(quiz.questions, 1):
             print(f"\nQuestion {idx_q}/{len(quiz.questions)} [{question.points} pt(s)] :")
-            print(f"👉 {question.enonce}")
+            print(f"Question : {question.enonce}")
             for idx_r, rep in enumerate(question.reponses, 1):
                 print(f"   {idx_r}. {rep.text_reponse}")
             # Saisie de la réponse du joueur
@@ -188,13 +188,13 @@ class QuizAppCLI:
                 if rep_joueur.isdigit() and 1 <= int(rep_joueur) <= len(question.reponses):
                     choix_idx = int(rep_joueur) - 1
                     break
-                print("❌ Saisie invalide, entrez le numéro d'une des options.")
+                print("Saisie invalide, entrez le numéro d'une des options.")
             if question.reponses[choix_idx].est_correct:
-                print("✅ Bonne réponse !")
+                print("[OK] Bonne réponse !")
                 score_obtenu += question.points
             else:
                 bonnes = [r.text_reponse for r in question.get_bonnes_reponses()]
-                print("❌ Mauvaise réponse.")
+                print("[Erreur] Mauvaise réponse.")
                 reponses_incorrectes.append({
                     "question": question.enonce,
                     "choisie": question.reponses[choix_idx].text_reponse,
@@ -204,16 +204,16 @@ class QuizAppCLI:
         total_max = quiz.total_points()
         pourcentage = round((score_obtenu / total_max * 100), 1) if total_max > 0 else 0
         print("\n" + "=" * 55)
-        print(f"🏁 FIN DU QUIZ ! Score de {user.pseudo} : {score_obtenu} / {total_max} points ({pourcentage}%)")
+        print(f"FIN DU QUIZ ! Score de {user.pseudo} : {score_obtenu} / {total_max} points ({pourcentage}%)")
         print("=" * 55)
         if reponses_incorrectes:
-            print("\n📖 Récapitulatif des erreurs :")
+            print("\nRécapitulatif des erreurs :")
             for err in reponses_incorrectes:
                 print(f" • Question : {err['question']}")
-                print(f"   Votre réponse : {err['choisie']} ❌")
-                print(f"   Réponse attendue : {err['attendue']} ✅\n")
+                print(f"   Votre réponse : {err['choisie']} [Incorrect]")
+                print(f"   Réponse attendue : {err['attendue']} [Correct]\n")
         else:
-            print("🎉 Félicitations ! Un sans-faute !")
+            print("Félicitations ! Un sans-faute !")
         input("Appuyez sur [Entrée] pour revenir au menu...")
     def menu_administrateur(self, user: User) -> None:
         """Menu interactif pour un utilisateur ayant le rôle 'admin'."""
