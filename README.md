@@ -1,131 +1,155 @@
-# 🎓 PROJ531 – Application de Gestion et Passation de Quiz en Python
+# PROJ531 - Application de Gestion et Passation de Quiz en Python
 
-Projet universitaire réalisé dans le cadre de l'UE **PROJ531 - Gestion de projet informatique** à l'**Université Savoie Mont Blanc**.
-
----
-
-## 📌 1. Présentation et Objectifs du Projet
-
-L'objectif de ce projet est de concevoir et développer une application complète en Python permettant la **création, l'administration et la passation de quiz interactifs**, tout en appliquant les principes rigoureux de la **gestion de projet en méthode Agile / Scrum**.
-
-### ✨ Fonctionnalités Principales
-- **Système d'Authentification & Rôles :** Inscription et connexion sécurisées distinguant les rôles **Joueur** et **Administrateur**.
-- **Sécurité des Données :** Hachage cryptographique des mots de passe avec **SHA-256 salé** (sel unique par utilisateur) et comparaison à temps constant.
-- **Persistance des Données :** Stockage modulaire au format standardisé **JSON** (`users.json`, `quizzes.json`, `results.json`).
-- **Administration des Quiz :** Création manuelle interactive et importation automatisée depuis des fichiers texte structurés.
-- **Moteur de Jeu & Évaluation :** Passation de quiz pour les utilisateurs autorisés, calcul immédiat du score, restitution des bonnes réponses et historisation des résultats.
+Projet académique réalisé dans le cadre de l'unité d'enseignement **PROJ531 - Gestion de projet informatique** à l'**Université Savoie Mont Blanc**.
 
 ---
 
-## 👥 2. Composition de l'Équipe & Rôles Scrum
+## 1. Présentation du Projet et Objectifs
 
-Le projet est mené en équipe de 4 étudiants selon le cadre Scrum :
+Ce projet a pour finalité la conception, le développement et la validation d'une application modulaire en Python dédiée à la création, à l'administration et à la passation de quiz interactifs.
 
-| Nom / Étudiant | Rôle Scrum | Responsabilités principales |
+Le développement s'inscrit rigoureusement dans le cadre méthodologique **Agile / Scrum**, en appliquant les bonnes pratiques de génie logiciel :
+- Découpage du cycle de vie en sprints itératifs et incrémentaux.
+- Séparation stricte des responsabilités (architecture en couches).
+- Gestion des versions collaborative et traçabilité des tâches via Git et Kanban.
+- Couverture fonctionnelle assurée par une suite de tests unitaires automatisés.
+
+### Fonctionnalités Principales du Système
+- **Gestion des Comptes et Authentification :** Inscription et authentification avec contrôle d'accès basé sur les rôles (Joueur et Administrateur).
+- **Sécurité Cryptographique :** Protection des mots de passe par hachage SHA-256 associé à un sel cryptographique unique par utilisateur et comparaison à temps constant.
+- **Persistance des Données :** Sérialisation structurée au format standard JSON (`users.json`, `quizzes.json`, `results.json`).
+- **Administration des Quiz :** Création interactive par saisie console et importation automatisée à partir de fichiers texte structurés.
+- **Moteur d'Évaluation :** Déroulement séquentiel des questionnaires, validation des réponses, calcul immédiat du score et restitution des réponses attendues.
+- **Historique Individuel :** Enregistrement des résultats pour assurer le suivi des performances des joueurs.
+
+---
+
+## 2. Organisation de l'Équipe et Rôles Scrum
+
+Le projet est conduit par une équipe de 4 étudiants conformément aux rôles Scrum :
+
+| Membre | Rôle Scrum | Responsabilités principales |
 | :--- | :--- | :--- |
-| **Bilal Draoui** | **Product Owner (PO)** & Dév | Interface avec le commanditaire (enseignant), vision produit, priorisation du backlog, validation des livrables. |
-| **Sabrine Kawiche** | Développeuse | Conception du MCD, gestion du dépôt GitHub, développement des modèles de données. |
-| **Chadi Kharchoufa** | Développeur | Élaboration du WBS, planification Gantt, conception de la sécurité et du hachage. |
-| **Gabrien Vaz** | Développeur | Développement des services applicatifs, persistance JSON, conception des tests unitaires. |
+| **Bilal Draoui** | **Product Owner (PO)** & Développeur | Gestion du produit, interface avec le commanditaire, priorisation du backlog, validation des livrables et des critères d'acceptation. |
+| **Sabrine Kawiche** | Développeuse | Modélisation conceptuelle des données (MCD), gestion du dépôt GitHub, développement des modèles de données. |
+| **Chadi Kharchoufa** | Développeur | Décomposition WBS, planification temporelle Gantt, conception du module de sécurité et hachage. |
+| **Gabrien Vaz** | Développeur | Conception des services applicatifs, persistance des données JSON, développement des suites de tests unitaires. |
 
-> 🔗 **Tableau Trello de suivi des tâches :** [Tableau Trello PROJ531-Quiz-Python](https://trello.com/b/zFAmvu0D/proj531-quiz-python)
+Tableau de suivi Kanban (Trello) : [Tableau Trello PROJ531-Quiz-Python](https://trello.com/b/zFAmvu0D/proj531-quiz-python)
 
 ---
 
-## 🏛️ 3. Architecture Logicielle & Modèle de Données
+## 3. Architecture Logicielle et Organisation du Dépôt
 
-Le projet adopte une **architecture en couches** (modèles / services / utilitaires / interface) pour séparer les responsabilités et faciliter les tests.
-
-> 🟡 Le code applicatif (`src/`, `tests/`) est en cours de développement dans le cadre du **Sprint 2** et sera publié sur le dépôt à la fin du sprint. L'arborescence ci-dessous est la structure **cible**.
+Le système repose sur une architecture découplée afin d'assurer l'indépendance entre l'interface utilisateur, la logique métier et la couche d'accès aux données.
 
 ```text
 PROJ531-Quiz-Python/
-├── main.py                            # Point d'entrée unique : python main.py
-├── README.md                          # Documentation principale du dépôt
-├── .gitignore                         # Fichiers exclus de Git (caches, data/, .env)
-├── docs/                              # Gestion de projet et livrables
-│   ├── Gantt_projet_quiz.gan          # Planning (source GanttProject)
-│   ├── Gantt_projet_quiz.png          # Planning (image)
-│   ├── wbs_projet_quiz_python.png     # Organigramme des tâches (WBS)
-│   ├── quiz.mdc                       # MCD (source Looping)
-│   ├── mcd_documentation.md           # MCD expliqué + dictionnaire des données
-│   ├── glossaire.md                   # Glossaire du projet
-│   └── comptes-rendus/                # Un compte-rendu par séance
-│       ├── cr_seance_1.md
-│       ├── cr_seance_2.md
-│       └── cr_seance_3.md
-├── src/                               # Code source de l'application
-│   ├── cli.py                         # Menus de l'interface console
-│   ├── models/                        # Classes de données (User, Quiz, Question, Reponse, Resultat)
-│   ├── services/                      # Services métier (AuthService, QuizService, StorageService)
-│   └── utils/                         # Sécurité (hachage) et validation des saisies
-└── tests/                             # Tests unitaires (uniquement des fichiers test_*.py)
+├── main.py                            # Point d'entrée exécutable unique
+├── README.md                          # Documentation générale et technique
+├── .gitignore                         # Exclusions de versionnement (caches, data/, environnements)
+├── docs/                              # Dossier de gestion de projet et livrables
+│   ├── Gantt_projet_quiz.gan          # Diagramme de Gantt (source GanttProject)
+│   ├── Gantt_projet_quiz.png          # Export graphique du planning Gantt
+│   ├── wbs_projet_quiz_python.png     # Organigramme de décomposition des tâches (WBS)
+│   ├── quiz.mdc                       # Modèle Conceptuel de Données (source Looping)
+│   ├── mcd_documentation.md           # Spécifications détaillées du MCD et dictionnaire des données
+│   ├── glossaire.md                   # Glossaire terminologique du projet
+│   ├── trello_sprint2.png             # Preuve d'avancement Kanban (clôture Sprint 2)
+│   └── comptes-rendus/                # Comptes-rendus hebdomadaires de séance
+│       ├── cr_seance_1.md             # Séance 1 : Cadrage, WBS, Gantt, MCD
+│       ├── cr_seance_2.md             # Séance 2 : Authentification, sécurité, stockage JSON
+│       └── cr_seance_3.md             # Séance 3 : Moteur de quiz, création, import et passation
+├── src/                               # Code source applicatif
+│   ├── cli.py                         # Interface utilisateur en ligne de commande (CLI)
+│   ├── security.py                    # Primitives cryptographiques (hachage, salage)
+│   ├── models/                        # Entités métier (User, Quiz, Question, Reponse, Resultat)
+│   ├── services/                      # Services applicatifs (AuthService, QuizService, StorageService)
+│   └── utils/                         # Utilitaires transverses
+└── tests/                             # Suites de tests unitaires automatisés
+    ├── test_security.py               # Validation de la robustesse cryptographique
+    ├── test_auth.py                   # Validation des flux d'authentification
+    └── test_storage.py                # Validation de la persistance JSON
 ```
 
-> Le dossier `data/` (fichiers `users.json`, `quizzes.json`, `results.json`) **n'est pas versionné** : il est exclu par le `.gitignore` pour ne pas publier les comptes utilisateurs, et il est recréé automatiquement au premier lancement.
-
-### Modèle Conceptuel de Données (MCD)
-Le schéma complet et le dictionnaire de données sont détaillés dans [docs/mcd_documentation.md](docs/mcd_documentation.md).
-- `Utilisateur (0,n) --- creer --- (1,1) Quiz`
-- `Quiz (1,n) --- contenir --- (1,1) Question`
-- `Question (2,n) --- proposer --- (1,1) Reponse`
-- `Utilisateur (0,n) --- obtenir --- (1,1) Résultat`
-- `Quiz (0,n) --- concerner --- (1,1) Résultat`
+### Remarque relative aux données locales
+Le répertoire `data/` stockant les fichiers JSON (`users.json`, `quizzes.json`, `results.json`) est volontairement exclu du suivi de versions via le fichier `.gitignore` afin de garantir la confidentialité des données et d'éviter les conflits entre environnements de développement. Ce répertoire est initialisé de manière autonome lors du premier lancement de l'application.
 
 ---
 
-## 🚀 4. Installation et Démarrage
+## 4. Modèle Conceptuel de Données (MCD)
 
-### Prérequis
-- **Python 3.10 ou supérieur** (testé avec succès sous Python 3.11).
-- Aucune dépendance externe tierce n'est requise : le projet utilise exclusivement la bibliothèque standard de Python (`hashlib`, `secrets`, `hmac`, `json`, `uuid`, `unittest`, `getpass`).
+La modélisation Entité-Association a été formalisée selon le formalisme Merise. Le détail des entités, associations et cardinalités est disponible dans [docs/mcd_documentation.md](docs/mcd_documentation.md).
 
-### Lancement de l'application
-Ouvrez un terminal à la racine du projet et exécutez :
+- **Utilisateur (0,n) --- creer --- (1,1) Quiz**
+- **Quiz (1,n) --- contenir --- (1,1) Question**
+- **Question (2,n) --- proposer --- (1,1) Reponse**
+- **Utilisateur (0,n) --- obtenir --- (1,1) Resultat**
+- **Quiz (0,n) --- concerner --- (1,1) Resultat**
+
+---
+
+## 5. Spécifications Techniques et Déploiement
+
+### Prérequis d'Exécution
+- **Environnement d'exécution :** Python 3.10 ou version supérieure (validé sous Python 3.11).
+- **Dépendances tierces :** Aucune bibliothèque externe n'est requise. L'implémentation repose exclusivement sur les modules standards certifiés de Python (`hashlib`, `secrets`, `hmac`, `json`, `uuid`, `unittest`, `getpass`).
+
+### Procédure de Lancement
+À la racine du projet, exécuter la commande suivante :
 ```bash
 python main.py
 ```
 
-### Comptes de test pré-configurés
-Au premier lancement, deux comptes de démonstration sont créés automatiquement dans `data/users.json` :
+### Comptes de Démonstration Pré-configurés
+Lors de l'initialisation initiale de la base locale, deux profils de référence sont créés automatiquement :
 
-| Rôle | Identifiant (ou Email) | Mot de passe |
-| :--- | :--- | :--- |
-| **Administrateur** | `admin` (ou `admin@quiz.fr`) | `Admin123!` |
-| **Joueur** | `joueur1` (ou `joueur1@quiz.fr`) | `Joueur123!` |
+| Profil | Identifiant (ou Adresse e-mail) | Mot de passe | Rôle attribué |
+| :--- | :--- | :--- | :--- |
+| **Administrateur** | `admin` (ou `admin@quiz.fr`) | `Admin123!` | Administration du système |
+| **Joueur** | `joueur1` (ou `joueur1@quiz.fr`) | `Joueur123!` | Passation de quiz |
 
-Un nouveau compte joueur peut aussi être créé via le menu **2. S'inscrire**.
+La création autonome de nouveaux comptes joueurs est accessible via le menu d'inscription de l'interface console.
 
 ---
 
-## 🧪 5. Tests Unitaires
+## 6. Assurance Qualité et Tests Unitaires
 
-Les tests unitaires (en cours d'écriture pendant le Sprint 2) se lancent avec :
+Conformément aux exigences de livraison logicielle sans régression, la conformité du code est validée par l'exécution de la suite de tests unitaires :
+
 ```bash
 python -m unittest discover tests -v
 ```
 
+Tous les tests doivent obligatoirement être validés préalablement à toute fusion ou livraison vers la branche principale `main`.
+
 ---
 
-## 📅 6. Feuille de Route des Sprints (Roadmap)
+## 7. Planification et Suivi des Sprints (Roadmap)
 
-- [x] **Sprint 1 (12/10 - 15/10) : Cadrage et Conception**
-  - [x] Création du dépôt Git et premier README
-  - [x] Conception du MCD sur Looping
-  - [x] Organigramme WBS et planning Gantt (tâches $\le 2$ jours)
-  - [x] Initialisation du tableau Kanban Trello
-- [x] **Sprint 2 (19/10 - 22/10) : Authentification & Stockage** — 🟢 *Terminé*
-  - [x] Architecture du code et modèles (`User`, `Quiz`, `Question`, `Reponse`, `Resultat`)
-  - [x] Sécurité : hachage SHA-256 avec sel cryptographique
-  - [x] Stockage JSON des utilisateurs (`data/users.json`)
-  - [x] Menu console de connexion / inscription (`src/cli.py`)
-  - [x] Suite de 15 tests unitaires automatisés validés à 100%
-- [ ] **Sprint 3 (26/10 - 30/10) : Cœur du Jeu & Création de Quiz**
-  - [ ] Création manuelle d'un quiz par l'administrateur
-  - [ ] Importation de quiz depuis un fichier texte
-  - [ ] Sélection et passation d'un quiz par un joueur avec validation des réponses
-- [ ] **Sprint 4 (02/11 - 06/11) : Scores, Finitions & Soutenance**
-  - [ ] Calcul et persistance des scores dans `results.json`
-  - [ ] Historique individuel des scores par joueur
-  - [ ] Rédaction du rapport final de projet
-  - [ ] Répétition de la démonstration de soutenance (15 min)
+Le calendrier du projet est découpé en 4 sprints successifs :
+
+- **Sprint 1 (12/10 - 15/10) : Cadrage et Conception Initiale** - Statut : Validé
+  - Initialisation du dépôt Git et de la documentation socle.
+  - Modélisation conceptuelle de données (MCD) sous Looping.
+  - Établissement de l'organigramme WBS et du diagramme de Gantt (durée maximale de 2 jours par tâche élémentaire).
+  - Mise en place du tableau Kanban Trello.
+
+- **Sprint 2 (19/10 - 22/10) : Authentification et Persistance Utilisateurs** - Statut : Validé
+  - Architecture modulaire et instanciation des modèles de données.
+  - Implémentation du sous-système de sécurité (hachage salé SHA-256).
+  - Gestion de la persistance JSON des utilisateurs (`data/users.json`).
+  - Interface console de gestion des flux d'inscription et de connexion.
+  - Validation de la première suite de tests unitaires automatisés.
+
+- **Sprint 3 (26/10 - 30/10) : Cœur Fonctionnel et Gestion des Quiz** - Statut : En cours
+  - Module de création interactive de quiz par l'administrateur (US04).
+  - Module d'importation de quiz depuis des fichiers texte structurés (US05).
+  - Moteur d'exécution des questionnaires et restitution des scores pour les joueurs (US06).
+  - Extension de la couverture de tests unitaires au moteur de jeu.
+
+- **Sprint 4 (02/11 - 06/11) : Historisation des Résultats, Consolidation et Soutenance** - Statut : Planifié
+  - Sauvegarde de l'historique individuel des scores par joueur (`results.json`).
+  - Audit de robustesse et correction des anomalies éventuelles.
+  - Rédaction du rapport final de projet.
+  - Préparation et répétition de la soutenance orale (démonstration de 15 minutes).
