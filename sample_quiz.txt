@@ -1,0 +1,20 @@
+TITRE: Culture Informatique et Génie Logiciel
+DESCRIPTION: Quiz d'exemple pour tester l'importation automatisée depuis un fichier texte.
+
+QUESTION: Quel langage de programmation a été créé par Guido van Rossum ? [2 pts]
+- Java
+- C++
+* Python
+- Ruby
+
+QUESTION: Quelle structure de données applique le principe FIFO (First In, First Out) ? [1 pt]
+- Une pile (Stack)
+* Une file (Queue)
+- Une table de hachage
+- Un graphe
+
+QUESTION: En quelle année le Manifeste Agile a-t-il été rédigé ? [1 pt]
+- 1995
+* 2001
+- 2010
+- 2015
