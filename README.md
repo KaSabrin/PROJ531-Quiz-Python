@@ -56,6 +56,8 @@ PROJ531-Quiz-Python/
 │   ├── mcd_documentation.md           # Spécifications détaillées du MCD et dictionnaire des données
 │   ├── glossaire.md                   # Glossaire terminologique du projet
 │   ├── trello_sprint2.png             # Preuve d'avancement Kanban (clôture Sprint 2)
+│   ├── architecture_technique_quizora.pdf  # Dossier d'architecture technique (PDF certifié)
+│   ├── architecture_technique_quizora.md   # Spécifications et schéma d'architecture Mermaid
 │   └── comptes-rendus/                # Comptes-rendus hebdomadaires de séance
 │       ├── cr_seance_1.md             # Séance 1 : Cadrage, WBS, Gantt, MCD
 │       ├── cr_seance_2.md             # Séance 2 : Authentification, sécurité, stockage JSON
