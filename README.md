@@ -4,23 +4,16 @@ Projet académique réalisé dans le cadre de l'unité d'enseignement **PROJ531 
 
 ---
 
-## 1. Présentation du Projet et Objectifs
+## 1. Présentation du Projet
 
-**Quizora** est une application modulaire développée en Python dédiée à la création, à l'administration et à la passation de quiz interactifs. Conçue par l'équipe Quizora, la solution a pour objectif d'offrir une plateforme fluide, sécurisée et ergonomique permettant tant aux enseignants et administrateurs d'alimenter une banque d'évaluations qu'aux apprenants et joueurs de tester leurs connaissances avec un retour d'évaluation immédiat.
+**Quizora** est une application console en Python développée par notre groupe dans le cadre du module **PROJ531 (Gestion de projet informatique)** à l'Université Savoie Mont Blanc.
 
-Le développement de Quizora s'inscrit rigoureusement dans le cadre méthodologique **Agile / Scrum**, en appliquant les bonnes pratiques de génie logiciel :
-- Découpage du cycle de vie en sprints itératifs et incrémentaux.
-- Séparation stricte des responsabilités (architecture en couches).
-- Gestion des versions collaborative et traçabilité des tâches via Git et Kanban.
-- Couverture fonctionnelle assurée par une suite de tests unitaires automatisés.
-
-### Fonctionnalités Principales de Quizora
-- **Gestion des Comptes et Authentification :** Inscription et authentification avec contrôle d'accès basé sur les rôles (Joueur et Administrateur).
-- **Sécurité Cryptographique :** Protection des mots de passe par hachage SHA-256 associé à un sel cryptographique unique par utilisateur et comparaison à temps constant.
-- **Persistance des Données :** Sérialisation structurée au format standard JSON (`users.json`, `quizzes.json`, `results.json`).
-- **Administration des Quiz :** Création interactive par saisie console et importation automatisée à partir de fichiers texte structurés.
-- **Moteur d'Évaluation :** Déroulement séquentiel des questionnaires, validation des réponses, calcul immédiat du score et restitution des réponses attendues.
-- **Historique Individuel :** Enregistrement des résultats pour assurer le suivi des performances des joueurs.
+Elle permet de gérer et de passer des quiz sous forme de QCM :
+- **Comptes et sécurité :** Inscription et connexion avec distinction des rôles (Joueur et Administrateur). Les mots de passe sont hachés en SHA-256 avec un sel individuel de 16 octets.
+- **Gestion des quiz :** L'administrateur peut créer des quiz directement dans le terminal ou les importer depuis un fichier texte `.txt`.
+- **Passation et scores :** Le joueur choisit un quiz, répond aux questions, et l'application affiche son score et les bonnes réponses.
+- **Stockage local :** Les données sont enregistrées dans des fichiers JSON (`users.json`, `quizzes.json`, `results.json`) dans un dossier `data/`.
+- **Méthode Agile :** Le travail est découpé en 4 sprints de 2 jours maximum par tâche, suivis sur Trello et planifiés sur un diagramme de Gantt.
 
 ---
 

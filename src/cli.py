@@ -9,6 +9,7 @@ import sys
 from src.models.user import User
 from src.services.auth_service import AuthService
 from src.services.storage_service import StorageService
+from src.services.quiz_service import QuizService
 
 
 def prompt_password(prompt: str = "Mot de passe : ") -> str:
@@ -29,6 +30,7 @@ class QuizAppCLI:
     def __init__(self):
         self.storage_service = StorageService()
         self.auth_service = AuthService(storage_service=self.storage_service)
+        self.quiz_service = QuizService(storage_service=self.storage_service)
 
     def afficher_banniere(self) -> None:
         """Affiche le titre stylisé de l'application."""
@@ -172,17 +174,104 @@ class QuizAppCLI:
             elif choix == "2":
                 self.lister_utilisateurs()
             elif choix == "3":
-                print("\n[Sprint 3 - Tâche 3.1] La création interactive de quiz sera développée lors du prochain sprint.")
-                input("Appuyez sur [Entrée] pour continuer...")
+                self.action_creer_quiz(user)
             elif choix == "4":
-                print("\n[Sprint 3 - Tâche 3.2] L'importateur de quiz depuis fichier texte (.txt) sera développé au prochain sprint.")
-                input("Appuyez sur [Entrée] pour continuer...")
+                self.action_importer_quiz(user)
             elif choix == "5":
                 self.auth_service.logout()
                 print("\n Déconnexion réussie.")
                 break
             else:
                 print(" Choix invalide.")
+
+    def action_creer_quiz(self, user: User) -> None:
+        """Formulaire interactif de création manuelle d'un quiz (Tâche 3.1)."""
+        print("\n" + "=" * 50)
+        print("📝 CRÉATION D'UN NOUVEAU QUIZ")
+        print("=" * 50)
+        titre = input("Titre du quiz : ").strip()
+        if not titre:
+            print("❌ Le titre ne peut pas être vide.")
+            input("Appuyez sur [Entrée] pour continuer...")
+            return
+
+        description = input("Description (optionnelle) : ").strip()
+
+        questions_data = []
+        num_q = 1
+        print("\n--- Ajout des questions (tapez 'fin' comme énoncé pour terminer) ---")
+        while True:
+            print(f"\nQuestion n°{num_q} :")
+            enonce = input("Énoncé de la question (ou 'fin' pour terminer) : ").strip()
+            if enonce.lower() == "fin":
+                break
+            if not enonce:
+                print("❌ L'énoncé ne peut pas être vide.")
+                continue
+
+            pts_input = input("Nombre de points pour cette question [défaut 1] : ").strip()
+            points = int(pts_input) if pts_input.isdigit() and int(pts_input) > 0 else 1
+
+            reponses = []
+            print("Saisissez les propositions de réponses (min. 2) :")
+            for i in range(1, 5):
+                rep_texte = input(f"  Option {i} (ou laissez vide pour arrêter) : ").strip()
+                if not rep_texte:
+                    if len(reponses) < 2:
+                        print("  ⚠️ Il faut au moins 2 propositions de réponse.")
+                        continue
+                    break
+                reponses.append({"texte": rep_texte, "est_correct": False})
+
+            print("Quelle est la bonne réponse ?")
+            for idx, r in enumerate(reponses, 1):
+                print(f"  {idx}. {r['texte']}")
+
+            while True:
+                choix_bonne = input(f"Numéro de la bonne réponse (1-{len(reponses)}) : ").strip()
+                if choix_bonne.isdigit() and 1 <= int(choix_bonne) <= len(reponses):
+                    reponses[int(choix_bonne) - 1]["est_correct"] = True
+                    break
+                print("❌ Choix invalide.")
+
+            questions_data.append({"enonce": enonce, "points": points, "reponses": reponses})
+            num_q += 1
+
+        if not questions_data:
+            print("\n❌ Aucun quiz créé (aucune question ajoutée).")
+            input("Appuyez sur [Entrée] pour continuer...")
+            return
+
+        succes, message, quiz = self.quiz_service.creer_quiz_manuel(
+            titre=titre,
+            description=description,
+            auteur=user,
+            questions_data=questions_data,
+        )
+
+        if succes:
+            print(f"\n✅ {message}")
+        else:
+            print(f"\n❌ Échec : {message}")
+        input("Appuyez sur [Entrée] pour continuer...")
+
+    def action_importer_quiz(self, user: User) -> None:
+        """Importation d'un quiz depuis un fichier texte (Tâche 3.2)."""
+        print("\n" + "=" * 50)
+        print("📂 IMPORTATION D'UN QUIZ DEPUIS UN FICHIER TEXTE (.TXT)")
+        print("=" * 50)
+        chemin = input("Chemin du fichier (ex: data/sample_quiz.txt) : ").strip()
+        if not chemin:
+            print("❌ Chemin non renseigné.")
+            input("Appuyez sur [Entrée] pour continuer...")
+            return
+
+        succes, message, quiz = self.quiz_service.importer_quiz_depuis_fichier(chemin, auteur=user)
+        if succes:
+            print(f"\n✅ {message}")
+        else:
+            print(f"\n❌ Échec : {message}")
+        input("Appuyez sur [Entrée] pour continuer...")
 
     def afficher_profil(self, user: User) -> None:
         """Affiche les informations personnelles de l'utilisateur."""
