@@ -51,7 +51,7 @@ def importer_quiz_depuis_txt(chemin_fichier):
                 quiz["questions"].append(current_question)
                 
     except FileNotFoundError:
-        print(f"❌ Erreur : Le fichier {chemin_fichier} est introuvable.")
+        print(f"Erreur : Le fichier {chemin_fichier} est introuvable.")
         return None
 
     return quiz

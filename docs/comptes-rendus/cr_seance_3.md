@@ -5,7 +5,7 @@
 - **Product Owner :** Bilal Draoui  
 - **Développeurs / Collaborateurs :** Sabrine Kawiche, Chadi Kharchoufa, Gabrien Vaz  
 
-**Statut du sprint :** 🟡 **Sprint 3 - Cœur du jeu (En cours / Planifié pour la séance)**
+**Statut du sprint :** **Sprint 3 - Cœur du jeu (En cours / Planifié pour la séance)**
 
 ---
 
@@ -23,10 +23,10 @@ Faisant suite à la validation du Sprint 2 (authentification sécurisée et stoc
 
 | Tâche WBS / Gantt | Responsable | Description | Temps estimé | Temps réel | Statut |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| **3.1 Admin : Création manuelle de quiz (US04)** | Sabrine Kawiche & Bilal Draoui | Formulaire interactif en console pour créer un quiz, ajouter des questions/réponses et l'enregistrer dans `data/quizzes.json`. | 2h00 | 1h45 | 🟡 **En cours** |
-| **3.2 Admin : Importation via fichier texte (US05)** | Chadi Kharchoufa | Service de parsing de fichiers `.txt` structurés avec validation syntaxique et conversion en objets `Quiz`. | 2h00 | 1h30 | 🟡 **En cours** |
-| **3.3 Joueur : Sélection et passation de quiz (US06)** | Gabrien Vaz & Bilal Draoui | Parcours joueur dans le CLI : listing des quiz, affichage séquentiel des questions, saisie contrôlée et calcul du score. | 2h00 | 1h45 | 🟡 **En cours** |
-| **3.4 Tests unitaires du moteur de quiz** | Gabrien Vaz & Chadi Kharchoufa | Tests automatisés pour la persistance JSON des quiz, le parsing de fichiers valides/invalides et l'évaluation des réponses. | 1h30 | 1h15 | 🟡 **En cours** |
+| **3.1 Admin : Création manuelle de quiz (US04)** | Sabrine Kawiche & Bilal Draoui | Formulaire interactif en console pour créer un quiz, ajouter des questions/réponses et l'enregistrer dans `data/quizzes.json`. | 2h00 | 1h45 | **En cours** |
+| **3.2 Admin : Importation via fichier texte (US05)** | Chadi Kharchoufa | Service de parsing de fichiers `.txt` structurés avec validation syntaxique et conversion en objets `Quiz`. | 2h00 | 1h30 | **En cours** |
+| **3.3 Joueur : Sélection et passation de quiz (US06)** | Gabrien Vaz & Bilal Draoui | Parcours joueur dans le CLI : listing des quiz, affichage séquentiel des questions, saisie contrôlée et calcul du score. | 2h00 | 1h45 | **En cours** |
+| **3.4 Tests unitaires du moteur de quiz** | Gabrien Vaz & Chadi Kharchoufa | Tests automatisés pour la persistance JSON des quiz, le parsing de fichiers valides/invalides et l'évaluation des réponses. | 1h30 | 1h15 | **En cours** |
 
 ---
 

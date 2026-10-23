@@ -35,7 +35,7 @@ class QuizAppCLI:
     def afficher_banniere(self) -> None:
         """Affiche le titre stylisé de l'application."""
         print("\n" + "=" * 60)
-        print("              🎓 QUIZORA - PROJ531 QUIZ PYTHON 🎓          ")
+        print("                 QUIZORA - PROJ531 QUIZ PYTHON             ")
         print("=" * 60)
 
     def menu_principal(self) -> None:
@@ -149,7 +149,7 @@ class QuizAppCLI:
                 input("Appuyez sur [Entrée] pour continuer...")
             elif choix == "4":
                 self.auth_service.logout()
-                print("\n👋 Vous avez été déconnecté avec succès.")
+                print("\nVous avez été déconnecté avec succès.")
                 break
             else:
                 print(" Choix invalide.")
@@ -187,11 +187,11 @@ class QuizAppCLI:
     def action_creer_quiz(self, user: User) -> None:
         """Formulaire interactif de création manuelle d'un quiz (Tâche 3.1)."""
         print("\n" + "=" * 50)
-        print("📝 CRÉATION D'UN NOUVEAU QUIZ")
+        print("CRÉATION D'UN NOUVEAU QUIZ")
         print("=" * 50)
         titre = input("Titre du quiz : ").strip()
         if not titre:
-            print("❌ Le titre ne peut pas être vide.")
+            print("Erreur : Le titre ne peut pas être vide.")
             input("Appuyez sur [Entrée] pour continuer...")
             return
 
@@ -206,7 +206,7 @@ class QuizAppCLI:
             if enonce.lower() == "fin":
                 break
             if not enonce:
-                print("❌ L'énoncé ne peut pas être vide.")
+                print("Erreur : L'énoncé ne peut pas être vide.")
                 continue
 
             pts_input = input("Nombre de points pour cette question [défaut 1] : ").strip()
@@ -218,7 +218,7 @@ class QuizAppCLI:
                 rep_texte = input(f"  Option {i} (ou laissez vide pour arrêter) : ").strip()
                 if not rep_texte:
                     if len(reponses) < 2:
-                        print("  ⚠️ Il faut au moins 2 propositions de réponse.")
+                        print("  Attention : Il faut au moins 2 propositions de réponse.")
                         continue
                     break
                 reponses.append({"texte": rep_texte, "est_correct": False})
@@ -232,13 +232,13 @@ class QuizAppCLI:
                 if choix_bonne.isdigit() and 1 <= int(choix_bonne) <= len(reponses):
                     reponses[int(choix_bonne) - 1]["est_correct"] = True
                     break
-                print("❌ Choix invalide.")
+                print("Choix invalide.")
 
             questions_data.append({"enonce": enonce, "points": points, "reponses": reponses})
             num_q += 1
 
         if not questions_data:
-            print("\n❌ Aucun quiz créé (aucune question ajoutée).")
+            print("\nAucun quiz créé (aucune question ajoutée).")
             input("Appuyez sur [Entrée] pour continuer...")
             return
 
@@ -250,27 +250,27 @@ class QuizAppCLI:
         )
 
         if succes:
-            print(f"\n✅ {message}")
+            print(f"\n[OK] {message}")
         else:
-            print(f"\n❌ Échec : {message}")
+            print(f"\n[Erreur] {message}")
         input("Appuyez sur [Entrée] pour continuer...")
 
     def action_importer_quiz(self, user: User) -> None:
         """Importation d'un quiz depuis un fichier texte (Tâche 3.2)."""
         print("\n" + "=" * 50)
-        print("📂 IMPORTATION D'UN QUIZ DEPUIS UN FICHIER TEXTE (.TXT)")
+        print("IMPORTATION D'UN QUIZ DEPUIS UN FICHIER TEXTE (.TXT)")
         print("=" * 50)
         chemin = input("Chemin du fichier (ex: data/sample_quiz.txt) : ").strip()
         if not chemin:
-            print("❌ Chemin non renseigné.")
+            print("Erreur : Chemin non renseigné.")
             input("Appuyez sur [Entrée] pour continuer...")
             return
 
         succes, message, quiz = self.quiz_service.importer_quiz_depuis_fichier(chemin, auteur=user)
         if succes:
-            print(f"\n✅ {message}")
+            print(f"\n[OK] {message}")
         else:
-            print(f"\n❌ Échec : {message}")
+            print(f"\n[Erreur] {message}")
         input("Appuyez sur [Entrée] pour continuer...")
 
     def afficher_profil(self, user: User) -> None:

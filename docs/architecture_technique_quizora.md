@@ -1,6 +1,6 @@
 # Architecture Technique & Structure Logicielle - Quizora
 
-> 📄 **Version PDF téléchargeable :** [Consulter le document PDF officiel (docs/architecture_technique_quizora.pdf)](architecture_technique_quizora.pdf)
+> **Version PDF téléchargeable :** [Consulter le document PDF officiel (docs/architecture_technique_quizora.pdf)](architecture_technique_quizora.pdf)
 
 ---
 
