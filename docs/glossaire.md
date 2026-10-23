@@ -1,10 +1,17 @@
-# Glossaire du Projet Quiz Python (PROJ531)
+# Glossaire du Projet Quizora (PROJ531)
 
 Ce glossaire définit les termes méthodologiques et techniques utilisés tout au long du projet afin de garantir une terminologie commune entre les membres de l'équipe et le commanditaire (enseignant).
 
 ---
 
-## 1. Termes de Gestion de Projet & Méthode Agile
+## 1. Identité du Produit & Organisation
+
+- **Quizora :** Nom officiel de l'application logicielle développée dans le cadre de l'UE PROJ531. Quizora désigne la plateforme globale de gestion, de stockage sécurisé et de passation interactive de quiz en Python.
+- **Équipe Quizora :** Collectif des 4 étudiants (Bilal Draoui PO, Sabrine Kawiche, Chadi Kharchoufa, Gabrien Vaz) en charge de la conception, du développement et de la livraison de l'application.
+
+---
+
+## 2. Termes de Gestion de Projet & Méthode Agile
 
 - **Agile / Scrum :** Méthodologie itérative et incrémentale de gestion de projet privilégiant les cycles courts, l'adaptation continue et la livraison régulière de fonctionnalités opérationnelles.
 - **Sprint :** Période délimitée dans le temps (ici 2 à 5 jours selon la planification) au cours de laquelle l'équipe conçoit, développe et teste un ensemble précis de fonctionnalités.
