@@ -47,6 +47,14 @@ Conformément au WBS (lot 2) et au diagramme de Gantt, le Sprint 2 visait à :
 
 ---
 
-## 4. Prochaine séance
-- Terminer et tester les tâches 2.0 à 2.4, puis pousser le code du Sprint 2 sur GitHub.
-- Démarrer le Sprint 3 (26/10) : création manuelle de quiz (3.1), import depuis un fichier texte (3.2), passation d'un quiz par un joueur (3.3).
+## 4. Preuve d'avancement Kanban (Tableau Trello)
+Ci-dessous, la capture d'écran du tableau Trello de l'équipe **Quizora** attestant de l'avancement et de la clôture des tâches du Sprint 2 (toutes les cartes de développement, de tests unitaires et de gestion sont validées dans la colonne **Terminé**) :
+
+![Tableau Trello - Avancement Sprint 2](../trello_sprint2.png)
+
+---
+
+## 5. Prochaine séance (Sprint 3 - 26/10)
+- Démarrer le Sprint 3 (création manuelle de quiz US04, import depuis un fichier texte US05, passation de quiz US06).
+- Préparer la logique métier du moteur de quiz (`QuizService`) et les structures de questions/réponses.
+- Poursuivre le suivi de projet Kanban et la mise à jour hebdomadaire des livrables.

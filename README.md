@@ -52,11 +52,12 @@ PROJ531-Quiz-Python/
 │   ├── glossaire.md                   # Glossaire du projet
 │   └── comptes-rendus/                # Un compte-rendu par séance
 │       ├── cr_seance_1.md
-│       └── cr_seance_2.md
-├── src/                               # Code source (Sprint 2, en cours)
+│       ├── cr_seance_2.md
+│       └── cr_seance_3.md
+├── src/                               # Code source de l'application
 │   ├── cli.py                         # Menus de l'interface console
 │   ├── models/                        # Classes de données (User, Quiz, Question, Reponse, Resultat)
-│   ├── services/                      # Authentification et stockage JSON
+│   ├── services/                      # Services métier (AuthService, QuizService, StorageService)
 │   └── utils/                         # Sécurité (hachage) et validation des saisies
 └── tests/                             # Tests unitaires (uniquement des fichiers test_*.py)
 ```
