@@ -5,12 +5,12 @@
 - **Product Owner :** Bilal Draoui  
 - **Développeurs / Collaborateurs :** Sabrine Kawiche, Chadi Kharchoufa, Gabrien Vaz  
 
-**Statut du sprint :** 🟡 **En cours** (Sprint 2 : du 19/10 au 22/10)
+**Statut du sprint :** 🟢 **Terminé avec succès** (Sprint 2 : Authentification & Stockage)
 
 ---
 
 ## 1. Objectifs du Sprint 2
-Conformément au WBS (lot 2) et au diagramme de Gantt, le Sprint 2 vise à :
+Conformément au WBS (lot 2) et au diagramme de Gantt, le Sprint 2 visait à :
 - Structurer l'architecture logicielle modulaire (`src/models`, `src/services`, `src/utils`).
 - Mettre en place la persistance JSON des utilisateurs (`data/users.json`).
 - Gérer les comptes utilisateurs de façon sécurisée (inscription, connexion, hachage des mots de passe, distinction Joueur / Admin).
@@ -20,16 +20,16 @@ Conformément au WBS (lot 2) et au diagramme de Gantt, le Sprint 2 vise à :
 
 ## 2. Avancement des tâches
 
-| Tâche WBS / Gantt | Responsable prévu | Description | Temps estimé | Temps réel | Statut |
+| Tâche WBS / Gantt | Responsable | Description | Temps estimé | Temps réel | Statut |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| **2.0 Architecture & structure du code** | Bilal Draoui | Arborescence `src/` (models, services, utils) et `tests/`, point d'entrée unique `main.py`. | 1h00 | _à compléter_ | 🟡 En cours |
-| **2.1 Gestion des utilisateurs (inscription / connexion)** | Bilal Draoui & Sabrine Kawiche | Modèle `User`, service `AuthService`, validation des entrées, gestion des rôles. | 2h30 | _à compléter_ | 🟡 En cours |
-| **2.1.bis Sécurité des mots de passe** | Chadi Kharchoufa | Hachage SHA-256 avec sel aléatoire (`security.py`). | 1h30 | _à compléter_ | 🟡 En cours |
-| **2.2 Stockage des données (JSON)** | Gabrien Vaz | Service `StorageService` : lecture/écriture JSON, création automatique des fichiers. | 1h30 | _à compléter_ | 🟡 En cours |
-| **2.3 Menu console (CLI)** | Sabrine Kawiche | Menus d'inscription, de connexion et espaces Joueur / Admin. | 1h30 | _à compléter_ | ⚪ À faire |
-| **2.4 Tests unitaires** | Gabrien Vaz & Chadi Kharchoufa | Tests de l'authentification, de la sécurité et du stockage. | 1h30 | _à compléter_ | ⚪ À faire |
+| **2.0 Architecture & structure du code** | Bilal Draoui & Équipe | Arborescence `src/` (models, services, utils) et `tests/`, point d'entrée unique `main.py`. | 1h00 | 0h45 | 🟢 **Terminé** |
+| **2.1.bis Sécurité des mots de passe** | Chadi Kharchoufa & Bilal Draoui | Hachage SHA-256 avec sel aléatoire (`src/security.py`) et tests unitaires (`test_security.py`). | 1h30 | 1h15 | 🟢 **Terminé** |
+| **2.1 Gestion des utilisateurs (inscription / connexion)** | Sabrine Kawiche & Bilal Draoui | Modèle `User` harmonisé, service `AuthService`, validation des entrées et gestion des rôles. | 2h30 | 2h00 | 🟢 **Terminé** |
+| **2.2 Stockage des données (JSON)** | Gabrien Vaz | Service `StorageService` : lecture/écriture JSON, gestion automatique du dossier `data/`. | 1h30 | 1h15 | 🟢 **Terminé** |
+| **2.3 Menu console (CLI)** | Sabrine Kawiche & Équipe | Menus d'inscription, de connexion et espaces Joueur / Admin dans `src/cli.py`. | 1h30 | 1h00 | 🟢 **Terminé** |
+| **2.4 Tests unitaires automatisés** | Gabrien Vaz & Bilal Draoui | Suite complète de 15 tests unitaires validant la sécurité, l'authentification et le stockage JSON. | 1h30 | 1h00 | 🟢 **Terminé** |
 
-> Le code du Sprint 2 est en cours de développement et sera poussé sur GitHub une fois relu et testé par l'équipe.
+> L'ensemble du code et des tests unitaires du Sprint 2 a été validé et intégré avec succès sur le dépôt Git.
 
 ---
 

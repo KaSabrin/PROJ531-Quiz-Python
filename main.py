@@ -1,10 +1,12 @@
 
 # PROJ531 : Application de quiz "Quizora"
 
-from src.cli import menu_principal
+from src.cli import lancer
+
 
 def main():
-    menu_principal()
+    lancer()
+
 
 if __name__ == "__main__":
     main()
