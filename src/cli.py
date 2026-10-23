@@ -55,7 +55,7 @@ class QuizAppCLI:
             elif choix == "3":
                 self.action_a_propos()
             elif choix == "4":
-                print("\nMerci d'avoir utilisé Quiz Python. À bientôt !\n")
+                print("\nMerci d'avoir utilisé Quizora. À bientôt !\n")
                 sys.exit(0)
             else:
                 print("\n Option invalide. Veuillez entrer un nombre entre 1 et 4.")
@@ -65,6 +65,7 @@ class QuizAppCLI:
         print("\n" + "-" * 50)
         print("ℹ  INFORMATIONS DU PROJET & COMPTES DE TEST")
         print("-" * 50)
+        print("Application : Quizora")
         print("Projet : PROJ531 - Université Savoie Mont Blanc")
         print("Développement : Sprint 2 (Authentification & Stockage JSON)")
         print("\nComptes pré-configurés pour tester directement :")

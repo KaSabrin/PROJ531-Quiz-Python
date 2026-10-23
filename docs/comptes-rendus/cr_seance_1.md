@@ -1,14 +1,14 @@
 # Compte-Rendu de Séance n°1 - Cadrage et Conception initiale
 **Date :** Mardi 13 Octobre 2026  
 **Module :** PROJ531 - Gestion de projet informatique  
-**Équipe :** Groupe Quiz Python (4 membres)  
+**Équipe :** Groupe Quizora (4 membres)  
 - **Product Owner :** Bilal Draoui  
 - **Développeurs / Collaborateurs :** Sabrine Kawiche, Chadi Kharchoufa, Gabrien Vaz  
 
 ---
 
 ## 1. Objectifs de la séance
-L'objectif de cette première séance était d'effectuer le cadrage complet du projet, de définir l'architecture globale, d'initialiser les outils de gestion de projet (Scrum, Trello, Git) et de concevoir le Modèle Conceptuel de Données (MCD).
+L'objectif de cette première séance était d'effectuer le cadrage complet du projet de l'application **Quizora**, de définir l'architecture logicielle globale, d'initialiser les outils de gestion de projet (Scrum, Trello, Git) et de concevoir le Modèle Conceptuel de Données (MCD).
 
 ---
 

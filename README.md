@@ -1,4 +1,4 @@
-# PROJ531 - Application de Gestion et Passation de Quiz en Python
+# Quizora - Application de Gestion et Passation de Quiz en Python
 
 Projet académique réalisé dans le cadre de l'unité d'enseignement **PROJ531 - Gestion de projet informatique** à l'**Université Savoie Mont Blanc**.
 
@@ -6,15 +6,15 @@ Projet académique réalisé dans le cadre de l'unité d'enseignement **PROJ531 
 
 ## 1. Présentation du Projet et Objectifs
 
-Ce projet a pour finalité la conception, le développement et la validation d'une application modulaire en Python dédiée à la création, à l'administration et à la passation de quiz interactifs.
+**Quizora** est une application modulaire développée en Python dédiée à la création, à l'administration et à la passation de quiz interactifs. Conçue par l'équipe Quizora, la solution a pour objectif d'offrir une plateforme fluide, sécurisée et ergonomique permettant tant aux enseignants et administrateurs d'alimenter une banque d'évaluations qu'aux apprenants et joueurs de tester leurs connaissances avec un retour d'évaluation immédiat.
 
-Le développement s'inscrit rigoureusement dans le cadre méthodologique **Agile / Scrum**, en appliquant les bonnes pratiques de génie logiciel :
+Le développement de Quizora s'inscrit rigoureusement dans le cadre méthodologique **Agile / Scrum**, en appliquant les bonnes pratiques de génie logiciel :
 - Découpage du cycle de vie en sprints itératifs et incrémentaux.
 - Séparation stricte des responsabilités (architecture en couches).
 - Gestion des versions collaborative et traçabilité des tâches via Git et Kanban.
 - Couverture fonctionnelle assurée par une suite de tests unitaires automatisés.
 
-### Fonctionnalités Principales du Système
+### Fonctionnalités Principales de Quizora
 - **Gestion des Comptes et Authentification :** Inscription et authentification avec contrôle d'accès basé sur les rôles (Joueur et Administrateur).
 - **Sécurité Cryptographique :** Protection des mots de passe par hachage SHA-256 associé à un sel cryptographique unique par utilisateur et comparaison à temps constant.
 - **Persistance des Données :** Sérialisation structurée au format standard JSON (`users.json`, `quizzes.json`, `results.json`).
