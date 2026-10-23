@@ -11,8 +11,8 @@ class TestSecurity(unittest.TestCase):
         hashed = hash_password(pwd)
         self.assertIn("$", hashed)
         salt, hash_val = hashed.split("$")
-        self.assertEqual(len(salt), 32)  # 16 octets hex
-        self.assertEqual(len(hash_val), 64)  # sha256 hex
+        self.assertEqual(len(salt), 32)  
+        self.assertEqual(len(hash_val), 64)  
 
     def test_verify_password_success(self):
         """Vérifie qu'un mot de passe correct est validé."""
