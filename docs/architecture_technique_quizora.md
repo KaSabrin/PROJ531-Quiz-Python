@@ -8,10 +8,10 @@
 
 ```mermaid
 graph TD
-    subgraph CP["1. Couche Présentation (Interface CLI)"]
-        MAIN["main.py<br/>(Point d'entrée exécutable)"]
-        CLI_J["cli.py - Menu Joueur<br/>(Passation de quiz & Scores)"]
-        CLI_A["cli.py - Menu Admin<br/>(Création manuelle & Import .txt)"]
+    subgraph CP["1. Couche Présentation (CLI Console & GUI Tkinter)"]
+        MAIN["main.py / gui_main.py<br/>(Points d'entrée exécutables)"]
+        CLI_J["cli.py & gui.py - Espace Joueur<br/>(Connexion, passation & scores)"]
+        CLI_A["cli.py & gui.py - Espace Admin<br/>(Création manuelle & Import .txt)"]
     end
 
     subgraph CS["2. Couche Logique Métier & Services"]

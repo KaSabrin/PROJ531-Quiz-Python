@@ -91,10 +91,20 @@ La modélisation Entité-Association a été formalisée selon le formalisme Mer
 - **Dépendances tierces :** Aucune bibliothèque externe n'est requise. L'implémentation repose exclusivement sur les modules standards certifiés de Python (`hashlib`, `secrets`, `hmac`, `json`, `uuid`, `unittest`, `getpass`).
 
 ### Procédure de Lancement
-À la racine du projet, exécuter la commande suivante :
+L'application propose deux modes d'exécution (sans aucune dépendance externe à installer) :
+
+1. **Mode Interface Graphique (GUI - Page de connexion et tableau de bord moderne) :**
+```bash
+python gui_main.py
+# ou
+python main.py --gui
+```
+
+2. **Mode Console classique (CLI interactif en terminal) :**
 ```bash
 python main.py
 ```
+*(Le mode console permet également d'ouvrir l'interface graphique via l'option 4 du menu d'accueil).*
 
 ### Comptes de Démonstration Pré-configurés
 Lors de l'initialisation initiale de la base locale, deux profils de référence sont créés automatiquement :

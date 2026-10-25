@@ -44,11 +44,12 @@ class QuizAppCLI:
             self.afficher_banniere()
             print("1.  Se connecter")
             print("2.  S'inscrire (Nouveau compte)")
-            print("3. ℹ  À propos & Comptes de démonstration")
-            print("4.  Quitter")
+            print("3.  A propos & Comptes de demonstration")
+            print("4.  Ouvrir l'interface graphique (Page de connexion GUI)")
+            print("5.  Quitter")
             print("-" * 60)
 
-            choix = input("Votre choix (1-4) : ").strip()
+            choix = input("Votre choix (1-5) : ").strip()
 
             if choix == "1":
                 self.action_connexion()
@@ -57,10 +58,21 @@ class QuizAppCLI:
             elif choix == "3":
                 self.action_a_propos()
             elif choix == "4":
-                print("\nMerci d'avoir utilisé Quizora. À bientôt !\n")
+                self.action_ouvrir_gui()
+            elif choix == "5":
+                print("\nMerci d'avoir utilise Quizora. A bientot !\n")
                 sys.exit(0)
             else:
-                print("\n Option invalide. Veuillez entrer un nombre entre 1 et 4.")
+                print("\nOption invalide. Veuillez entrer un nombre entre 1 et 5.")
+
+    def action_ouvrir_gui(self) -> None:
+        """Ouvre l'interface graphique (page de connexion Tkinter)."""
+        print("\nOuverture de la fenetre graphique Quizora...")
+        try:
+            from src.gui import lancer_gui
+            lancer_gui()
+        except Exception as e:
+            print(f"Erreur lors du lancement de l'interface graphique : {e}")
 
     def action_a_propos(self) -> None:
         """Affiche les informations du projet et les comptes de démo."""
