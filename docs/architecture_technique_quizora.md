@@ -69,6 +69,7 @@ graph TD
 | Domaine | Outil / Technologie | Rôle dans l'application Quizora |
 | :--- | :--- | :--- |
 | **Langage & Runtime** | Python 3.10+ | Langage principal imposé, typage avec Type Hinting. |
+| **Interface Utilisateur** | Console CLI & Tkinter (GUI) | Deux modes d'exécution natifs : terminal interactif (`cli.py`) et fenêtre graphique moderne (`gui.py`). |
 | **Sécurité Cryptographique** | `hashlib`, `secrets`, `hmac` | Hachage SHA-256 salé avec sel cryptographique aléatoire de 16 octets et comparaison à temps constant. |
 | **Persistance** | `json` (Bibliothèque standard) | Stockage portable et transparent avec encodage UTF-8 forcé. |
 | **Assurance Qualité** | `unittest` | Tests unitaires automatisés d'intégration et de non-régression. |
