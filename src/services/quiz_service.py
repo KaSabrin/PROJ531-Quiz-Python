@@ -38,7 +38,7 @@ class QuizService:
 
         # Vérifier les droits administrateur
         if not auteur.is_admin():
-            return False, "Accès réservé à l'administrateur.", None
+            return False, "Seul un administrateur peut créer un quiz.", None
 
         # Vérifier le titre
         titre = titre.strip()
