@@ -23,9 +23,9 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 
 | Tâche WBS / Gantt | Responsable | Description | Temps estimé | Statut |
 | :--- | :--- | :--- | :---: | :---: |
-| **3.4 Joueur : Sauvegarde et historique des scores (US07)** | Sabrine Kawiche & Bilal Draoui | Sauvegarde du score en fin de quiz (Sabrine), puis regroupement dans le service `ResultatService`, enregistrement automatique du score en fin de quiz, menu « Consulter mon historique de scores » dans le CLI. | 2h00 | **Terminé** |
-| **3.4.bis Tests unitaires de l'historique** | Gabrien Vaz | Nouveau fichier `tests/test_resultat.py` (5 tests) : persistance, rejet des scores incohérents, filtrage par joueur, statistiques. | 1h00 | **Terminé** |
-| **4.1 Chasse aux bugs et robustesse** | Chadi Kharchoufa & Sabrine Kawiche | Relecture du parseur d'import et du parcours joueur, corrections et tests de non-régression. | 1h30 | **Terminé** |
+| **3.4 Joueur : Sauvegarde et historique des scores (US07)** | Sabrine Kawiche & Bilal Draoui | Sauvegarde du score en fin de quiz (Sabrine), puis regroupement dans le service `ResultatService`, enregistrement automatique du score en fin de quiz, menu « Consulter mon historique de scores » dans le CLI. | 2h00 | **En cours** |
+| **3.4.bis Tests unitaires de l'historique** | Gabrien Vaz | Nouveau fichier `tests/test_resultat.py` (5 tests) : persistance, rejet des scores incohérents, filtrage par joueur, statistiques. | 1h00 | **En cours** |
+| **4.1 Chasse aux bugs et robustesse** | Chadi Kharchoufa & Sabrine Kawiche | Relecture du parseur d'import et du parcours joueur, corrections et tests de non-régression. | 1h30 | **En cours** |
 | **4.2 Rédaction du rapport final** | Bilal Draoui & Équipe | Synthèse du projet : gestion de projet (WBS, Gantt, Trello), architecture, bilan des sprints. | 2h00 | **En cours** |
 | **4.3 Préparation de la soutenance** | Équipe | Scénario de démonstration (admin puis joueur), support de présentation, répétition chronométrée. | 1h30 | **À faire** |
 
@@ -74,7 +74,7 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 
 ## 4. Suivi de projet & Organisation Kanban (Trello)
 - Le **PBS** (Product Breakdown Structure) du projet a été ajouté dans `docs/PBS_Quizora.png`.
-- Les cartes **US07** (historique des scores), **T3.4** et **T4.1** (chasse aux bugs) sont déplacées dans la colonne **Terminé**.
+- Les cartes **US07** (historique des scores), **T3.4** et **T4.1** (chasse aux bugs) sont dans la colonne **En cours** (fonctionnalités développées, en cours de validation par l'équipe).
 - Les cartes **T4.2** (rapport final) et **T4.3** (soutenance) restent dans la colonne **En cours** / **À faire** jusqu'à la fin du sprint.
 - *Capture du tableau Trello à ajouter en fin de sprint : `docs/trello_sprint4.png`.*
 
@@ -95,4 +95,4 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 | Sprint 3 | Création manuelle et import de quiz, passation et calcul du score, interface graphique de connexion | Terminé |
 | Sprint 4 | Historique des scores, corrections de bugs, rapport final et soutenance | En cours |
 
-Toutes les user stories fonctionnelles prévues au backlog (US01 à US07) sont désormais implémentées. Il reste uniquement les livrables de fin de projet (rapport et soutenance).
+Toutes les user stories fonctionnelles prévues au backlog (US01 à US07) sont développées ; l'US07 et la chasse aux bugs sont en cours de validation. Il reste ensuite les livrables de fin de projet (rapport et soutenance).
