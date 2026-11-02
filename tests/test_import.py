@@ -42,5 +42,12 @@ class TestImportQuiz(unittest.TestCase):
         quiz = importer_quiz_depuis_txt("inexistant.txt")
         self.assertIsNone(quiz)
 
+    def test_fichier_non_texte_ou_dossier(self):
+        """Un dossier ou un fichier binaire est refusé sans faire planter l'application."""
+        with open(self.test_filename, "wb") as f:
+            f.write(b"\xff\xfe\x00\x81 contenu binaire")
+        self.assertIsNone(importer_quiz_depuis_txt(self.test_filename))
+        self.assertIsNone(importer_quiz_depuis_txt("tests"))
+
 if __name__ == "__main__":
     unittest.main()

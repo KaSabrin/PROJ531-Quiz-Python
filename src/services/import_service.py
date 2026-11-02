@@ -54,6 +54,10 @@ def importer_quiz_depuis_txt(chemin_fichier):
     except FileNotFoundError:
         print(f"Erreur : Le fichier {chemin_fichier} est introuvable.")
         return None
+    except (OSError, UnicodeDecodeError):
+        # Dossier, fichier protégé ou fichier non texte (PDF, image...)
+        print(f"Erreur : Le fichier {chemin_fichier} n'est pas un fichier texte lisible.")
+        return None
 
     return quiz
 

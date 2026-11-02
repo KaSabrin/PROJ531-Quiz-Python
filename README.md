@@ -38,7 +38,9 @@ Le système repose sur une architecture découplée afin d'assurer l'indépendan
 
 ```text
 PROJ531-Quiz-Python/
-├── main.py                            # Point d'entrée exécutable unique
+├── main.py                            # Point d'entrée principal (console, ou GUI avec --gui)
+├── gui_main.py                        # Lancement direct de l'interface graphique
+├── sample_quiz.txt                    # Exemple de quiz à importer
 ├── README.md                          # Documentation générale et technique
 ├── .gitignore                         # Exclusions de versionnement (caches, data/, environnements)
 ├── docs/                              # Dossier de gestion de projet et livrables
@@ -59,15 +61,18 @@ PROJ531-Quiz-Python/
 │       └── cr_seance_4.md             # Séance 4 : Historique des scores, chasse aux bugs, soutenance
 ├── src/                               # Code source applicatif
 │   ├── cli.py                         # Interface utilisateur en ligne de commande (CLI)
+│   ├── gui.py                         # Interface graphique Tkinter (connexion, tableau de bord)
 │   ├── security.py                    # Primitives cryptographiques (hachage, salage)
 │   ├── models/                        # Entités métier (User, Quiz, Question, Reponse, Resultat)
-│   ├── services/                      # Services applicatifs (AuthService, QuizService, StorageService)
+│   ├── services/                      # Services applicatifs (AuthService, QuizService, ResultatService, StorageService)
 │   └── utils/                         # Utilitaires transverses
 └── tests/                             # Suites de tests unitaires automatisés
     ├── test_security.py               # Validation de la robustesse cryptographique
     ├── test_auth.py                   # Validation des flux d'authentification
     ├── test_storage.py                # Validation de la persistance JSON
-    └── test_quiz.py                   # Validation de la création et de l'import de quiz
+    ├── test_quiz.py                   # Validation de la création et de l'import de quiz
+    ├── test_import.py                 # Validation du parseur de fichiers texte
+    └── test_resultat.py               # Validation de l'historique des scores
 ```
 
 ### Remarque relative aux données locales

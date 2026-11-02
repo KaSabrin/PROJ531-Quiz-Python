@@ -4,9 +4,8 @@ Fournit une page de connexion graphique, une page d'inscription et un tableau
 de bord adapte au role de l'utilisateur (Joueur / Administrateur).
 """
 
-import sys
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 from typing import Optional
 
 from src.models.user import User

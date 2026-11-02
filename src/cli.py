@@ -79,11 +79,10 @@ class QuizAppCLI:
     def action_a_propos(self) -> None:
         """Affiche les informations du projet et les comptes de démo."""
         print("\n" + "-" * 50)
-        print("ℹ  INFORMATIONS DU PROJET & COMPTES DE TEST")
+        print("INFORMATIONS DU PROJET & COMPTES DE TEST")
         print("-" * 50)
         print("Application : Quizora")
         print("Projet : PROJ531 - Université Savoie Mont Blanc")
-        print("Développement : Sprint 2 (Authentification & Stockage JSON)")
         print("\nComptes pré-configurés pour tester directement :")
         print("  • Administrateur :")
         print("      Identifiant : admin")
@@ -146,9 +145,9 @@ class QuizAppCLI:
             print(f" ESPACE JOUEUR - Connecté : {user.pseudo}")
             print("=" * 50)
             print("1.  Voir mon profil")
-            print("2.  Lister et passer un quiz (Sprint 3)")
-            print("3.  Consulter mon historique de scores (Sprint 4)")
-            print("4. Se déconnecter")
+            print("2.  Lister et passer un quiz")
+            print("3.  Consulter mon historique de scores")
+            print("4.  Se déconnecter")
             print("-" * 50)
 
             choix = input("Votre choix (1-4) : ").strip()
@@ -324,8 +323,8 @@ class QuizAppCLI:
 
             reponses = []
             print("Saisissez les propositions de réponses (min. 2) :")
-            for i in range(1, 5):
-                rep_texte = input(f"  Option {i} (ou laissez vide pour arrêter) : ").strip()
+            while len(reponses) < 4:
+                rep_texte = input(f"  Option {len(reponses) + 1} (ou laissez vide pour arrêter) : ").strip()
                 if not rep_texte:
                     if len(reponses) < 2:
                         print("  Attention : Il faut au moins 2 propositions de réponse.")
@@ -370,7 +369,7 @@ class QuizAppCLI:
         print("\n" + "=" * 50)
         print("IMPORTATION D'UN QUIZ DEPUIS UN FICHIER TEXTE (.TXT)")
         print("=" * 50)
-        chemin = input("Chemin du fichier (ex: data/sample_quiz.txt) : ").strip()
+        chemin = input("Chemin du fichier (ex: sample_quiz.txt) : ").strip()
         if not chemin:
             print("Erreur : Chemin non renseigné.")
             input("Appuyez sur [Entrée] pour continuer...")
