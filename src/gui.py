@@ -5,12 +5,14 @@ de bord adapte au role de l'utilisateur (Joueur / Administrateur).
 """
 
 import tkinter as tk
-from tkinter import ttk
+from tkinter import filedialog, messagebox, ttk
 from typing import Optional
 
+from src.models.quiz import Quiz
 from src.models.user import User
 from src.services.auth_service import AuthService
 from src.services.quiz_service import QuizService
+from src.services.resultat_service import ResultatService
 from src.services.storage_service import StorageService
 
 
@@ -41,6 +43,7 @@ class QuizoraGUI:
         self.storage_service = StorageService()
         self.auth_service = AuthService(storage_service=self.storage_service)
         self.quiz_service = QuizService(storage_service=self.storage_service)
+        self.resultat_service = ResultatService(storage_service=self.storage_service)
 
         self.current_user: Optional[User] = None
 
@@ -699,23 +702,28 @@ class QuizoraGUI:
             fg=self.COLOR_MUTED,
         ).pack(side="left")
 
+        # Barre d'actions selon le role
+        actions_frame = tk.Frame(carte_principale, bg=self.COLOR_CARD)
+        actions_frame.pack(fill="x", padx=20, pady=(0, 10))
+
+        if self.current_user.is_admin():
+            self._bouton(
+                actions_frame, "+ Creer un quiz", self.afficher_page_creation_quiz
+            ).pack(side="left", padx=(0, 6), ipady=4)
+            self._bouton(
+                actions_frame, "Importer un fichier (.txt)", self.importer_quiz_fichier,
+                secondaire=True,
+            ).pack(side="left", ipady=4)
+        else:
+            self._bouton(
+                actions_frame, "Mon historique de scores", self.afficher_page_historique,
+                secondaire=True,
+            ).pack(side="left", ipady=4)
+
         # Liste deroulante des quiz
         list_container = tk.Frame(carte_principale, bg=self.COLOR_CARD)
         list_container.pack(fill="both", expand=True, padx=20, pady=(0, 15))
-
-        canvas = tk.Canvas(list_container, bg=self.COLOR_CARD, highlightthickness=0)
-        scrollbar = tk.Scrollbar(list_container, orient="vertical", command=canvas.yview)
-        scrollable_frame = tk.Frame(canvas, bg=self.COLOR_CARD)
-
-        scrollable_frame.bind(
-            "<Configure>",
-            lambda e: canvas.configure(scrollregion=canvas.bbox("all")),
-        )
-        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
-        canvas.configure(yscrollcommand=scrollbar.set)
-
-        canvas.pack(side="left", fill="both", expand=True)
-        scrollbar.pack(side="right", fill="y")
+        scrollable_frame = self._zone_defilante(list_container)
 
         if not quizzes:
             tk.Label(
@@ -736,6 +744,11 @@ class QuizoraGUI:
                 )
                 item.pack(fill="x", expand=True, pady=4)
 
+                if not self.current_user.is_admin():
+                    self._bouton(
+                        item, "Jouer", lambda quiz=q: self.afficher_page_passage(quiz)
+                    ).pack(side="right", padx=(8, 0))
+
                 tk.Label(
                     item,
                     text=f"{idx}. {q.titre}",
@@ -754,6 +767,606 @@ class QuizoraGUI:
                     fg=self.COLOR_MUTED,
                     anchor="w",
                 ).pack(fill="x")
+
+    # =========================================================================
+    # OUTILS COMMUNS (boutons, champs, zones defilantes)
+    # =========================================================================
+
+    def _bouton(self, parent, texte: str, commande, secondaire: bool = False) -> tk.Button:
+        """Cree un bouton plat au style de l'application."""
+        bg = self.COLOR_BORDER if secondaire else self.COLOR_PRIMARY
+        return tk.Button(
+            parent,
+            text=texte,
+            font=("Segoe UI", 9, "bold"),
+            bg=bg,
+            fg="#ffffff",
+            activebackground=self.COLOR_PRIMARY_HOVER,
+            activeforeground="#ffffff",
+            relief="flat",
+            cursor="hand2",
+            padx=10,
+            command=commande,
+        )
+
+    def _champ(self, parent, libelle: str) -> tk.Entry:
+        """Cree un libelle suivi d'un champ de saisie, et retourne le champ."""
+        tk.Label(
+            parent,
+            text=libelle,
+            font=("Segoe UI", 9, "bold"),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_TEXT,
+            anchor="w",
+        ).pack(fill="x")
+        entree = tk.Entry(
+            parent,
+            font=("Segoe UI", 10),
+            bg=self.COLOR_INPUT_BG,
+            fg=self.COLOR_INPUT_FG,
+            insertbackground="white",
+            relief="flat",
+            highlightthickness=1,
+            highlightbackground=self.COLOR_BORDER,
+        )
+        entree.pack(fill="x", ipady=4, pady=(2, 8))
+        return entree
+
+    def _carte(self, parent) -> tk.Frame:
+        """Cree un cadre de type carte."""
+        return tk.Frame(
+            parent,
+            bg=self.COLOR_CARD,
+            bd=1,
+            relief="solid",
+            highlightbackground=self.COLOR_BORDER,
+            highlightthickness=1,
+        )
+
+    def _zone_defilante(self, parent) -> tk.Frame:
+        """Cree une zone avec barre de defilement et retourne le cadre interieur."""
+        canvas = tk.Canvas(parent, bg=self.COLOR_CARD, highlightthickness=0)
+        scrollbar = tk.Scrollbar(parent, orient="vertical", command=canvas.yview)
+        interieur = tk.Frame(canvas, bg=self.COLOR_CARD)
+
+        interieur.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all")),
+        )
+        fenetre = canvas.create_window((0, 0), window=interieur, anchor="nw")
+        # Le cadre interieur suit la largeur du canvas
+        canvas.bind("<Configure>", lambda e: canvas.itemconfigure(fenetre, width=e.width))
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+        return interieur
+
+    def _entete_page(self, titre: str) -> None:
+        """Affiche le titre d'une page et un bouton de retour au tableau de bord."""
+        top = tk.Frame(self.content_frame, bg=self.COLOR_BG)
+        top.pack(fill="x", pady=(0, 12))
+        tk.Label(
+            top,
+            text=titre,
+            font=("Segoe UI", 16, "bold"),
+            bg=self.COLOR_BG,
+            fg=self.COLOR_TEXT,
+        ).pack(side="left")
+        self._bouton(
+            top, "< Retour", self.afficher_page_dashboard, secondaire=True
+        ).pack(side="right", ipady=3)
+
+    # =========================================================================
+    # ADMIN : CREATION ET IMPORT DE QUIZ
+    # =========================================================================
+
+    def afficher_page_creation_quiz(self) -> None:
+        """Formulaire graphique de creation manuelle d'un quiz (admin)."""
+        self._nettoyer_contenu()
+        self._entete_page("Creer un nouveau quiz")
+
+        questions_data: list[dict] = []
+
+        corps = tk.Frame(self.content_frame, bg=self.COLOR_BG)
+        corps.pack(fill="both", expand=True)
+
+        # --- Colonne gauche : informations du quiz et questions ajoutees ---
+        gauche = self._carte(corps)
+        gauche.pack(side="left", fill="both", expand=True, padx=(0, 10))
+        g = tk.Frame(gauche, bg=self.COLOR_CARD)
+        g.pack(fill="both", expand=True, padx=16, pady=12)
+
+        entree_titre = self._champ(g, "Titre du quiz :")
+        entree_desc = self._champ(g, "Description (optionnelle) :")
+
+        tk.Label(
+            g,
+            text="Questions ajoutees :",
+            font=("Segoe UI", 9, "bold"),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_TEXT,
+            anchor="w",
+        ).pack(fill="x")
+        liste_questions = tk.Listbox(
+            g,
+            font=("Segoe UI", 9),
+            bg=self.COLOR_INPUT_BG,
+            fg=self.COLOR_TEXT,
+            selectbackground=self.COLOR_PRIMARY,
+            relief="flat",
+            highlightthickness=1,
+            highlightbackground=self.COLOR_BORDER,
+            height=8,
+        )
+        liste_questions.pack(fill="both", expand=True, pady=(2, 6))
+
+        def retirer_question():
+            selection = liste_questions.curselection()
+            if not selection:
+                return
+            idx = selection[0]
+            del questions_data[idx]
+            rafraichir_liste()
+
+        def rafraichir_liste():
+            liste_questions.delete(0, tk.END)
+            for i, q in enumerate(questions_data, 1):
+                liste_questions.insert(tk.END, f"{i}. {q['enonce']} ({q['points']} pt)")
+
+        self._bouton(
+            g, "Retirer la question selectionnee", retirer_question, secondaire=True
+        ).pack(fill="x", ipady=2)
+
+        lbl_feedback = tk.Label(
+            g,
+            text="",
+            font=("Segoe UI", 9),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_ERROR,
+            wraplength=300,
+            justify="left",
+        )
+        lbl_feedback.pack(fill="x", pady=6)
+
+        def enregistrer_quiz():
+            succes, message, _ = self.quiz_service.creer_quiz_manuel(
+                titre=entree_titre.get(),
+                description=entree_desc.get(),
+                auteur=self.current_user,
+                questions_data=questions_data,
+            )
+            if succes:
+                messagebox.showinfo("Quizora", message)
+                self.afficher_page_dashboard()
+            else:
+                lbl_feedback.config(text=f"Erreur : {message}", fg=self.COLOR_ERROR)
+
+        self._bouton(g, "Enregistrer le quiz", enregistrer_quiz).pack(fill="x", ipady=6)
+
+        # --- Colonne droite : saisie d'une question ---
+        droite = self._carte(corps)
+        droite.pack(side="right", fill="both", expand=True)
+        d = tk.Frame(droite, bg=self.COLOR_CARD)
+        d.pack(fill="both", expand=True, padx=16, pady=12)
+
+        lbl_num = tk.Label(
+            d,
+            text="Nouvelle question",
+            font=("Segoe UI", 11, "bold"),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_TEXT,
+            anchor="w",
+        )
+        lbl_num.pack(fill="x", pady=(0, 6))
+
+        entree_enonce = self._champ(d, "Enonce :")
+
+        pts_frame = tk.Frame(d, bg=self.COLOR_CARD)
+        pts_frame.pack(fill="x", pady=(0, 8))
+        tk.Label(
+            pts_frame,
+            text="Points :",
+            font=("Segoe UI", 9, "bold"),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_TEXT,
+        ).pack(side="left")
+        spin_points = tk.Spinbox(
+            pts_frame,
+            from_=1,
+            to=20,
+            width=5,
+            font=("Segoe UI", 10),
+            bg=self.COLOR_INPUT_BG,
+            fg=self.COLOR_INPUT_FG,
+            buttonbackground=self.COLOR_BORDER,
+            relief="flat",
+        )
+        spin_points.pack(side="left", padx=8)
+
+        tk.Label(
+            d,
+            text="Propositions (cochez la bonne reponse, min. 2) :",
+            font=("Segoe UI", 9, "bold"),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_TEXT,
+            anchor="w",
+        ).pack(fill="x")
+
+        bonne_reponse = tk.IntVar(value=0)
+        entrees_options: list[tk.Entry] = []
+        for i in range(4):
+            ligne = tk.Frame(d, bg=self.COLOR_CARD)
+            ligne.pack(fill="x", pady=3)
+            tk.Radiobutton(
+                ligne,
+                variable=bonne_reponse,
+                value=i,
+                bg=self.COLOR_CARD,
+                activebackground=self.COLOR_CARD,
+                selectcolor=self.COLOR_INPUT_BG,
+            ).pack(side="left")
+            e = tk.Entry(
+                ligne,
+                font=("Segoe UI", 10),
+                bg=self.COLOR_INPUT_BG,
+                fg=self.COLOR_INPUT_FG,
+                insertbackground="white",
+                relief="flat",
+                highlightthickness=1,
+                highlightbackground=self.COLOR_BORDER,
+            )
+            e.pack(side="left", fill="x", expand=True, ipady=3)
+            entrees_options.append(e)
+
+        lbl_q_feedback = tk.Label(
+            d,
+            text="",
+            font=("Segoe UI", 9),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_ERROR,
+            wraplength=300,
+            justify="left",
+        )
+        lbl_q_feedback.pack(fill="x", pady=6)
+
+        def ajouter_question():
+            enonce = entree_enonce.get().strip()
+            if not enonce:
+                lbl_q_feedback.config(text="Erreur : L'enonce est vide.", fg=self.COLOR_ERROR)
+                return
+            try:
+                points = int(spin_points.get())
+            except ValueError:
+                points = 0
+            if points < 1:
+                lbl_q_feedback.config(text="Erreur : Points invalides.", fg=self.COLOR_ERROR)
+                return
+
+            reponses = []
+            bonne_choisie = False
+            for i, e in enumerate(entrees_options):
+                texte = e.get().strip()
+                if not texte:
+                    continue
+                est_correct = i == bonne_reponse.get()
+                bonne_choisie = bonne_choisie or est_correct
+                reponses.append({"texte": texte, "est_correct": est_correct})
+
+            if len(reponses) < 2:
+                lbl_q_feedback.config(
+                    text="Erreur : Il faut au moins 2 propositions.", fg=self.COLOR_ERROR
+                )
+                return
+            if not bonne_choisie:
+                lbl_q_feedback.config(
+                    text="Erreur : La bonne reponse cochee est vide.", fg=self.COLOR_ERROR
+                )
+                return
+
+            questions_data.append({"enonce": enonce, "points": points, "reponses": reponses})
+            rafraichir_liste()
+
+            # Remise a zero du formulaire de question
+            entree_enonce.delete(0, tk.END)
+            for e in entrees_options:
+                e.delete(0, tk.END)
+            spin_points.delete(0, tk.END)
+            spin_points.insert(0, "1")
+            bonne_reponse.set(0)
+            lbl_q_feedback.config(
+                text=f"[OK] Question {len(questions_data)} ajoutee.", fg=self.COLOR_SUCCESS
+            )
+            entree_enonce.focus_set()
+
+        self._bouton(d, "Ajouter cette question", ajouter_question).pack(fill="x", ipady=6)
+
+        entree_titre.focus_set()
+
+    def importer_quiz_fichier(self) -> None:
+        """Ouvre un selecteur de fichier puis importe le quiz (admin)."""
+        chemin = filedialog.askopenfilename(
+            title="Importer un quiz",
+            filetypes=[("Fichiers texte", "*.txt"), ("Tous les fichiers", "*.*")],
+        )
+        if not chemin:
+            return
+        succes, message, _ = self.quiz_service.importer_quiz_depuis_fichier(
+            chemin, auteur=self.current_user
+        )
+        if succes:
+            messagebox.showinfo("Quizora", message)
+            self.afficher_page_dashboard()
+        else:
+            messagebox.showerror("Quizora", message)
+
+    # =========================================================================
+    # JOUEUR : PASSAGE D'UN QUIZ, RESULTAT ET HISTORIQUE
+    # =========================================================================
+
+    def afficher_page_passage(self, quiz: Quiz) -> None:
+        """Lance le passage interactif d'un quiz, question par question."""
+        if not quiz.questions:
+            messagebox.showwarning(
+                "Quizora", f"Le quiz « {quiz.titre} » ne contient aucune question."
+            )
+            return
+
+        etat = {"index": 0, "score": 0, "erreurs": [], "valide": False}
+
+        self._nettoyer_contenu()
+        self._entete_page(quiz.titre)
+
+        card = self._carte(self.content_frame)
+        card.pack(fill="both", expand=True)
+        zone = tk.Frame(card, bg=self.COLOR_CARD)
+        zone.pack(fill="both", expand=True, padx=30, pady=20)
+
+        lbl_progression = tk.Label(
+            zone, font=("Segoe UI", 9), bg=self.COLOR_CARD, fg=self.COLOR_MUTED, anchor="w"
+        )
+        lbl_progression.pack(fill="x")
+        lbl_enonce = tk.Label(
+            zone,
+            font=("Segoe UI", 13, "bold"),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_TEXT,
+            anchor="w",
+            justify="left",
+            wraplength=680,
+        )
+        lbl_enonce.pack(fill="x", pady=(6, 14))
+
+        options_frame = tk.Frame(zone, bg=self.COLOR_CARD)
+        options_frame.pack(fill="x")
+        choix = tk.IntVar(value=-1)
+
+        lbl_feedback = tk.Label(
+            zone,
+            font=("Segoe UI", 10, "bold"),
+            bg=self.COLOR_CARD,
+            anchor="w",
+            justify="left",
+            wraplength=680,
+        )
+        lbl_feedback.pack(fill="x", pady=12)
+
+        btn_action = self._bouton(zone, "Valider", lambda: action())
+        btn_action.pack(anchor="e", ipady=6, ipadx=10)
+
+        def afficher_question():
+            question = quiz.questions[etat["index"]]
+            etat["valide"] = False
+            choix.set(-1)
+            lbl_progression.config(
+                text=f"Question {etat['index'] + 1}/{len(quiz.questions)}"
+                f"  |  {question.points} pt(s)"
+            )
+            lbl_enonce.config(text=question.enonce)
+            lbl_feedback.config(text="")
+            btn_action.config(text="Valider")
+            for w in options_frame.winfo_children():
+                w.destroy()
+            for i, rep in enumerate(question.reponses):
+                tk.Radiobutton(
+                    options_frame,
+                    text=rep.text_reponse,
+                    variable=choix,
+                    value=i,
+                    font=("Segoe UI", 10),
+                    bg=self.COLOR_CARD,
+                    fg=self.COLOR_TEXT,
+                    activebackground=self.COLOR_CARD,
+                    activeforeground=self.COLOR_TEXT,
+                    selectcolor=self.COLOR_INPUT_BG,
+                    anchor="w",
+                    justify="left",
+                    wraplength=640,
+                ).pack(fill="x", pady=3)
+
+        def action():
+            if etat["valide"]:
+                etat["index"] += 1
+                if etat["index"] < len(quiz.questions):
+                    afficher_question()
+                else:
+                    self._afficher_page_resultat(quiz, etat["score"], etat["erreurs"])
+                return
+
+            idx = choix.get()
+            question = quiz.questions[etat["index"]]
+            if idx < 0:
+                lbl_feedback.config(text="Choisissez une reponse.", fg=self.COLOR_ERROR)
+                return
+
+            etat["valide"] = True
+            for w in options_frame.winfo_children():
+                w.config(state="disabled")
+            if question.reponses[idx].est_correct:
+                etat["score"] += question.points
+                lbl_feedback.config(text="[OK] Bonne reponse !", fg=self.COLOR_SUCCESS)
+            else:
+                attendue = ", ".join(r.text_reponse for r in question.get_bonnes_reponses())
+                etat["erreurs"].append({
+                    "question": question.enonce,
+                    "choisie": question.reponses[idx].text_reponse,
+                    "attendue": attendue,
+                })
+                lbl_feedback.config(
+                    text=f"Mauvaise reponse. Reponse attendue : {attendue}",
+                    fg=self.COLOR_ERROR,
+                )
+            dernier = etat["index"] == len(quiz.questions) - 1
+            btn_action.config(text="Voir le resultat" if dernier else "Question suivante")
+
+        afficher_question()
+
+    def _afficher_page_resultat(self, quiz: Quiz, score: int, erreurs: list[dict]) -> None:
+        """Enregistre le score et affiche le bilan du quiz."""
+        succes, message, _ = self.resultat_service.enregistrer_resultat(
+            self.current_user, quiz, score
+        )
+        total = quiz.total_points()
+        pourcentage = round(score / total * 100, 1) if total > 0 else 0
+
+        self._nettoyer_contenu()
+        self._entete_page("Resultat du quiz")
+
+        card = self._carte(self.content_frame)
+        card.pack(fill="both", expand=True)
+
+        tk.Label(
+            card,
+            text=quiz.titre,
+            font=("Segoe UI", 12, "bold"),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_TEXT,
+        ).pack(pady=(20, 4))
+        tk.Label(
+            card,
+            text=f"{score} / {total} points  ({pourcentage}%)",
+            font=("Segoe UI", 20, "bold"),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_SUCCESS if pourcentage >= 50 else self.COLOR_ERROR,
+        ).pack(pady=4)
+        tk.Label(
+            card,
+            text=message,
+            font=("Segoe UI", 9),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_MUTED if succes else self.COLOR_ERROR,
+        ).pack(pady=(0, 12))
+
+        recap = tk.Frame(card, bg=self.COLOR_CARD)
+        recap.pack(fill="both", expand=True, padx=20, pady=(0, 10))
+        interieur = self._zone_defilante(recap)
+
+        if not erreurs:
+            tk.Label(
+                interieur,
+                text="Felicitations ! Un sans-faute !",
+                font=("Segoe UI", 11, "bold"),
+                bg=self.COLOR_CARD,
+                fg=self.COLOR_SUCCESS,
+            ).pack(pady=20)
+        else:
+            tk.Label(
+                interieur,
+                text="Recapitulatif des erreurs :",
+                font=("Segoe UI", 10, "bold"),
+                bg=self.COLOR_CARD,
+                fg=self.COLOR_TEXT,
+                anchor="w",
+            ).pack(fill="x", pady=(0, 6))
+            for err in erreurs:
+                item = tk.Frame(interieur, bg=self.COLOR_BORDER, padx=12, pady=8)
+                item.pack(fill="x", pady=4)
+                for texte, couleur in (
+                    (err["question"], self.COLOR_TEXT),
+                    (f"Votre reponse : {err['choisie']}", self.COLOR_ERROR),
+                    (f"Reponse attendue : {err['attendue']}", self.COLOR_SUCCESS),
+                ):
+                    tk.Label(
+                        item,
+                        text=texte,
+                        font=("Segoe UI", 9),
+                        bg=self.COLOR_BORDER,
+                        fg=couleur,
+                        anchor="w",
+                        justify="left",
+                        wraplength=640,
+                    ).pack(fill="x")
+
+        self._bouton(
+            card, "Retour au tableau de bord", self.afficher_page_dashboard
+        ).pack(pady=(0, 16), ipady=6, ipadx=10)
+
+    def afficher_page_historique(self) -> None:
+        """Affiche l'historique des scores du joueur connecte."""
+        self._nettoyer_contenu()
+        self._entete_page("Mon historique de scores")
+
+        card = self._carte(self.content_frame)
+        card.pack(fill="both", expand=True)
+
+        stats = self.resultat_service.statistiques_joueur(self.current_user)
+        tk.Label(
+            card,
+            text=f"Quiz passes : {stats['nb_quiz']}   |   Moyenne : {stats['moyenne']}%"
+            f"   |   Meilleur score : {stats['meilleur']}%",
+            font=("Segoe UI", 10, "bold"),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_TEXT,
+        ).pack(pady=(16, 10))
+
+        style = ttk.Style()
+        style.configure(
+            "Quizora.Treeview",
+            background=self.COLOR_INPUT_BG,
+            fieldbackground=self.COLOR_INPUT_BG,
+            foreground=self.COLOR_TEXT,
+            rowheight=24,
+        )
+        style.configure(
+            "Quizora.Treeview.Heading",
+            background=self.COLOR_BORDER,
+            foreground=self.COLOR_TEXT,
+            font=("Segoe UI", 9, "bold"),
+        )
+
+        tableau_frame = tk.Frame(card, bg=self.COLOR_CARD)
+        tableau_frame.pack(fill="both", expand=True, padx=20, pady=(0, 20))
+
+        colonnes = ("date", "quiz", "score", "pourcentage")
+        tableau = ttk.Treeview(
+            tableau_frame, columns=colonnes, show="headings", style="Quizora.Treeview"
+        )
+        for col, titre, largeur, ancre in (
+            ("date", "Date", 140, "w"),
+            ("quiz", "Quiz", 300, "w"),
+            ("score", "Score", 80, "center"),
+            ("pourcentage", "%", 80, "center"),
+        ):
+            tableau.heading(col, text=titre)
+            tableau.column(col, width=largeur, anchor=ancre)
+
+        scrollbar = ttk.Scrollbar(tableau_frame, orient="vertical", command=tableau.yview)
+        tableau.configure(yscrollcommand=scrollbar.set)
+        tableau.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+
+        titres = {q.id_quiz: q.titre for q in self.quiz_service.lister_quiz()}
+        for r in self.resultat_service.historique_joueur(self.current_user):
+            tableau.insert(
+                "",
+                tk.END,
+                values=(
+                    r.date_passage[:16].replace("T", " "),
+                    titres.get(r.id_quiz, "(quiz supprime)"),
+                    f"{r.score}/{r.score_max}",
+                    f"{r.pourcentage:.1f}%",
+                ),
+            )
 
     def _mettre_a_jour_header_deconnecte(self) -> None:
         """Nettoie les informations du bandeau quand aucun utilisateur n'est connecte."""
