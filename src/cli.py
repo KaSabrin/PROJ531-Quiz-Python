@@ -250,6 +250,37 @@ class QuizAppCLI:
         else:
             print("Félicitations ! Un sans-faute !")
         input("Appuyez sur [Entrée] pour revenir au menu...")
+    
+    
+    def action_consulter_historique(self, user: User) -> None:
+        """Affiche les scores précédents du joueur connecté."""
+
+        print("\nMON HISTORIQUE DE SCORES ")
+
+        #recupérer les résultats enregistrés
+        resultats = self.storage_service.load_results()
+
+        #garder seulement les résultats du joueur connecté
+        mes_resultats = [
+            r for r in resultats
+            if r.id_utilisateur == user.id_utilisateur
+        ]
+
+        if not mes_resultats:
+            print("Vous n'avez pas encore passé de quiz.")
+            return
+
+        #afficher les résultats
+        for resultat in mes_resultats:
+            quiz = self.quiz_service.get_quiz_par_id(resultat.id_quiz)
+            titre = quiz.titre if quiz else "Quiz indisponible"
+
+            print("\n------------------------------")
+            print(f"Quiz : {titre}")
+            print(f"Score : {resultat.score}/{resultat.score_max}")
+            print(f"Date : {resultat.date_passage}")
+
+    
     def menu_administrateur(self, user: User) -> None:
         """Menu interactif pour un utilisateur ayant le rôle 'admin'."""
         while self.auth_service.is_authenticated():
@@ -258,8 +289,8 @@ class QuizAppCLI:
             print("=" * 50)
             print("1.  Voir mon profil")
             print("2.  Lister les utilisateurs enregistrés")
-            print("3.  Créer un quiz manuellement (Sprint 3 - Tâche 3.1)")
-            print("4.  Importer un quiz depuis un fichier texte (Sprint 3 - Tâche 3.2)")
+            print("3.  Créer un quiz manuellement ")
+            print("4.  Importer un quiz depuis un fichier texte")
             print("5.  Se déconnecter")
             print("-" * 50)
 
@@ -281,7 +312,7 @@ class QuizAppCLI:
                 print(" Choix invalide.")
     
     def action_creer_quiz(self, user: User) -> None:
-        """Formulaire interactif de création manuelle d'un quiz (Tâche 3.1)."""
+        """Formulaire interactif de création manuelle d'un quiz."""
         print("\n" + "=" * 50)
         print("CRÉATION D'UN NOUVEAU QUIZ")
         print("=" * 50)
@@ -352,7 +383,7 @@ class QuizAppCLI:
         input("Appuyez sur [Entrée] pour continuer...")
 
     def action_importer_quiz(self, user: User) -> None:
-        """Importation d'un quiz depuis un fichier texte (Tâche 3.2)."""
+        """Importation d'un quiz depuis un fichier texte ."""
         print("\n" + "=" * 50)
         print("IMPORTATION D'UN QUIZ DEPUIS UN FICHIER TEXTE (.TXT)")
         print("=" * 50)
