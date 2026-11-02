@@ -7,12 +7,26 @@ from src.models.user import User
 from src.services.storage_service import StorageService
 from src.services.import_service import importer_quiz_depuis_txt
 
+# Quiz de démonstration importés au premier lancement (dossier exemples/ à la racine)
+DOSSIER_EXEMPLES = Path(__file__).resolve().parent.parent.parent / "exemples"
+
 
 class QuizService:
     """Gère le cycle de vie des quiz, de leur création à leur enregistrement."""
 
     def __init__(self, storage_service: StorageService | None = None):
         self.storage_service = storage_service or StorageService()
+        self._ensure_demo_quizzes()
+
+    def _ensure_demo_quizzes(self) -> None:
+        """Importe les quiz d'exemple au nom de l'administrateur si aucun quiz n'existe encore."""
+        if self.storage_service.load_quizzes():
+            return
+        admin = next((u for u in self.storage_service.load_users() if u.is_admin()), None)
+        if admin is None:
+            return
+        for fichier in sorted(DOSSIER_EXEMPLES.glob("*.txt")):
+            self.importer_quiz_depuis_fichier(fichier, auteur=admin)
 
     def lister_quiz(self) -> list[Quiz]:
         """Retourne la liste de tous les quiz enregistrés."""

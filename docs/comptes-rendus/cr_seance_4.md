@@ -94,7 +94,7 @@ Ci-dessous, la capture d'écran du tableau Trello à la fin de la séance 4 :
 
 ## 5. Points restant à traiter avant la soutenance
 - **Temps réels :** chaque responsable doit renseigner le temps réellement passé sur sa tâche dans le tableau de la section 2.
-- **Interface graphique :** le tableau de bord Tkinter liste les quiz mais ne permet pas encore de les passer ni d'afficher l'historique ; la démonstration de ces fonctionnalités se fera donc en mode console. À décider en équipe : intégrer l'historique dans la GUI ou le présenter comme une évolution possible.
+- **Interface graphique :** elle permet désormais aussi de créer et d'importer des quiz (admin), de les passer et de consulter l'historique des scores (joueur). Il reste à la tester ensemble avant la démonstration.
 - **Rapport final :** reprendre les quatre comptes-rendus, le WBS, le PBS, le Gantt, le MCD et le dossier d'architecture technique.
 - **Soutenance :** préparer un jeu de données de démonstration propre (quiz importé + quelques résultats) et répéter la démonstration en respectant les 15 minutes.
 

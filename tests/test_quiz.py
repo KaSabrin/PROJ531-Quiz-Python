@@ -105,6 +105,21 @@ class TestQuizService(unittest.TestCase):
         self.assertEqual(quiz.total_points(), 3)
         self.assertEqual(len(quiz.questions[0].reponses), 2)
 
+    def test_quiz_de_demonstration_importes_au_nom_de_l_admin(self):
+        """Au premier lancement, les quiz du dossier exemples/ sont créés par l'administrateur."""
+        self.storage_service.save_users([self.admin, self.joueur])
+        quizzes = QuizService(storage_service=self.storage_service).lister_quiz()
+        self.assertEqual(len(quizzes), 3)
+        self.assertTrue(all(q.auteur_id == self.admin.id_utilisateur for q in quizzes))
+        self.assertTrue(all(len(q.questions) == 5 for q in quizzes))
+
+    def test_quiz_de_demonstration_non_reimportes(self):
+        """Les quiz d'exemple ne sont pas ajoutés une seconde fois au lancement suivant."""
+        self.storage_service.save_users([self.admin])
+        QuizService(storage_service=self.storage_service)
+        QuizService(storage_service=self.storage_service)
+        self.assertEqual(len(self.storage_service.load_quizzes()), 3)
+
 
 if __name__ == "__main__":
     unittest.main()

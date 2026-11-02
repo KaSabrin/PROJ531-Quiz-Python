@@ -41,6 +41,7 @@ PROJ531-Quiz-Python/
 ├── main.py                            # Point d'entrée principal (console, ou GUI avec --gui)
 ├── gui_main.py                        # Lancement direct de l'interface graphique
 ├── sample_quiz.txt                    # Exemple de quiz à importer
+├── exemples/                          # Quiz de démonstration créés automatiquement par l'admin au premier lancement
 ├── README.md                          # Documentation générale et technique
 ├── .gitignore                         # Exclusions de versionnement (caches, data/, environnements)
 ├── docs/                              # Dossier de gestion de projet et livrables
@@ -120,7 +121,7 @@ Toutes les commandes ci-dessous sont à lancer depuis le dossier `PROJ531-Quiz-P
 ### Procédure de Lancement
 L'application propose deux modes d'exécution (sans aucune dépendance externe à installer) :
 
-1. **Mode Interface Graphique (GUI - Page de connexion et tableau de bord moderne) :**
+1. **Mode Interface Graphique (GUI : connexion, création et import de quiz, passation et historique des scores) :**
 ```bash
 python gui_main.py
 # ou
@@ -140,6 +141,8 @@ Lors de l'initialisation initiale de la base locale, deux profils de référence
 | :--- | :--- | :--- | :--- |
 | **Administrateur** | `admin` (ou `admin@quiz.fr`) | `Admin123!` | Administration du système |
 | **Joueur** | `joueur1` (ou `joueur1@quiz.fr`) | `Joueur123!` | Passation de quiz |
+
+Au premier lancement, trois quiz de démonstration du dossier `exemples/` (Python, gestion de projet, culture générale) sont également créés au nom du compte `admin`, ce qui permet de tester immédiatement la passation de quiz et l'historique des scores. L'administrateur peut aussi les réimporter depuis le menu d'import (par exemple `exemples/quiz_python.txt`).
 
 La création autonome de nouveaux comptes joueurs est accessible via le menu d'inscription de l'interface console.
 

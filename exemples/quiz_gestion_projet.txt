@@ -1,0 +1,32 @@
+TITRE: Gestion de projet et méthode Scrum
+DESCRIPTION: Quiz de démonstration sur les notions vues dans le module PROJ531.
+
+QUESTION: Dans Scrum, quel rôle priorise le backlog et représente le client ? [2 pts]
+- Le Scrum Master
+* Le Product Owner
+- L'équipe de développement
+- Le commanditaire
+
+QUESTION: Que signifie le sigle WBS ? [1 pt]
+* Work Breakdown Structure
+- Web Based System
+- Work Business Schedule
+- Workflow Backlog Sprint
+
+QUESTION: Quel diagramme représente les tâches d'un projet sur une échelle de temps ? [1 pt]
+- Le MCD
+- Le PBS
+* Le diagramme de Gantt
+- Le diagramme de classes
+
+QUESTION: Comment s'appelle une itération de durée fixe dans Scrum ? [1 pt]
+- Une milestone
+* Un sprint
+- Une release
+- Un ticket
+
+QUESTION: Dans un tableau Kanban, que représente la colonne « En cours » ? [1 pt]
+- Les tâches terminées
+- Les idées non planifiées
+* Les tâches en train d'être réalisées
+- Les tâches abandonnées

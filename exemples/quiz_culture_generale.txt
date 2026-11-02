@@ -1,0 +1,32 @@
+TITRE: Culture générale
+DESCRIPTION: Quiz de démonstration ouvert à tous les joueurs.
+
+QUESTION: Quelle est la capitale de l'Australie ? [2 pts]
+- Sydney
+- Melbourne
+* Canberra
+- Perth
+
+QUESTION: Combien de continents compte-t-on habituellement ? [1 pt]
+- 5
+- 6
+* 7
+- 8
+
+QUESTION: Quelle planète est la plus proche du Soleil ? [1 pt]
+* Mercure
+- Vénus
+- Mars
+- La Terre
+
+QUESTION: Quel est le plus grand océan du monde ? [1 pt]
+- L'océan Atlantique
+- L'océan Indien
+* L'océan Pacifique
+- L'océan Arctique
+
+QUESTION: Quel est le symbole chimique de l'or ? [2 pts]
+- Ag
+- Or
+* Au
+- Fe
