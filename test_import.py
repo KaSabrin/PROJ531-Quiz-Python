@@ -1,9 +1,5 @@
-import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 import unittest
-import json
 from src.services.import_service import importer_quiz_depuis_txt
 
 class TestImportQuiz(unittest.TestCase):
@@ -28,6 +24,19 @@ class TestImportQuiz(unittest.TestCase):
         self.assertEqual(quiz["titre"], "Quiz Mathématiques")
         self.assertEqual(len(quiz["questions"]), 1)
         self.assertTrue(quiz["questions"][0]["options"][1]["est_correcte"])
+
+    def test_bareme_singulier_pt(self):
+        """Non-régression : [1 pt] doit être lu comme un barème, pas rester dans l'énoncé."""
+        with open(self.test_filename, "w", encoding="utf-8") as f:
+            f.write("TITRE: Quiz barème\n\n")
+            f.write("QUESTION: Quelle structure applique le principe FIFO ? [1 pt]\n")
+            f.write("- Une pile\n* Une file\n\n")
+            f.write("QUESTION: Année du Manifeste Agile ? [3 pts]\n")
+            f.write("- 1995\n* 2001\n")
+        quiz = importer_quiz_depuis_txt(self.test_filename)
+        self.assertEqual(quiz["questions"][0]["enonce"], "Quelle structure applique le principe FIFO ?")
+        self.assertEqual(quiz["questions"][0]["points"], 1)
+        self.assertEqual(quiz["questions"][1]["points"], 3)
 
     def test_fichier_inexistant(self):
         quiz = importer_quiz_depuis_txt("inexistant.txt")
