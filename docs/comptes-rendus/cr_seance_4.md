@@ -77,9 +77,15 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 
 ## 4. Suivi de projet & Organisation Kanban (Trello)
 - Le **PBS** (Product Breakdown Structure) du projet a été ajouté dans `docs/PBS_Quizora.png`.
-- Les cartes **US07** (historique des scores), **T3.4**, **T3.4.bis** (tests de l'historique) et **T4.1** (chasse aux bugs) sont dans la colonne **En cours**.
-- Les cartes **T4.2** (rapport final) et **T4.3** (soutenance) sont dans les colonnes **En cours** / **À faire** jusqu'à la fin du sprint.
-- *Capture du tableau Trello à ajouter en fin de sprint : `docs/trello_sprint4.png`.*
+- En fin de séance, le tableau Trello compte **38 cartes** dans la colonne **Terminé**, dont :
+  - **T08.1** - Enregistrer les résultats par utilisateur et par quiz (Sabrine Kawiche, Gabrien Vaz) ;
+  - **T08.2** - Développer la consultation de l'historique (Sabrine Kawiche, Gabrien Vaz) ;
+  - **US11** - Créer l'interface graphique (Bilal Draoui) ;
+  - **Rédiger le README.md** (Bilal Draoui).
+
+Ci-dessous, la capture d'écran du tableau Trello à la fin de la séance 4 :
+
+![Tableau Trello - Sprint 4](../trello_sprint4.png)
 
 ---
 
