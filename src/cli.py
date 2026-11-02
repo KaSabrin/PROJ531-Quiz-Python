@@ -7,10 +7,10 @@ main.py situé à la racine du dépôt.
 import getpass
 import sys
 from src.models.user import User
-from src.services.resultat_service import ResultatService
 from src.services.auth_service import AuthService
 from src.services.storage_service import StorageService
 from src.services.quiz_service import QuizService
+from src.services.resultat_service import ResultatService
 
 
 def prompt_password(prompt: str = "Mot de passe : ") -> str:
@@ -32,6 +32,7 @@ class QuizAppCLI:
         self.storage_service = StorageService()
         self.auth_service = AuthService(storage_service=self.storage_service)
         self.quiz_service = QuizService(storage_service=self.storage_service)
+        self.resultat_service = ResultatService(storage_service=self.storage_service)
 
     def afficher_banniere(self) -> None:
         """Affiche le titre stylisé de l'application."""
@@ -185,6 +186,10 @@ class QuizAppCLI:
         if choix.lower() == "retour" or not choix.isdigit() or not (1 <= int(choix) <= len(quizzes)):
             return
         quiz = quizzes[int(choix) - 1]
+        if not quiz.questions:
+            print(f"\nLe quiz « {quiz.titre} » ne contient aucune question : impossible de le lancer.")
+            input("Appuyez sur [Entrée] pour continuer...")
+            return
         print("\n" + "=" * 55)
         print(f"DÉMARRAGE DU QUIZ : {quiz.titre.upper()}")
         print("=" * 55)
@@ -216,27 +221,9 @@ class QuizAppCLI:
         #résultat final
         total_max = quiz.total_points()
         pourcentage = round((score_obtenu / total_max * 100), 1) if total_max > 0 else 0
-        
-        
-        #créer le résultat du joueur
-        resultat = Resultat(
-            id_utilisateur=user.id_utilisateur,
-            id_quiz=quiz.id_quiz,
-            score=score_obtenu,
-            score_max=total_max
-        )
 
-        #récupérer les anciens résultats
-        resultats = self.storage_service.load_results()
-
-        #ajouter le nouveau résultat
-        resultats.append(resultat)
-
-        #sauvegarder tous les résultats
-        if self.storage_service.save_results(resultats):
-            print("Votre score a été enregistré !")
-        else:
-            print("Erreur : impossible d'enregistrer votre score.")
+        succes, message, _ = self.resultat_service.enregistrer_resultat(user, quiz, score_obtenu)
+        print(f"\n{message}" if succes else f"\n[Erreur] {message}")
         
         print("\n" + "=" * 55)
         print(f"FIN DU QUIZ ! Score de {user.pseudo} : {score_obtenu} / {total_max} points ({pourcentage}%)")
@@ -250,52 +237,33 @@ class QuizAppCLI:
         else:
             print("Félicitations ! Un sans-faute !")
         input("Appuyez sur [Entrée] pour revenir au menu...")
-<<<<<<< HEAD
-    
-    
-    def action_consulter_historique(self, user: User) -> None:
-        """Affiche les scores précédents du joueur connecté."""
-
-        print("\nMON HISTORIQUE DE SCORES ")
-
-        #recupérer les résultats enregistrés
-        resultats = self.storage_service.load_results()
-
-        #garder seulement les résultats du joueur connecté
-        mes_resultats = [
-            r for r in resultats
-            if r.id_utilisateur == user.id_utilisateur
-        ]
-
-        if not mes_resultats:
-            print("Vous n'avez pas encore passé de quiz.")
-            return
-
-        #afficher les résultats
-        for resultat in mes_resultats:
-            quiz = self.quiz_service.get_quiz_par_id(resultat.id_quiz)
-            titre = quiz.titre if quiz else "Quiz indisponible"
-
-            print("\n------------------------------")
-            print(f"Quiz : {titre}")
-            print(f"Score : {resultat.score}/{resultat.score_max}")
-            print(f"Date : {resultat.date_passage}")
-
-    
-=======
 
     def action_consulter_historique(self, user: User) -> None:
-        """Affiche les scores enregistrés du joueur connecté."""
-        resultats = [r for r in self.storage_service.load_results() if r.id_utilisateur == user.id_utilisateur]
-        if not resultats:
-            print("\nVous n'avez encore passé aucun quiz.")
+        """Affiche l'historique des scores du joueur connecté, du plus récent au plus ancien."""
+        historique = self.resultat_service.historique_joueur(user)
+        print(f"\nHISTORIQUE DES SCORES DE {user.pseudo.upper()}")
+        if not historique:
+            print("Vous n'avez encore passé aucun quiz.")
             return
+
         titres = {q.id_quiz: q.titre for q in self.quiz_service.lister_quiz()}
-        print(f"\n--- HISTORIQUE DE {user.pseudo.upper()} ---")
-        for r in resultats:
-            print(f"{r.date_passage[:10]} | {titres.get(r.id_quiz, 'Quiz supprimé')} | {r.score}/{r.score_max} ({r.pourcentage}%)")
+        print("=" * 70)
+        print(f"{'Date':<18} {'Quiz':<32} {'Score':>7} {'%':>8}")
+        print("-" * 70)
+        for r in historique:
+            date = r.date_passage[:16].replace("T", " ")
+            titre = titres.get(r.id_quiz, "(quiz supprimé)")
+            if len(titre) > 30:
+                titre = titre[:29] + "…"
+            score = f"{r.score}/{r.score_max}"
+            print(f"{date:<18} {titre:<32} {score:>7} {r.pourcentage:>7.1f}%")
+        print("-" * 70)
+        stats = self.resultat_service.statistiques_joueur(user)
+        print(
+            f"Quiz passés : {stats['nb_quiz']} | Moyenne : {stats['moyenne']}% "
+            f"| Meilleur score : {stats['meilleur']}%"
+        )
 
->>>>>>> 3871d47c17383740e0ded4106db85d6c6479e7e9
     def menu_administrateur(self, user: User) -> None:
         """Menu interactif pour un utilisateur ayant le rôle 'admin'."""
         while self.auth_service.is_authenticated():
