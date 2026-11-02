@@ -51,8 +51,11 @@ PROJ531-Quiz-Python/
 │   ├── quiz.mdc                       # Modèle Conceptuel de Données (source Looping)
 │   ├── mcd_documentation.md           # Spécifications détaillées du MCD et dictionnaire des données
 │   ├── glossaire.md                   # Glossaire terminologique du projet
-│   ├── trello_sprint2.png             # Preuve d'avancement Kanban (clôture Sprint 2)
-│   ├── architecture_technique_quizora.pdf  # Dossier d'architecture technique (PDF certifié)
+│   ├── trello_sprint2.png             # Capture Trello (clôture Sprint 2)
+│   ├── trello_sprint3.png             # Capture Trello (clôture Sprint 3)
+│   ├── trello_sprint4.png             # Capture Trello (Sprint 4)
+│   ├── architecture_technique_quizora.pdf  # Dossier d'architecture technique (version PDF)
+│   ├── architecture_technique_quizora.html # Dossier d'architecture technique (source HTML du PDF)
 │   ├── architecture_technique_quizora.md   # Spécifications et schéma d'architecture Mermaid
 │   └── comptes-rendus/                # Comptes-rendus hebdomadaires de séance
 │       ├── cr_seance_1.md             # Séance 1 : Cadrage, WBS, Gantt, MCD
@@ -96,7 +99,23 @@ La modélisation Entité-Association a été formalisée selon le formalisme Mer
 
 ### Prérequis d'Exécution
 - **Environnement d'exécution :** Python 3.10 ou version supérieure (validé sous Python 3.11).
-- **Dépendances tierces :** Aucune bibliothèque externe n'est requise. L'implémentation repose exclusivement sur les modules standards certifiés de Python (`hashlib`, `secrets`, `hmac`, `json`, `uuid`, `unittest`, `getpass`).
+- **Dépendances tierces :** Aucune bibliothèque externe n'est requise. L'implémentation repose exclusivement sur les modules standards certifiés de Python (`hashlib`, `secrets`, `hmac`, `json`, `uuid`, `re`, `unittest`, `getpass`, `tkinter` pour l'interface graphique).
+
+### Installation
+1. Vérifier que Python 3.10 ou plus récent est installé :
+```bash
+python --version
+```
+2. Récupérer le projet depuis GitHub :
+```bash
+git clone https://github.com/KaSabrin/PROJ531-Quiz-Python.git
+cd PROJ531-Quiz-Python
+```
+Sans Git, il est aussi possible de télécharger le projet depuis GitHub (bouton **Code** puis **Download ZIP**) et de décompresser l'archive.
+
+3. Aucune autre installation n'est nécessaire : le dossier `data/` et les comptes de démonstration sont créés automatiquement au premier lancement.
+
+Toutes les commandes ci-dessous sont à lancer depuis le dossier `PROJ531-Quiz-Python`.
 
 ### Procédure de Lancement
 L'application propose deux modes d'exécution (sans aucune dépendance externe à installer) :
@@ -162,7 +181,7 @@ Le calendrier du projet est découpé en 4 sprints successifs :
   - Extension de la couverture de tests unitaires au moteur de jeu.
 
 - **Sprint 4 (02/11 - 06/11) : Historisation des Résultats, Consolidation et Soutenance** - Statut : En cours
-  - Sauvegarde de l'historique individuel des scores par joueur (`results.json`).
-  - Audit de robustesse et correction des anomalies éventuelles.
-  - Rédaction du rapport final de projet.
-  - Préparation et répétition de la soutenance orale (démonstration de 15 minutes).
+  - Sauvegarde de l'historique individuel des scores par joueur (`results.json`) - terminé.
+  - Audit de robustesse et correction des anomalies - terminé.
+  - Rédaction du rapport final de projet - en cours.
+  - Préparation et répétition de la soutenance orale (démonstration de 15 minutes) - à faire.

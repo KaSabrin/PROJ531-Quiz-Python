@@ -12,22 +12,25 @@
 ## 1. Objectifs de la Séance n°4 (Sprint 4)
 Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). Entre-temps, une interface graphique Tkinter (page de connexion et tableau de bord) a été ajoutée et le dossier d'architecture technique a été mis à jour. Le Sprint 4, dernier sprint du projet, a pour objectifs :
 
-1. **Historique des scores (US07 / Tâche 3.4) :** Enregistrer chaque passage de quiz dans `data/results.json` et permettre au joueur de consulter son historique personnel.
-2. **Chasse aux bugs (Tâche 4.1) :** Relire le code livré aux sprints précédents, repérer et corriger les anomalies.
-3. **Rapport final (Tâche 4.2) :** Rédiger le rapport de fin de projet.
-4. **Préparation de la soutenance (Tâche 4.3) :** Préparer et répéter la démonstration orale de 15 minutes.
+1. **Historique des scores (US07 / cartes T08.1 et T08.2) :** Enregistrer chaque passage de quiz dans `data/results.json` et permettre au joueur de consulter son historique personnel.
+2. **Chasse aux bugs :** Relire le code livré aux sprints précédents, repérer et corriger les anomalies.
+3. **Rapport final :** Rédiger le rapport de fin de projet.
+4. **Préparation de la soutenance :** Préparer et répéter la démonstration orale de 15 minutes.
 
 ---
 
 ## 2. Répartition des tâches WBS / Gantt de la séance
 
-| Tâche WBS / Gantt | Responsable | Description | Temps estimé | Statut |
-| :--- | :--- | :--- | :---: | :---: |
-| **3.4 Joueur : Sauvegarde et historique des scores (US07)** | Sabrine Kawiche, Chadi Kharchoufa & Bilal Draoui | Enregistrement du score dans `data/results.json` à la fin d'un quiz (service `ResultatService`) et affichage de l'historique du joueur dans le menu console. | 2h00 | **En cours** |
-| **3.4.bis Tests unitaires de l'historique** | Chadi Kharchoufa | Fichier `tests/test_resultat.py` (5 tests) : persistance, scores incohérents, quiz vide, filtrage et tri par joueur, statistiques. | 1h00 | **En cours** |
-| **4.1 Chasse aux bugs et robustesse** | Chadi Kharchoufa & Bilal Draoui | Relecture de l'ensemble du code, correction des anomalies relevées et nettoyage du code inutilisé (voir section 3.2). | 1h30 | **En cours** |
-| **4.2 Rédaction du rapport final** | Bilal Draoui & Équipe | Synthèse du projet : gestion de projet (WBS, PBS, Gantt, Trello), architecture, bilan des sprints. | 2h00 | **En cours** |
-| **4.3 Préparation de la soutenance** | Équipe | Scénario de démonstration (admin puis joueur), support de présentation, répétition chronométrée. | 1h30 | **À faire** |
+| Tâche Trello | Responsable | Description | Temps estimé | Temps réel | Statut |
+| :--- | :--- | :--- | :---: | :---: | :---: |
+| **T08.1 - Enregistrer les résultats par utilisateur et par quiz (US07)** | Sabrine Kawiche & Gabrien Vaz | Enregistrement du score dans `data/results.json` à la fin d'un quiz (service `ResultatService`). | 2h00 | *à compléter* | **Terminé** |
+| **T08.2 - Développer la consultation de l'historique (US07)** | Sabrine Kawiche & Gabrien Vaz | Affichage de l'historique du joueur dans le menu console, avec moyenne et meilleur score. | 1h30 | *à compléter* | **Terminé** |
+| **Tests unitaires de l'historique** | Chadi Kharchoufa | Fichier `tests/test_resultat.py` (5 tests) : persistance, scores incohérents, quiz vide, filtrage et tri par joueur, statistiques. | 1h00 | *à compléter* | **Terminé** |
+| **Chasse aux bugs et robustesse** | Chadi Kharchoufa & Bilal Draoui | Relecture de l'ensemble du code, correction des anomalies relevées et nettoyage du code inutilisé (voir section 3.2). | 1h30 | *à compléter* | **Terminé** |
+| **Rédaction du rapport final** | Bilal Draoui & Équipe | Synthèse du projet : gestion de projet (WBS, PBS, Gantt, Trello), architecture, bilan des sprints. | 2h00 | *à compléter* | **En cours** |
+| **Préparation de la soutenance** | Équipe | Scénario de démonstration (admin puis joueur), support de présentation, répétition chronométrée. | 1h30 | *à compléter* | **À faire** |
+
+> Les temps réels sont à renseigner par chaque responsable de tâche.
 
 ---
 
@@ -52,7 +55,7 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
   Quiz passés : 2 | Moyenne : 87.5% | Meilleur score : 100.0%
   ```
 
-### 3.2 Chasse aux bugs (Tâche 4.1) - anomalies relevées
+### 3.2 Chasse aux bugs - anomalies relevées
 | Anomalie constatée | Cause | Statut |
 | :--- | :--- | :---: |
 | L'option 3 « Consulter mon historique de scores » faisait planter l'application. | Méthode `action_consulter_historique` appelée mais pas encore écrite. | **Corrigé** |
@@ -90,11 +93,10 @@ Ci-dessous, la capture d'écran du tableau Trello à la fin de la séance 4 :
 ---
 
 ## 5. Points restant à traiter avant la soutenance
-- **Validation (3.4 / 4.1) :** faire relire et tester par l'équipe l'historique des scores et les corrections de la section 3.2.
-- **Documentation :** mettre à jour le dossier d'architecture technique (versions Markdown, HTML et PDF), qui cite encore `data/sample_quiz.txt` et ne mentionne pas `ResultatService`.
+- **Temps réels :** chaque responsable doit renseigner le temps réellement passé sur sa tâche dans le tableau de la section 2.
 - **Interface graphique :** le tableau de bord Tkinter liste les quiz mais ne permet pas encore de les passer ni d'afficher l'historique ; la démonstration de ces fonctionnalités se fera donc en mode console. À décider en équipe : intégrer l'historique dans la GUI ou le présenter comme une évolution possible.
-- **Rapport final (4.2) :** reprendre les quatre comptes-rendus, le WBS, le PBS, le Gantt, le MCD et le dossier d'architecture technique.
-- **Soutenance (4.3) :** préparer un jeu de données de démonstration propre (quiz importé + quelques résultats) et répéter la démonstration en respectant les 15 minutes.
+- **Rapport final :** reprendre les quatre comptes-rendus, le WBS, le PBS, le Gantt, le MCD et le dossier d'architecture technique.
+- **Soutenance :** préparer un jeu de données de démonstration propre (quiz importé + quelques résultats) et répéter la démonstration en respectant les 15 minutes.
 
 ---
 
@@ -106,4 +108,4 @@ Ci-dessous, la capture d'écran du tableau Trello à la fin de la séance 4 :
 | Sprint 3 | Création manuelle et import de quiz, passation et calcul du score, interface graphique de connexion | Terminé |
 | Sprint 4 | Historique des scores, corrections de bugs, rapport final et soutenance | En cours |
 
-Les user stories US01 à US06 sont terminées. L'US07 (historique des scores) est fonctionnelle et testée, en cours de validation par l'équipe. Il reste ensuite les livrables de fin de projet (rapport et soutenance).
+Les user stories US01 à US06 sont terminées. L'US07 (historique des scores) est terminée et testée. Il reste ensuite les livrables de fin de projet (rapport et soutenance).

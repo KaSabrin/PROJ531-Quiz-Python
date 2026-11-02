@@ -17,6 +17,7 @@ graph TD
     subgraph CS["2. Couche Logique Métier & Services"]
         AUTH["AuthService<br/>(Inscription, Connexion, Sessions)"]
         QUIZ["QuizService<br/>(Gestion CRUD & Parseur texte .txt)"]
+        RES["ResultatService<br/>(Scores, historique & statistiques)"]
         STOR["StorageService<br/>(I/O JSON Atomiques UTF-8)"]
     end
 
@@ -36,7 +37,7 @@ graph TD
         DATA_U[("data/users.json<br/>Comptes utilisateurs")]
         DATA_Q[("data/quizzes.json<br/>Banque de quiz")]
         DATA_R[("data/results.json<br/>Historique des scores")]
-        DATA_T["data/sample_quiz.txt<br/>Importation texte"]
+        DATA_T["sample_quiz.txt<br/>Importation texte"]
     end
 
     %% Interactions
@@ -46,6 +47,7 @@ graph TD
     CLI_A --> AUTH
     CLI_J --> QUIZ
     CLI_A --> QUIZ
+    CLI_J --> RES
 
     AUTH --> SECU
     AUTH --> MOD_U
@@ -56,6 +58,9 @@ graph TD
     MOD_QU --> MOD_R
     QUIZ --> STOR
     QUIZ --> DATA_T
+
+    RES --> MOD_RES
+    RES --> STOR
 
     STOR --> DATA_U
     STOR --> DATA_Q
@@ -102,3 +107,9 @@ graph TD
 1. Sélection d'un quiz dans le catalogue.
 2. Déroulement question par question avec validation des saisies.
 3. Calcul en temps réel du score et restitution du corrigé pédagogique.
+4. Enregistrement automatique du résultat dans `data/results.json` via `ResultatService`.
+
+### E. Consultation de l'Historique des Scores (Sprint 4 - US07)
+1. Le joueur choisit « Consulter mon historique de scores » dans son espace.
+2. `ResultatService` charge `data/results.json` et ne garde que les résultats du joueur connecté, du plus récent au plus ancien.
+3. Affichage de la date, du quiz et du score de chaque passage, puis du nombre de quiz passés, de la moyenne et du meilleur score.
