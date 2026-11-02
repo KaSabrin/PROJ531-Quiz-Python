@@ -7,7 +7,6 @@ main.py situé à la racine du dépôt.
 import getpass
 import sys
 from src.models.user import User
-from src.models.resultat import Resultat
 from src.services.auth_service import AuthService
 from src.services.storage_service import StorageService
 from src.services.quiz_service import QuizService
