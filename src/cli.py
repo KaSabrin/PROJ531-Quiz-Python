@@ -7,6 +7,7 @@ main.py situé à la racine du dépôt.
 import getpass
 import sys
 from src.models.user import User
+from src.models.resultat import Resultat
 from src.services.auth_service import AuthService
 from src.services.storage_service import StorageService
 from src.services.quiz_service import QuizService
@@ -156,7 +157,7 @@ class QuizAppCLI:
             elif choix == "2":
                 self.action_passer_quiz(user)
             elif choix == "3":
-                print("\n[Sprint 4] L'historique détaillé des scores sera intégré lors du Sprint 4.")
+                self.action_consulter_historique(user)
                 input("Appuyez sur [Entrée] pour continuer...")
             elif choix == "4":
                 self.auth_service.logout()
@@ -212,9 +213,31 @@ class QuizAppCLI:
                     "choisie": question.reponses[choix_idx].text_reponse,
                     "attendue": ", ".join(bonnes),
                 })
-        # Résultat final
+        #résultat final
         total_max = quiz.total_points()
         pourcentage = round((score_obtenu / total_max * 100), 1) if total_max > 0 else 0
+        
+        
+        #créer le résultat du joueur
+        resultat = Resultat(
+            id_utilisateur=user.id_utilisateur,
+            id_quiz=quiz.id_quiz,
+            score=score_obtenu,
+            score_max=total_max
+        )
+
+        #récupérer les anciens résultats
+        resultats = self.storage_service.load_results()
+
+        #ajouter le nouveau résultat
+        resultats.append(resultat)
+
+        #sauvegarder tous les résultats
+        if self.storage_service.save_results(resultats):
+            print("Votre score a été enregistré !")
+        else:
+            print("Erreur : impossible d'enregistrer votre score.")
+        
         print("\n" + "=" * 55)
         print(f"FIN DU QUIZ ! Score de {user.pseudo} : {score_obtenu} / {total_max} points ({pourcentage}%)")
         print("=" * 55)
