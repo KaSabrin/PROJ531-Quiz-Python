@@ -1,3 +1,6 @@
+import re
+
+
 def importer_quiz_depuis_txt(chemin_fichier):
     """
     Lit un fichier texte structuré pour importer un quiz.
@@ -28,15 +31,12 @@ def importer_quiz_depuis_txt(chemin_fichier):
                     
                     enonce_brut = ligne.replace("QUESTION:", "").strip()
                     points = 1
-                    
-                    if "[" in enonce_brut and "pts]" in enonce_brut:
-                        parties = enonce_brut.split("[")
-                        enonce = parties[0].strip()
-                        pts_str = parties[1].replace("pts]", "").replace("pt]", "").strip()
-                        try:
-                            points = int(pts_str)
-                        except ValueError:
-                            points = 1
+
+                    # Barème en fin de ligne : accepte "[1 pt]" comme "[2 pts]"
+                    bareme = re.search(r"\[\s*(\d+)\s*pts?\s*\]\s*$", enonce_brut)
+                    if bareme:
+                        enonce = enonce_brut[:bareme.start()].strip()
+                        points = int(bareme.group(1))
                     else:
                         enonce = enonce_brut
 

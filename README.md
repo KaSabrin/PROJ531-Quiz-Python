@@ -45,6 +45,7 @@ PROJ531-Quiz-Python/
 │   ├── Gantt_projet_quiz.gan          # Diagramme de Gantt (source GanttProject)
 │   ├── Gantt_projet_quiz.png          # Export graphique du planning Gantt
 │   ├── wbs_projet_quiz_python.png     # Organigramme de décomposition des tâches (WBS)
+│   ├── PBS_Quizora.png                # Organigramme de décomposition du produit (PBS)
 │   ├── quiz.mdc                       # Modèle Conceptuel de Données (source Looping)
 │   ├── mcd_documentation.md           # Spécifications détaillées du MCD et dictionnaire des données
 │   ├── glossaire.md                   # Glossaire terminologique du projet
@@ -54,17 +55,21 @@ PROJ531-Quiz-Python/
 │   └── comptes-rendus/                # Comptes-rendus hebdomadaires de séance
 │       ├── cr_seance_1.md             # Séance 1 : Cadrage, WBS, Gantt, MCD
 │       ├── cr_seance_2.md             # Séance 2 : Authentification, sécurité, stockage JSON
-│       └── cr_seance_3.md             # Séance 3 : Moteur de quiz, création, import et passation
+│       ├── cr_seance_3.md             # Séance 3 : Moteur de quiz, création, import et passation
+│       └── cr_seance_4.md             # Séance 4 : Historique des scores, chasse aux bugs, soutenance
 ├── src/                               # Code source applicatif
 │   ├── cli.py                         # Interface utilisateur en ligne de commande (CLI)
 │   ├── security.py                    # Primitives cryptographiques (hachage, salage)
 │   ├── models/                        # Entités métier (User, Quiz, Question, Reponse, Resultat)
-│   ├── services/                      # Services applicatifs (AuthService, QuizService, StorageService)
+│   ├── services/                      # Services applicatifs (AuthService, QuizService, ResultatService, StorageService)
 │   └── utils/                         # Utilitaires transverses
 └── tests/                             # Suites de tests unitaires automatisés
     ├── test_security.py               # Validation de la robustesse cryptographique
     ├── test_auth.py                   # Validation des flux d'authentification
-    └── test_storage.py                # Validation de la persistance JSON
+    ├── test_storage.py                # Validation de la persistance JSON
+    ├── test_quiz.py                   # Validation de la création et de l'import de quiz
+    ├── test_import.py                 # Validation du parseur de fichiers texte
+    └── test_resultat.py               # Validation de l'historique des scores
 ```
 
 ### Remarque relative aux données locales
@@ -147,14 +152,14 @@ Le calendrier du projet est découpé en 4 sprints successifs :
   - Interface console de gestion des flux d'inscription et de connexion.
   - Validation de la première suite de tests unitaires automatisés.
 
-- **Sprint 3 (26/10 - 30/10) : Cœur Fonctionnel et Gestion des Quiz** - Statut : En cours
+- **Sprint 3 (26/10 - 30/10) : Cœur Fonctionnel et Gestion des Quiz** - Statut : Validé
   - Module de création interactive de quiz par l'administrateur (US04).
   - Module d'importation de quiz depuis des fichiers texte structurés (US05).
   - Moteur d'exécution des questionnaires et restitution des scores pour les joueurs (US06).
   - Extension de la couverture de tests unitaires au moteur de jeu.
 
-- **Sprint 4 (02/11 - 06/11) : Historisation des Résultats, Consolidation et Soutenance** - Statut : Planifié
-  - Sauvegarde de l'historique individuel des scores par joueur (`results.json`).
-  - Audit de robustesse et correction des anomalies éventuelles.
+- **Sprint 4 (02/11 - 06/11) : Historisation des Résultats, Consolidation et Soutenance** - Statut : En cours
+  - Sauvegarde de l'historique individuel des scores par joueur (`results.json`) - réalisé.
+  - Audit de robustesse et correction des anomalies éventuelles - réalisé.
   - Rédaction du rapport final de projet.
   - Préparation et répétition de la soutenance orale (démonstration de 15 minutes).
