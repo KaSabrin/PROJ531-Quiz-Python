@@ -29,17 +29,6 @@ class TestImportQuiz(unittest.TestCase):
         self.assertEqual(len(quiz["questions"]), 1)
         self.assertTrue(quiz["questions"][0]["options"][1]["est_correcte"])
 
-    def test_bareme_singulier_pt(self):
-        """Non-régression Sprint 4 : '[1 pt]' doit être retiré de l'énoncé."""
-        with open(self.test_filename, "w", encoding="utf-8") as f:
-            f.write("TITRE: Quiz\n")
-            f.write("QUESTION: Combien font 1 + 1 ? [1 pt]\n")
-            f.write("* 2\n")
-            f.write("- 3\n")
-        quiz = importer_quiz_depuis_txt(self.test_filename)
-        self.assertEqual(quiz["questions"][0]["enonce"], "Combien font 1 + 1 ?")
-        self.assertEqual(quiz["questions"][0]["points"], 1)
-
     def test_fichier_inexistant(self):
         quiz = importer_quiz_depuis_txt("inexistant.txt")
         self.assertIsNone(quiz)

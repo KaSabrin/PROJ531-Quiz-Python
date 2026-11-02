@@ -61,15 +61,13 @@ PROJ531-Quiz-Python/
 │   ├── cli.py                         # Interface utilisateur en ligne de commande (CLI)
 │   ├── security.py                    # Primitives cryptographiques (hachage, salage)
 │   ├── models/                        # Entités métier (User, Quiz, Question, Reponse, Resultat)
-│   ├── services/                      # Services applicatifs (AuthService, QuizService, ResultatService, StorageService)
+│   ├── services/                      # Services applicatifs (AuthService, QuizService, StorageService)
 │   └── utils/                         # Utilitaires transverses
 └── tests/                             # Suites de tests unitaires automatisés
     ├── test_security.py               # Validation de la robustesse cryptographique
     ├── test_auth.py                   # Validation des flux d'authentification
     ├── test_storage.py                # Validation de la persistance JSON
-    ├── test_quiz.py                   # Validation de la création et de l'import de quiz
-    ├── test_import.py                 # Validation du parseur de fichiers texte
-    └── test_resultat.py               # Validation de l'historique des scores
+    └── test_quiz.py                   # Validation de la création et de l'import de quiz
 ```
 
 ### Remarque relative aux données locales
@@ -159,7 +157,7 @@ Le calendrier du projet est découpé en 4 sprints successifs :
   - Extension de la couverture de tests unitaires au moteur de jeu.
 
 - **Sprint 4 (02/11 - 06/11) : Historisation des Résultats, Consolidation et Soutenance** - Statut : En cours
-  - Sauvegarde de l'historique individuel des scores par joueur (`results.json`) - réalisé.
-  - Audit de robustesse et correction des anomalies éventuelles - réalisé.
+  - Sauvegarde de l'historique individuel des scores par joueur (`results.json`).
+  - Audit de robustesse et correction des anomalies éventuelles.
   - Rédaction du rapport final de projet.
   - Préparation et répétition de la soutenance orale (démonstration de 15 minutes).

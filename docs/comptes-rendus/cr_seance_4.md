@@ -13,7 +13,7 @@
 Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). Entre-temps, une interface graphique Tkinter (page de connexion et tableau de bord) a été ajoutée et le dossier d'architecture technique a été mis à jour. Le Sprint 4, dernier sprint du projet, a pour objectifs :
 
 1. **Historique des scores (US07 / Tâche 3.4) :** Enregistrer chaque passage de quiz dans `data/results.json` et permettre au joueur de consulter son historique personnel.
-2. **Chasse aux bugs (Tâche 4.1) :** Relire le code livré aux sprints précédents, corriger les anomalies et vérifier que tous les tests sont réellement exécutés.
+2. **Chasse aux bugs (Tâche 4.1) :** Relire le code livré aux sprints précédents, repérer et corriger les anomalies.
 3. **Rapport final (Tâche 4.2) :** Rédiger le rapport de fin de projet.
 4. **Préparation de la soutenance (Tâche 4.3) :** Préparer et répéter la démonstration orale de 15 minutes.
 
@@ -23,10 +23,10 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 
 | Tâche WBS / Gantt | Responsable | Description | Temps estimé | Statut |
 | :--- | :--- | :--- | :---: | :---: |
-| **3.4 Joueur : Sauvegarde et historique des scores (US07)** | Sabrine Kawiche & Bilal Draoui | Sauvegarde du score en fin de quiz (Sabrine), puis regroupement dans le service `ResultatService`, enregistrement automatique du score en fin de quiz, menu « Consulter mon historique de scores » dans le CLI. | 2h00 | **En cours** |
-| **3.4.bis Tests unitaires de l'historique** | Gabrien Vaz | Nouveau fichier `tests/test_resultat.py` (5 tests) : persistance, rejet des scores incohérents, filtrage par joueur, statistiques. | 1h00 | **En cours** |
-| **4.1 Chasse aux bugs et robustesse** | Chadi Kharchoufa & Sabrine Kawiche | Relecture du parseur d'import et du parcours joueur, corrections et tests de non-régression. | 1h30 | **En cours** |
-| **4.2 Rédaction du rapport final** | Bilal Draoui & Équipe | Synthèse du projet : gestion de projet (WBS, Gantt, Trello), architecture, bilan des sprints. | 2h00 | **En cours** |
+| **3.4 Joueur : Sauvegarde et historique des scores (US07)** | Sabrine Kawiche & Bilal Draoui | Enregistrement du score dans `data/results.json` à la fin d'un quiz et affichage de l'historique du joueur dans le menu console. | 2h00 | **En cours** |
+| **3.4.bis Tests unitaires de l'historique** | Gabrien Vaz | Tests automatisés de la sauvegarde des résultats et de l'historique. | 1h00 | **À faire** |
+| **4.1 Chasse aux bugs et robustesse** | Chadi Kharchoufa & Sabrine Kawiche | Relecture du parseur d'import et du parcours joueur, correction des anomalies relevées (voir section 3.2). | 1h30 | **En cours** |
+| **4.2 Rédaction du rapport final** | Bilal Draoui & Équipe | Synthèse du projet : gestion de projet (WBS, PBS, Gantt, Trello), architecture, bilan des sprints. | 2h00 | **En cours** |
 | **4.3 Préparation de la soutenance** | Équipe | Scénario de démonstration (admin puis joueur), support de présentation, répétition chronométrée. | 1h30 | **À faire** |
 
 ---
@@ -34,60 +34,51 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 ## 3. Travail réalisé pendant la séance
 
 ### 3.1 Historique des scores (US07)
-- **Première version (Sabrine Kawiche) :** enregistrement du résultat dans `data/results.json` directement à la fin de `action_passer_quiz`, et branchement de l'option 3 du menu joueur sur une méthode `action_consulter_historique`.
-- **Nouveau service `src/services/resultat_service.py`** (`ResultatService`), qui s'appuie sur le modèle `Resultat` et les méthodes `load_results()` / `save_results()` du `StorageService`, déjà prévues depuis le Sprint 2 mais encore inutilisées :
-  - `enregistrer_resultat(joueur, quiz, score)` : crée un `Resultat` (score, score maximal, date de passage) et l'ajoute à `data/results.json`. Un score négatif ou supérieur au barème du quiz est refusé.
-  - `historique_joueur(joueur)` : renvoie uniquement les résultats du joueur connecté, du plus récent au plus ancien.
-  - `statistiques_joueur(joueur)` : nombre de quiz passés, moyenne et meilleur pourcentage.
-- **Intégration dans le CLI (`src/cli.py`) :**
-  - À la fin d'un quiz, le score est sauvegardé automatiquement et un message de confirmation s'affiche.
-  - L'option 3 de l'espace joueur, qui affichait jusqu'ici « sera intégré lors du Sprint 4 », ouvre désormais l'historique :
-    ```text
-    HISTORIQUE DES SCORES DE JOUEUR1
-    ======================================================================
-    Date               Quiz                                 Score        %
-    ----------------------------------------------------------------------
-    2026-11-02 15:06   Culture Informatique et Génie L        4/4   100.0%
-    2026-11-02 15:06   Culture Informatique et Génie L        3/4    75.0%
-    ----------------------------------------------------------------------
-    Quiz passés : 2 | Moyenne : 87.5% | Meilleur score : 100.0%
-    ```
-  - Si un quiz a été supprimé entre-temps, la ligne de l'historique affiche « (quiz supprimé) » au lieu de planter.
+- **Sauvegarde du score (Sabrine Kawiche) :** à la fin de `action_passer_quiz`, un objet `Resultat` (joueur, quiz, score, score maximal, date) est créé et ajouté à `data/results.json` grâce aux méthodes `load_results()` / `save_results()` du `StorageService`, prévues depuis le Sprint 2. Le message « Votre score a été enregistré ! » confirme la sauvegarde.
+- **Consultation de l'historique :** l'option 3 de l'espace joueur, qui affichait jusqu'ici « sera intégré lors du Sprint 4 », appelle désormais la méthode `action_consulter_historique`. Celle-ci affiche, pour le joueur connecté, la date, le titre du quiz et le score obtenu :
+  ```text
+  --- HISTORIQUE DE JOUEUR1 ---
+  2026-11-02 | Culture Informatique et Génie Logiciel | 4/4 (100.0%)
+  2026-11-02 | Culture Informatique et Génie Logiciel | 3/4 (75.0%)
+  ```
+- **Correctif :** dans la première version, la méthode `action_consulter_historique` était appelée par le menu mais n'existait pas encore, ce qui faisait planter l'application (`AttributeError`) dès qu'un joueur choisissait l'option 3. La méthode a été ajoutée et le parcours fonctionne de bout en bout.
 
-### 3.2 Chasse aux bugs (Tâche 4.1)
-| Anomalie constatée | Cause | Correction |
-| :--- | :--- | :--- |
-| Une question importée avec le barème `[1 pt]` gardait le texte « [1 pt] » dans son énoncé (cas présent dans `sample_quiz.txt`). | Le parseur ne reconnaissait que la forme plurielle `pts]`. | Lecture du barème par expression régulière, qui accepte `[1 pt]` comme `[2 pts]`. Test de non-régression `test_bareme_singulier_pt` ajouté. |
-| Les tests du parseur d'import n'étaient jamais lancés par `python -m unittest discover tests`. | Le fichier `test_import.py` se trouvait à la racine du dépôt au lieu du dossier `tests/`. | Fichier déplacé dans `tests/test_import.py`. |
-| L'option 3 « Consulter mon historique de scores » faisait planter l'application (`AttributeError`). | La méthode `action_consulter_historique` était appelée dans le menu joueur mais n'avait pas encore été écrite. | Méthode implémentée à partir du `ResultatService` ; l'enregistrement du score passe désormais uniquement par ce service pour éviter une double sauvegarde. |
-| Un quiz sans aucune question pouvait être lancé et produire un score « 0 / 0 ». | Aucune vérification avant le démarrage du quiz. | Le CLI refuse désormais de lancer un quiz vide avec un message explicite. |
+### 3.2 Chasse aux bugs (Tâche 4.1) - anomalies relevées
+| Anomalie constatée | Cause | Statut |
+| :--- | :--- | :---: |
+| L'option 3 « Consulter mon historique de scores » faisait planter l'application. | Méthode `action_consulter_historique` appelée mais pas encore écrite. | **Corrigé** |
+| Une question importée avec le barème `[1 pt]` garde le texte « [1 pt] » dans son énoncé (cas présent dans `sample_quiz.txt`). | Le parseur d'import ne reconnaît que la forme plurielle `pts]`. | **À corriger** |
+| Les tests du parseur d'import ne sont pas lancés par `python -m unittest discover tests`. | Le fichier `test_import.py` se trouve à la racine du dépôt et non dans `tests/`. | **À corriger** |
+| Un quiz sans aucune question peut être lancé et produit un score « 0 / 0 ». | Aucune vérification avant le démarrage du quiz. | **À corriger** |
 
-### 3.3 Assurance qualité
-- La suite de tests passe de **19 à 27 tests**, tous validés :
+### 3.3 Vérifications
+- La suite de tests existante (19 tests) passe toujours :
   ```bash
   python -m unittest discover tests
-  # Ran 27 tests ... OK
+  # Ran 19 tests ... OK
   ```
-- Un parcours complet a été rejoué en console : connexion `admin`, import de `sample_quiz.txt`, déconnexion, connexion `joueur1`, deux passages du quiz (4/4 puis 3/4), puis consultation de l'historique (moyenne 87,5 %, meilleur score 100 %).
+- Parcours rejoué en console : connexion `admin`, import de `sample_quiz.txt`, connexion `joueur1`, deux passages du quiz (4/4 puis 3/4), puis consultation de l'historique.
 
 ---
 
 ## 4. Suivi de projet & Organisation Kanban (Trello)
 - Le **PBS** (Product Breakdown Structure) du projet a été ajouté dans `docs/PBS_Quizora.png`.
-- Les cartes **US07** (historique des scores), **T3.4** et **T4.1** (chasse aux bugs) sont dans la colonne **En cours** (fonctionnalités développées, en cours de validation par l'équipe).
-- Les cartes **T4.2** (rapport final) et **T4.3** (soutenance) restent dans la colonne **En cours** / **À faire** jusqu'à la fin du sprint.
+- Les cartes **US07** (historique des scores), **T3.4** et **T4.1** (chasse aux bugs) sont dans la colonne **En cours**.
+- Les cartes **T3.4.bis** (tests de l'historique), **T4.2** (rapport final) et **T4.3** (soutenance) sont dans les colonnes **À faire** / **En cours** jusqu'à la fin du sprint.
 - *Capture du tableau Trello à ajouter en fin de sprint : `docs/trello_sprint4.png`.*
 
 ---
 
 ## 5. Points restant à traiter avant la soutenance
+- **Corrections (4.1) :** traiter les trois anomalies « À corriger » de la section 3.2.
+- **Tests (3.4.bis) :** ajouter les tests unitaires de la sauvegarde et de l'historique des scores.
 - **Interface graphique :** le tableau de bord Tkinter liste les quiz mais ne permet pas encore de les passer ni d'afficher l'historique ; la démonstration de ces fonctionnalités se fera donc en mode console. À décider en équipe : intégrer l'historique dans la GUI ou le présenter comme une évolution possible.
-- **Rapport final (4.2) :** reprendre les quatre comptes-rendus, le WBS, le Gantt, le MCD et le dossier d'architecture technique.
+- **Rapport final (4.2) :** reprendre les quatre comptes-rendus, le WBS, le PBS, le Gantt, le MCD et le dossier d'architecture technique.
 - **Soutenance (4.3) :** préparer un jeu de données de démonstration propre (quiz importé + quelques résultats) et répéter la démonstration en respectant les 15 minutes.
 
 ---
 
-## 6. Bilan global du projet (à l'issue des 4 sprints)
+## 6. Bilan global du projet
 | Sprint | Contenu livré | Statut |
 | :--- | :--- | :---: |
 | Sprint 1 | Cadrage, WBS, Gantt, MCD, tableau Trello | Terminé |
@@ -95,4 +86,4 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 | Sprint 3 | Création manuelle et import de quiz, passation et calcul du score, interface graphique de connexion | Terminé |
 | Sprint 4 | Historique des scores, corrections de bugs, rapport final et soutenance | En cours |
 
-Toutes les user stories fonctionnelles prévues au backlog (US01 à US07) sont développées ; l'US07 et la chasse aux bugs sont en cours de validation. Il reste ensuite les livrables de fin de projet (rapport et soutenance).
+Les user stories US01 à US06 sont terminées. L'US07 (historique des scores) est fonctionnelle et en cours de finalisation (tests et corrections). Il reste ensuite les livrables de fin de projet (rapport et soutenance).
