@@ -250,6 +250,7 @@ class QuizAppCLI:
         else:
             print("Félicitations ! Un sans-faute !")
         input("Appuyez sur [Entrée] pour revenir au menu...")
+<<<<<<< HEAD
     
     
     def action_consulter_historique(self, user: User) -> None:
@@ -281,6 +282,20 @@ class QuizAppCLI:
             print(f"Date : {resultat.date_passage}")
 
     
+=======
+
+    def action_consulter_historique(self, user: User) -> None:
+        """Affiche les scores enregistrés du joueur connecté."""
+        resultats = [r for r in self.storage_service.load_results() if r.id_utilisateur == user.id_utilisateur]
+        if not resultats:
+            print("\nVous n'avez encore passé aucun quiz.")
+            return
+        titres = {q.id_quiz: q.titre for q in self.quiz_service.lister_quiz()}
+        print(f"\n--- HISTORIQUE DE {user.pseudo.upper()} ---")
+        for r in resultats:
+            print(f"{r.date_passage[:10]} | {titres.get(r.id_quiz, 'Quiz supprimé')} | {r.score}/{r.score_max} ({r.pourcentage}%)")
+
+>>>>>>> 3871d47c17383740e0ded4106db85d6c6479e7e9
     def menu_administrateur(self, user: User) -> None:
         """Menu interactif pour un utilisateur ayant le rôle 'admin'."""
         while self.auth_service.is_authenticated():
