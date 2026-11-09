@@ -10,7 +10,7 @@
 ---
 
 ## 1. Objectifs de la Séance n°5
-Le planning initial (Gantt et README) prévoyait 4 sprints se terminant le 06/11/2026. Toutes les fonctionnalités sont livrées, mais les deux dernières tâches du Sprint 4 n'étaient pas achevées à cette date. La séance 5 est donc consacrée à la finalisation du projet :
+Le planning initial (Gantt et README) prévoyait 4 sprints se terminant le 06/11/2026. Toutes les fonctionnalités sont livrées. En séance 4, l'équipe a établi le plan du rapport final et le scénario de la démonstration ; il reste à rédiger entièrement le rapport et à répéter la soutenance. La séance 5 est donc consacrée à la finalisation du projet :
 
 1. **Préparation de la soutenance :** révision des notions de gestion de projet et de Git/GitHub, simulation des questions de l'enseignant, préparation de la démonstration de 15 minutes.
 2. **Rapport final :** rédaction du rapport de fin de projet demandé par le sujet.
@@ -33,8 +33,8 @@ Le 02/11/2026, après la séance 4, deux évolutions ont été intégrées sur l
 | :--- | :--- | :--- | :---: | :---: | :---: |
 | **Nettoyage du dépôt GitHub** | Bilal Draoui | Fermeture de la Pull Request #1 et suppression de la branche `gabv1138-coder-patch-1`, dont le contenu (passation de quiz) était déjà intégré dans `main`. | 0h15 | *à compléter* | **En cours** |
 | **Vérification de la version livrée** | Bilal Draoui | Exécution de la suite de tests unitaires sur `main`. | 0h15 | *à compléter* | **En cours** |
-| **Préparation de la soutenance** | Équipe | Révision des notions Git/GitHub (commandes du quotidien, conflits, branches, `.gitignore`), simulation des questions de l'enseignant, scénario de démonstration. | 1h30 | *à compléter* | **En cours** |
-| **Rédaction du rapport final** | Bilal Draoui & Équipe | Rapport structuré selon les critères du sujet (objectifs, gestion de projet, autonomie, réalisation technique, bilan). | 3h00 | *à compléter* | **En cours** |
+| **Soutenance : répétition** | Équipe | Révision des notions Git/GitHub (commandes du quotidien, conflits, branches, `.gitignore`), simulation des questions de l'enseignant, répétition chronométrée de la démonstration préparée en séance 4. | 1h30 | *à compléter* | **En cours** |
+| **Rapport final : rédaction complète** | Bilal Draoui & Équipe | Rédaction du rapport (`docs/rapport_final.md` et version PDF) à partir du plan établi en séance 4, puis relecture par l'équipe. | 3h00 | *à compléter* | **En cours** |
 | **Compléter les temps réels du CR4** | Équipe | Chaque responsable renseigne le temps réellement passé sur ses tâches du Sprint 4. | 0h15 | *à compléter* | **En cours** |
 
 > Les temps réels sont à renseigner par chaque responsable de tâche.
@@ -63,7 +63,7 @@ Le 02/11/2026, après la séance 4, deux évolutions ont été intégrées sur l
 ---
 
 ## 6. Difficultés rencontrées
-- **Retard sur le planning :** le rapport final (tâche 4.2, prévue les 03-04/11) et la préparation de la soutenance (tâche 4.3, prévue les 05-06/11) n'ont pas été terminés dans les délais du Gantt. Le développement a pris plus de temps que prévu en fin de Sprint 4 (historique des scores, corrections de bugs, interface graphique).
+- **Dépassement du planning :** le Gantt prévoyait la fin du projet le 06/11/2026. Le plan du rapport et le scénario de démonstration ont bien été préparés en séance 4, mais la rédaction complète du rapport et la répétition de la soutenance se poursuivent en séance 5, car le développement a pris plus de temps que prévu en fin de Sprint 4 (historique des scores, corrections de bugs, interface graphique).
 
 ---
 
@@ -74,7 +74,7 @@ Le 02/11/2026, après la séance 4, deux évolutions ont été intégrées sur l
 ---
 
 ## 8. Prochaines étapes
-- Terminer et déposer le **rapport final** sur le dépôt.
+- Faire relire le **rapport final** (`docs/rapport_final.md`) par toute l'équipe et y apporter les dernières corrections.
 - **Répéter la démonstration** en respectant les 15 minutes : connexion admin, création ou import d'un quiz, connexion joueur, passation d'un quiz, consultation de l'historique, en console puis en interface graphique.
 - Renseigner les **temps réels** dans les CR4 et CR5.
 - Préparer l'**évaluation par les pairs** demandée par l'enseignant.

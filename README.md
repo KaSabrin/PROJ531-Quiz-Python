@@ -52,6 +52,7 @@ PROJ531-Quiz-Python/
 │   ├── quiz.mdc                       # Modèle Conceptuel de Données (source Looping)
 │   ├── mcd_documentation.md           # Spécifications détaillées du MCD et dictionnaire des données
 │   ├── glossaire.md                   # Glossaire terminologique du projet
+│   ├── rapport_final.md               # Rapport final de projet (version PDF : rapport_final.pdf)
 │   ├── trello_sprint2.png             # Capture Trello (clôture Sprint 2)
 │   ├── trello_sprint3.png             # Capture Trello (clôture Sprint 3)
 │   ├── trello_sprint4.png             # Capture Trello (Sprint 4)
