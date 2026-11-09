@@ -53,6 +53,7 @@ PROJ531-Quiz-Python/
 │   ├── mcd_documentation.md           # Spécifications détaillées du MCD et dictionnaire des données
 │   ├── glossaire.md                   # Glossaire terminologique du projet
 │   ├── rapport_final.md               # Rapport final de projet (version PDF : rapport_final.pdf)
+│   ├── scenario_demonstration.md      # Déroulé de la démonstration finale (15 minutes)
 │   ├── trello_sprint2.png             # Capture Trello (clôture Sprint 2)
 │   ├── trello_sprint3.png             # Capture Trello (clôture Sprint 3)
 │   ├── trello_sprint4.png             # Capture Trello (Sprint 4)
