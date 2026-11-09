@@ -27,8 +27,8 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 | **T08.2 - Développer la consultation de l'historique (US07)** | Sabrine Kawiche & Gabrien Vaz | Affichage de l'historique du joueur dans le menu console, avec moyenne et meilleur score. | 1h30 | *à compléter* | **Terminé** |
 | **Tests unitaires de l'historique** | Chadi Kharchoufa | Fichier `tests/test_resultat.py` (5 tests) : persistance, scores incohérents, quiz vide, filtrage et tri par joueur, statistiques. | 1h00 | *à compléter* | **Terminé** |
 | **Chasse aux bugs et robustesse** | Chadi Kharchoufa & Bilal Draoui | Relecture de l'ensemble du code, correction des anomalies relevées et nettoyage du code inutilisé (voir section 3.2). | 1h30 | *à compléter* | **Terminé** |
-| **Rédaction du rapport final** | Bilal Draoui & Équipe | Synthèse du projet : gestion de projet (WBS, PBS, Gantt, Trello), architecture, bilan des sprints. | 2h00 | *à compléter* | **En cours** |
-| **Préparation de la soutenance** | Équipe | Scénario de démonstration (admin puis joueur), support de présentation, répétition chronométrée. | 1h30 | *à compléter* | **À faire** |
+| **Rédaction du rapport final** | Bilal Draoui & Équipe | Synthèse du projet : gestion de projet (WBS, PBS, Gantt, Trello), architecture, bilan des sprints. | 2h00 | *à compléter* | **Terminé** |
+| **Préparation de la soutenance** | Équipe | Scénario de démonstration (admin puis joueur), support de présentation, répétition chronométrée. | 1h30 | *à compléter* | **Terminé** |
 
 > Les temps réels sont à renseigner par chaque responsable de tâche.
 

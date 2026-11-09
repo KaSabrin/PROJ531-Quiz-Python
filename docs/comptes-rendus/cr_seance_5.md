@@ -31,11 +31,11 @@ Le 02/11/2026, après la séance 4, deux évolutions ont été intégrées sur l
 
 | Tâche | Responsable | Description | Temps estimé | Temps réel | Statut |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| **Nettoyage du dépôt GitHub** | Bilal Draoui | Fermeture de la Pull Request #1 et suppression de la branche `gabv1138-coder-patch-1`, dont le contenu (passation de quiz) était déjà intégré dans `main`. | 0h15 | *à compléter* | **Terminé** |
-| **Vérification de la version livrée** | Bilal Draoui | Exécution de la suite de tests unitaires sur `main`. | 0h15 | *à compléter* | **Terminé** |
+| **Nettoyage du dépôt GitHub** | Bilal Draoui | Fermeture de la Pull Request #1 et suppression de la branche `gabv1138-coder-patch-1`, dont le contenu (passation de quiz) était déjà intégré dans `main`. | 0h15 | *à compléter* | **En cours** |
+| **Vérification de la version livrée** | Bilal Draoui | Exécution de la suite de tests unitaires sur `main`. | 0h15 | *à compléter* | **En cours** |
 | **Préparation de la soutenance** | Équipe | Révision des notions Git/GitHub (commandes du quotidien, conflits, branches, `.gitignore`), simulation des questions de l'enseignant, scénario de démonstration. | 1h30 | *à compléter* | **En cours** |
 | **Rédaction du rapport final** | Bilal Draoui & Équipe | Rapport structuré selon les critères du sujet (objectifs, gestion de projet, autonomie, réalisation technique, bilan). | 3h00 | *à compléter* | **En cours** |
-| **Compléter les temps réels du CR4** | Équipe | Chaque responsable renseigne le temps réellement passé sur ses tâches du Sprint 4. | 0h15 | *à compléter* | **À faire** |
+| **Compléter les temps réels du CR4** | Équipe | Chaque responsable renseigne le temps réellement passé sur ses tâches du Sprint 4. | 0h15 | *à compléter* | **En cours** |
 
 > Les temps réels sont à renseigner par chaque responsable de tâche.
 
