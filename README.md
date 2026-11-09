@@ -62,7 +62,8 @@ PROJ531-Quiz-Python/
 │       ├── cr_seance_1.md             # Séance 1 : Cadrage, WBS, Gantt, MCD
 │       ├── cr_seance_2.md             # Séance 2 : Authentification, sécurité, stockage JSON
 │       ├── cr_seance_3.md             # Séance 3 : Moteur de quiz, création, import et passation
-│       └── cr_seance_4.md             # Séance 4 : Historique des scores, chasse aux bugs, soutenance
+│       ├── cr_seance_4.md             # Séance 4 : Historique des scores, chasse aux bugs, soutenance
+│       └── cr_seance_5.md             # Séance 5 : Finalisation, rapport final et préparation de la soutenance
 ├── src/                               # Code source applicatif
 │   ├── cli.py                         # Interface utilisateur en ligne de commande (CLI)
 │   ├── gui.py                         # Interface graphique Tkinter (connexion, tableau de bord)
