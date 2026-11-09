@@ -57,6 +57,7 @@ PROJ531-Quiz-Python/
 │   ├── trello_sprint2.png             # Capture Trello (clôture Sprint 2)
 │   ├── trello_sprint3.png             # Capture Trello (clôture Sprint 3)
 │   ├── trello_sprint4.png             # Capture Trello (Sprint 4)
+│   ├── trello_sprint5.png             # Capture Trello (séance 5)
 │   ├── architecture_technique_quizora.pdf  # Dossier d'architecture technique (version PDF)
 │   ├── architecture_technique_quizora.html # Dossier d'architecture technique (source HTML du PDF)
 │   ├── architecture_technique_quizora.md   # Spécifications et schéma d'architecture Mermaid
