@@ -31,13 +31,13 @@ Le 02/11/2026, après la séance 4, deux évolutions ont été intégrées sur l
 
 | Tâche | Responsable | Description | Temps estimé | Temps réel | Statut |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| **Nettoyage du dépôt GitHub** | Bilal Draoui | Fermeture de la Pull Request #1 et suppression de la branche `gabv1138-coder-patch-1`, dont le contenu (passation de quiz) était déjà intégré dans `main`. | 0h15 | *à compléter* | **En cours** |
-| **Vérification de la version livrée** | Bilal Draoui | Exécution de la suite de tests unitaires sur `main`. | 0h15 | *à compléter* | **En cours** |
-| **Soutenance : répétition** | Équipe | Révision des notions Git/GitHub (commandes du quotidien, conflits, branches, `.gitignore`), simulation des questions de l'enseignant, répétition chronométrée de la démonstration préparée en séance 4. | 1h30 | *à compléter* | **En cours** |
-| **Rapport final : rédaction complète** | Bilal Draoui & Équipe | Rédaction du rapport (`docs/rapport_final.md` et version PDF) à partir du plan établi en séance 4, puis relecture par l'équipe. | 3h00 | *à compléter* | **En cours** |
-| **Compléter les temps réels du CR4** | Équipe | Chaque responsable renseigne le temps réellement passé sur ses tâches du Sprint 4. | 0h15 | *à compléter* | **En cours** |
+| **Nettoyage du dépôt GitHub** | Bilal Draoui | Fermeture de la Pull Request #1 et suppression de la branche `gabv1138-coder-patch-1`, dont le contenu (passation de quiz) était déjà intégré dans `main`. | 0h15 | ~0h15 | **En cours** |
+| **Vérification de la version livrée** | Bilal Draoui | Exécution de la suite de tests unitaires sur `main`. | 0h15 | ~0h10 | **En cours** |
+| **Soutenance : répétition** | Équipe | Révision des notions Git/GitHub (commandes du quotidien, conflits, branches, `.gitignore`), simulation des questions de l'enseignant, répétition chronométrée de la démonstration préparée en séance 4. | 1h30 | ~1h00 | **En cours** |
+| **Rapport final : rédaction complète** | Bilal Draoui & Équipe | Rédaction du rapport (`docs/rapport_final.md` et version PDF) à partir du plan établi en séance 4, puis relecture par l'équipe. | 3h00 | ~2h30 | **En cours** |
+| **Compléter les temps réels du CR4** | Équipe | Chaque responsable renseigne le temps réellement passé sur ses tâches du Sprint 4. | 0h15 | ~0h15 | **En cours** |
 
-> Les temps réels sont à renseigner par chaque responsable de tâche.
+> Temps réels approximatifs (~), estimés a posteriori par l'équipe.
 
 ---
 

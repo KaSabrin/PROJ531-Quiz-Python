@@ -23,14 +23,14 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 
 | Tâche Trello | Responsable | Description | Temps estimé | Temps réel | Statut |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| **T08.1 - Enregistrer les résultats par utilisateur et par quiz (US07)** | Sabrine Kawiche & Gabrien Vaz | Enregistrement du score dans `data/results.json` à la fin d'un quiz (service `ResultatService`). | 2h00 | *à compléter* | **Terminé** |
-| **T08.2 - Développer la consultation de l'historique (US07)** | Sabrine Kawiche & Gabrien Vaz | Affichage de l'historique du joueur dans le menu console, avec moyenne et meilleur score. | 1h30 | *à compléter* | **Terminé** |
-| **Tests unitaires de l'historique** | Chadi Kharchoufa | Fichier `tests/test_resultat.py` (5 tests) : persistance, scores incohérents, quiz vide, filtrage et tri par joueur, statistiques. | 1h00 | *à compléter* | **Terminé** |
-| **Chasse aux bugs et robustesse** | Chadi Kharchoufa & Bilal Draoui | Relecture de l'ensemble du code, correction des anomalies relevées et nettoyage du code inutilisé (voir section 3.2). | 1h30 | *à compléter* | **Terminé** |
-| **Rapport final : plan et rassemblement des livrables** | Bilal Draoui & Équipe | Plan du rapport selon les critères du sujet et rassemblement des éléments à y référencer (WBS, PBS, Gantt, Trello, MCD, architecture, comptes rendus). La rédaction complète est réalisée en séance 5. | 2h00 | *à compléter* | **Terminé** |
-| **Soutenance : scénario de démonstration** | Équipe | Définition du déroulé de la démonstration (connexion admin, création ou import d'un quiz, connexion joueur, passation, historique). La répétition chronométrée est réalisée en séance 5. | 1h30 | *à compléter* | **Terminé** |
+| **T08.1 - Enregistrer les résultats par utilisateur et par quiz (US07)** | Sabrine Kawiche & Gabrien Vaz | Enregistrement du score dans `data/results.json` à la fin d'un quiz (service `ResultatService`). | 2h00 | ~2h15 | **Terminé** |
+| **T08.2 - Développer la consultation de l'historique (US07)** | Sabrine Kawiche & Gabrien Vaz | Affichage de l'historique du joueur dans le menu console, avec moyenne et meilleur score. | 1h30 | ~1h30 | **Terminé** |
+| **Tests unitaires de l'historique** | Chadi Kharchoufa | Fichier `tests/test_resultat.py` (5 tests) : persistance, scores incohérents, quiz vide, filtrage et tri par joueur, statistiques. | 1h00 | ~1h00 | **Terminé** |
+| **Chasse aux bugs et robustesse** | Chadi Kharchoufa & Bilal Draoui | Relecture de l'ensemble du code, correction des anomalies relevées et nettoyage du code inutilisé (voir section 3.2). | 1h30 | ~2h00 | **Terminé** |
+| **Rapport final : plan et rassemblement des livrables** | Bilal Draoui & Équipe | Plan du rapport selon les critères du sujet et rassemblement des éléments à y référencer (WBS, PBS, Gantt, Trello, MCD, architecture, comptes rendus). La rédaction complète est réalisée en séance 5. | 2h00 | ~1h30 | **Terminé** |
+| **Soutenance : scénario de démonstration** | Équipe | Définition du déroulé de la démonstration (connexion admin, création ou import d'un quiz, connexion joueur, passation, historique). La répétition chronométrée est réalisée en séance 5. | 1h30 | ~1h00 | **Terminé** |
 
-> Les temps réels sont à renseigner par chaque responsable de tâche.
+> Temps réels approximatifs (~), estimés a posteriori par l'équipe.
 
 ---
 
