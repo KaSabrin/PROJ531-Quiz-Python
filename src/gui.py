@@ -648,7 +648,7 @@ class QuizoraGUI:
 
         add_info_row("Pseudo", self.current_user.pseudo)
         add_info_row("Adresse e-mail", self.current_user.email)
-        add_info_row("Role", self.current_user.role.capitalize())
+        add_info_row("Rôle", self.current_user.role.capitalize())
         add_info_row("Identifiant unique", self.current_user.id_utilisateur[:13] + "...")
         add_info_row("Date de création", self.current_user.date_creation[:19])
 
@@ -915,7 +915,7 @@ class QuizoraGUI:
                 liste_questions.insert(tk.END, f"{i}. {q['enonce']} ({q['points']} pt)")
 
         self._bouton(
-            g, "Retirer la question selectionnee", retirer_question, secondaire=True
+            g, "Retirer la question sélectionnée", retirer_question, secondaire=True
         ).pack(fill="x", ipady=2)
 
         lbl_feedback = tk.Label(
@@ -960,7 +960,7 @@ class QuizoraGUI:
         )
         lbl_num.pack(fill="x", pady=(0, 6))
 
-        entree_enonce = self._champ(d, "Enonce :")
+        entree_enonce = self._champ(d, "Énoncé :")
 
         pts_frame = tk.Frame(d, bg=self.COLOR_CARD)
         pts_frame.pack(fill="x", pady=(0, 8))
@@ -1230,7 +1230,7 @@ class QuizoraGUI:
         pourcentage = round(score / total * 100, 1) if total > 0 else 0
 
         self._nettoyer_contenu()
-        self._entete_page("Resultat du quiz")
+        self._entete_page("Résultat du quiz")
 
         card = self._carte(self.content_frame)
         card.pack(fill="both", expand=True)
