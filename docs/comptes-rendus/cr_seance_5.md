@@ -81,5 +81,4 @@ Ci-dessous, la capture d'écran du tableau Trello à la fin de la séance 5 :
 ## 8. Prochaines étapes
 - Faire relire le **rapport final** (`docs/rapport_final.md`) par toute l'équipe et y apporter les dernières corrections.
 - **Répéter la démonstration** en respectant les 15 minutes : connexion admin, création ou import d'un quiz, connexion joueur, passation d'un quiz, consultation de l'historique, en console puis en interface graphique.
-- Renseigner les **temps réels** dans les CR4 et CR5.
 - Préparer l'**évaluation par les pairs** demandée par l'enseignant.

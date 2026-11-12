@@ -69,23 +69,23 @@ Nous avons suivi une démarche **agile inspirée de Scrum** : le travail a été
 
 | Sprint | Dates prévues | Contenu | Livrables |
 | :--- | :--- | :--- | :--- |
-| Sprint 1 - Cadrage et conception | 12/10 - 15/10 | Dépôt GitHub, README, MCD, WBS, Gantt, Trello | `quiz.mdc`, `mcd_documentation.md`, `wbs_projet_quiz_python.png`, `Gantt_projet_quiz.gan` |
+| Sprint 1 - Cadrage et conception | 12/10 - 15/10 | Dépôt GitHub, README, MCD, WBS, Gantt, Trello | `mcd_quizora.png`, `mcd_documentation.md`, `wbs_projet_quiz_python.png`, `Gantt_projet_quiz.gan` |
 | Sprint 2 - Authentification et stockage | 19/10 - 22/10 | Architecture du code, comptes utilisateurs, hachage des mots de passe, stockage JSON, menu console | `src/models/`, `src/services/auth_service.py`, `src/security.py`, `storage_service.py`, 15 tests |
 | Sprint 3 - Cœur du jeu | 26/10 - 30/10 | Création manuelle de quiz, import depuis un fichier texte, passation de quiz, page de connexion graphique | `quiz_service.py`, `import_service.py`, `src/gui.py` |
-| Sprint 4 - Scores, finitions et soutenance | 02/11 - 06/11 | Historique des scores, chasse aux bugs, interface graphique complète, rapport, soutenance | `resultat_service.py`, quiz d'exemple, 30 tests, présent rapport |
+| Sprint 4 - Scores, finitions et soutenance | 02/11 - 06/11 | Historique des scores, chasse aux bugs, interface graphique complète, rapport, soutenance | `resultat_service.py`, quiz d'exemple, 35 tests, présent rapport |
 
 Les livrables de planification sont disponibles dans `docs/` :
 
 - **WBS** (`wbs_projet_quiz_python.png`) : décomposition des travaux en quatre axes, un par sprint ;
 - **PBS** (`PBS_Quizora.png`) : décomposition du produit en ses composants ;
 - **Gantt** (`Gantt_projet_quiz.gan` et `.png`) : planification des tâches dans le temps, avec des tâches de deux jours au plus ;
-- **MCD** (`quiz.mdc` et `mcd_documentation.md`) : modèle Entité-Association des données.
+- **MCD** (`mcd_quizora.png` et `mcd_documentation.md`) : modèle Entité-Association des données.
 
 ### B.4 Suivi de l'avancement
 
 - **Trello :** un tableau Kanban (Backlog, À faire, En cours, À vérifier, Terminé) a servi à définir les user stories (US01 à US07, puis US11 pour l'interface graphique), à les découper en tâches, à les attribuer et à suivre leur avancement. Les captures du tableau aux sprints 2, 3 et 4 sont jointes aux comptes rendus.
 - **Comptes rendus de séance :** un compte rendu a été déposé sur GitHub à la fin de chacune des cinq séances (`docs/comptes-rendus/`). Il indique les tâches réalisées, leur responsable, le temps estimé et le temps réellement passé, les décisions prises et les difficultés rencontrées.
-- **GitHub :** l'historique du dépôt compte **81 commits** des quatre membres entre le 13 octobre et le 9 novembre 2026. Il permet de retracer qui a réalisé chaque modification.
+- **GitHub :** l'historique du dépôt compte plus de **80 commits** des quatre membres entre le 13 octobre et le 12 novembre 2026. Il permet de retracer qui a réalisé chaque modification.
 
 ### B.5 Démarche d'amélioration continue
 
@@ -118,7 +118,7 @@ Plusieurs notions ont dû être apprises pendant le projet :
 | **Découpage en tâches de deux jours au plus** (séance 1) | Découpage en quatre sprints progressifs et en tâches courtes dans le WBS et le Gantt. |
 | **Stockage des mots de passe** (séance 2) | Hachage SHA-256 avec un sel aléatoire de 16 octets propre à chaque utilisateur. |
 | **Conflit Git sur `src/cli.py`** (séance 4) : deux membres avaient modifié la même ligne du menu joueur. | Conflit résolu en conservant la version de la coéquipière ; la relecture a aussi révélé qu'une méthode appelée n'existait pas encore, ce qui faisait planter l'application. La méthode a été ajoutée. |
-| **Anomalies découvertes en fin de projet** (séance 4) : boucle infinie à la création d'un quiz, plantage à l'import d'un fichier non texte, barème `[1 pt]` mal lu, tests d'import jamais exécutés | Corrections et ajout de tests de non-régression ; la suite passe de 19 à 30 tests. |
+| **Anomalies découvertes en fin de projet** (séance 4) : boucle infinie à la création d'un quiz, plantage à l'import d'un fichier non texte, barème `[1 pt]` mal lu, tests d'import jamais exécutés | Corrections et ajout de tests de non-régression ; la suite passe de 19 à 35 tests. |
 | **Commits non reliés aux comptes GitHub** : l'adresse e-mail utilisée dans Git n'était pas enregistrée sur le compte GitHub. | Ajout et vérification de l'adresse dans les paramètres GitHub ; les commits ont alors été rattachés automatiquement au bon compte. |
 | **Dépassement du planning** : le Gantt prévoyait une fin le 06/11. | Le rapport et la répétition de la soutenance ont été finalisés lors d'une cinquième séance (09/11). |
 
@@ -161,7 +161,7 @@ Le MCD comporte cinq entités : **Utilisateur**, **Quiz**, **Question**, **Répo
 
 ### D.4 Validation
 
-La validation repose sur **30 tests unitaires automatisés**, exécutés avec `python -m unittest discover tests` avant chaque envoi sur GitHub :
+La validation repose sur **35 tests unitaires automatisés**, exécutés avec `python -m unittest discover tests` avant chaque envoi sur GitHub :
 
 | Fichier | Tests | Ce qui est vérifié |
 | :--- | :---: | :--- |
@@ -215,10 +215,10 @@ Côté gestion de projet, tous les livrables demandés sont présents dans le d�
 | README (objectif, installation, utilisation) | `README.md` |
 | Comptes rendus des 5 séances | `docs/comptes-rendus/` |
 | WBS, PBS, Gantt | `docs/wbs_projet_quiz_python.png`, `docs/PBS_Quizora.png`, `docs/Gantt_projet_quiz.gan` |
-| MCD et dictionnaire des données | `docs/quiz.mdc`, `docs/mcd_documentation.md` |
+| MCD et dictionnaire des données | `docs/mcd_quizora.png`, `docs/mcd_documentation.md` |
 | Dossier d'architecture technique | `docs/architecture_technique_quizora.pdf` (et versions Markdown et HTML) |
 | Glossaire | `docs/glossaire.md` |
-| Captures du tableau Trello | `docs/trello_sprint2.png`, `docs/trello_sprint3.png`, `docs/trello_sprint4.png` |
+| Captures du tableau Trello | `docs/trello_sprint2.png` à `docs/trello_sprint5.png` |
 | Rapport final | `docs/rapport_final.md` et `docs/rapport_final.pdf` |
 
 ---

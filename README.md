@@ -6,12 +6,12 @@ Projet académique réalisé dans le cadre de l'unité d'enseignement **PROJ531 
 
 ## 1. Présentation du Projet
 
-**Quizora** est une application console en Python développée par notre groupe dans le cadre du module **PROJ531 (Gestion de projet informatique)** à l'Université Savoie Mont Blanc.
+**Quizora** est une application Python, utilisable en console ou avec une interface graphique (Tkinter), développée par notre groupe dans le cadre du module **PROJ531 (Gestion de projet informatique)** à l'Université Savoie Mont Blanc.
 
 Elle permet de gérer et de passer des quiz sous forme de QCM :
 - **Comptes et sécurité :** Inscription et connexion avec distinction des rôles (Joueur et Administrateur). Les mots de passe sont hachés en SHA-256 avec un sel individuel de 16 octets.
-- **Gestion des quiz :** L'administrateur peut créer des quiz directement dans le terminal ou les importer depuis un fichier texte `.txt`.
-- **Passation et scores :** Le joueur choisit un quiz, répond aux questions, et l'application affiche son score et les bonnes réponses.
+- **Gestion des quiz :** L'administrateur peut créer des quiz (console ou interface graphique) ou les importer depuis un fichier texte `.txt`.
+- **Passation et scores :** Le joueur choisit un quiz, répond aux questions, et l'application affiche son score et les bonnes réponses. Chaque score est enregistré et le joueur peut consulter son historique (moyenne et meilleur score).
 - **Stockage local :** Les données sont enregistrées dans des fichiers JSON (`users.json`, `quizzes.json`, `results.json`) dans un dossier `data/`.
 - **Méthode Agile :** Le travail est découpé en 4 sprints de 2 jours maximum par tâche, suivis sur Trello et planifiés sur un diagramme de Gantt.
 
@@ -43,13 +43,14 @@ PROJ531-Quiz-Python/
 ├── sample_quiz.txt                    # Exemple de quiz à importer
 ├── exemples/                          # Quiz de démonstration créés automatiquement par l'admin au premier lancement
 ├── README.md                          # Documentation générale et technique
+├── CONTRIBUTING.md                    # Règles de travail Git (branches, commits, Pull Requests)
 ├── .gitignore                         # Exclusions de versionnement (caches, data/, environnements)
 ├── docs/                              # Dossier de gestion de projet et livrables
 │   ├── Gantt_projet_quiz.gan          # Diagramme de Gantt (source GanttProject)
 │   ├── Gantt_projet_quiz.png          # Export graphique du planning Gantt
 │   ├── wbs_projet_quiz_python.png     # Organigramme de décomposition des tâches (WBS)
 │   ├── PBS_Quizora.png                # Organigramme de décomposition du produit (PBS)
-│   ├── quiz.mdc                       # Modèle Conceptuel de Données (source Looping)
+│   ├── mcd_quizora.png                # Modèle Conceptuel de Données (capture Looping)
 │   ├── mcd_documentation.md           # Spécifications détaillées du MCD et dictionnaire des données
 │   ├── glossaire.md                   # Glossaire terminologique du projet
 │   ├── rapport_final.md               # Rapport final de projet (version PDF : rapport_final.pdf)
@@ -69,7 +70,7 @@ PROJ531-Quiz-Python/
 │       └── cr_seance_5.md             # Séance 5 : Finalisation, rapport final et préparation de la soutenance
 ├── src/                               # Code source applicatif
 │   ├── cli.py                         # Interface utilisateur en ligne de commande (CLI)
-│   ├── gui.py                         # Interface graphique Tkinter (connexion, tableau de bord)
+│   ├── gui.py                         # Interface graphique Tkinter (mêmes fonctionnalités que la console)
 │   ├── security.py                    # Primitives cryptographiques (hachage, salage)
 │   ├── models/                        # Entités métier (User, Quiz, Question, Reponse, Resultat)
 │   ├── services/                      # Services applicatifs (AuthService, QuizService, ResultatService, StorageService)
@@ -146,9 +147,9 @@ Lors de l'initialisation initiale de la base locale, deux profils de référence
 | **Administrateur** | `admin` (ou `admin@quiz.fr`) | `Admin123!` | Administration du système |
 | **Joueur** | `joueur1` (ou `joueur1@quiz.fr`) | `Joueur123!` | Passation de quiz |
 
-Au premier lancement, trois quiz de démonstration du dossier `exemples/` (Python, gestion de projet, culture générale) sont également créés au nom du compte `admin`, ce qui permet de tester immédiatement la passation de quiz et l'historique des scores. L'administrateur peut aussi les réimporter depuis le menu d'import (par exemple `exemples/quiz_python.txt`).
+Au premier lancement, trois quiz de démonstration du dossier `exemples/` (Python, gestion de projet, culture générale) sont également créés au nom du compte `admin`, ce qui permet de tester immédiatement la passation de quiz et l'historique des scores. Un même titre ne peut pas être importé deux fois : pour tester l'import, utiliser `sample_quiz.txt`.
 
-La création autonome de nouveaux comptes joueurs est accessible via le menu d'inscription de l'interface console.
+La création de nouveaux comptes joueurs est accessible depuis le menu d'inscription de la console ou le bouton « Créer un nouveau compte » de l'interface graphique.
 
 ---
 
@@ -160,7 +161,7 @@ Conformément aux exigences de livraison logicielle sans régression, la conform
 python -m unittest discover tests -v
 ```
 
-Tous les tests doivent obligatoirement être validés préalablement à toute fusion ou livraison vers la branche principale `main`.
+La suite compte **35 tests** (sécurité, authentification, stockage, quiz, import, historique des scores). Tous les tests doivent être validés avant toute fusion vers la branche principale `main` (voir [CONTRIBUTING.md](CONTRIBUTING.md)).
 
 ---
 
@@ -187,8 +188,9 @@ Le calendrier du projet est découpé en 4 sprints successifs :
   - Moteur d'exécution des questionnaires et restitution des scores pour les joueurs (US06).
   - Extension de la couverture de tests unitaires au moteur de jeu.
 
-- **Sprint 4 (02/11 - 06/11) : Historisation des Résultats, Consolidation et Soutenance** - Statut : En cours
+- **Sprint 4 (02/11 - 06/11, prolongé en séance 5 le 09/11) : Historisation des Résultats, Consolidation et Soutenance** - Statut : En cours
   - Sauvegarde de l'historique individuel des scores par joueur (`results.json`) - terminé.
   - Audit de robustesse et correction des anomalies - terminé.
-  - Rédaction du rapport final de projet - en cours.
-  - Préparation et répétition de la soutenance orale (démonstration de 15 minutes) - à faire.
+  - Interface graphique complète (création, import, passation, historique) - terminé.
+  - Rédaction du rapport final de projet - rédigé, relecture par l'équipe en cours.
+  - Préparation de la soutenance orale (démonstration de 15 minutes) - scénario prêt, répétition en cours.

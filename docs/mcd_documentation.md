@@ -1,6 +1,6 @@
 # Documentation du Modèle Conceptuel de Données (MCD) - Application Quizora
 
-Le modèle conceptuel de données modélise les entités et relations nécessaires au fonctionnement de l'application **Quizora**. Il a été conçu sous l'outil **Looping** (fichier source : [`docs/quiz.mdc`](quiz.mdc)).
+Le modèle conceptuel de données modélise les entités et relations nécessaires au fonctionnement de l'application **Quizora**. Il a été conçu sous l'outil **Looping** (capture du modèle : [`docs/mcd_quizora.png`](mcd_quizora.png)).
 
 ---
 
