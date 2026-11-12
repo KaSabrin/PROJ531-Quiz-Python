@@ -5,6 +5,7 @@ import unittest
 
 from src.models.question import Question
 from src.models.quiz import Quiz
+from src.models.resultat import Resultat
 from src.models.user import User
 from src.services.resultat_service import ResultatService
 from src.services.storage_service import StorageService
@@ -80,6 +81,13 @@ class TestResultatService(unittest.TestCase):
         self.assertEqual(self.service.statistiques_joueur(self.bob),
                          {"nb_quiz": 0, "moyenne": 0.0, "meilleur": 0.0})
 
+
+    def test_moyenne_et_meilleur_arrondis_pareil(self):
+        """Moyenne et meilleur score sont tous deux arrondis à une décimale (3/7 = 42.9 %)."""
+        self.storage.save_results([Resultat(self.alice.id_utilisateur, "q1", 3, 7)])
+        stats = self.service.statistiques_joueur(self.alice)
+        self.assertEqual(stats["moyenne"], 42.9)
+        self.assertEqual(stats["meilleur"], 42.9)
 
 if __name__ == "__main__":
     unittest.main()

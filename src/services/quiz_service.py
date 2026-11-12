@@ -114,10 +114,9 @@ class QuizService:
         # Récupérer les quiz enregistrés
         quizzes = self.storage_service.load_quizzes()
 
-        # Éviter un doublon d'identifiant
-        for quiz_existant in quizzes:
-            if quiz_existant.id_quiz == quiz.id_quiz:
-                return False, "Ce quiz existe déjà.", None
+        # Éviter deux quiz portant le même titre (ex. : même fichier importé deux fois)
+        if any(q.titre.casefold() == quiz.titre.casefold() for q in quizzes):
+            return False, f"Un quiz intitulé '{quiz.titre}' existe déjà.", None
 
         # Ajouter et enregistrer le quiz
         quizzes.append(quiz)
@@ -127,7 +126,7 @@ class QuizService:
 
         return (
             True,
-            f"Quiz '{quiz.titre}' créé avec succès ({len(quiz.questions)} questions).",
+            f"Quiz '{quiz.titre}' créé avec succès ({len(quiz.questions)} question(s)).",
             quiz
         )
 
@@ -145,7 +144,7 @@ class QuizService:
 
         donnees_quiz = importer_quiz_depuis_txt(chemin_fichier)
         if not donnees_quiz:
-            return False, "Fichier introuvable ou erreur de lecture.", None
+            return False, "Fichier introuvable ou illisible (un fichier texte .txt est attendu).", None
 
         titre = donnees_quiz.get("titre", "").strip()
         if not titre:

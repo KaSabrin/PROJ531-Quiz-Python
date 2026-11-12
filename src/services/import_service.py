@@ -18,7 +18,7 @@ def importer_quiz_depuis_txt(chemin_fichier):
     current_question = None
 
     try:
-        with open(chemin_fichier, 'r', encoding='utf-8') as f:
+        with open(chemin_fichier, 'r', encoding='utf-8-sig') as f:
             for ligne in f:
                 ligne = ligne.strip()
                 if not ligne:
@@ -51,19 +51,9 @@ def importer_quiz_depuis_txt(chemin_fichier):
             if current_question:
                 quiz["questions"].append(current_question)
 
-    except FileNotFoundError:
-        print(f"Erreur : Le fichier {chemin_fichier} est introuvable.")
-        return None
     except (OSError, UnicodeDecodeError):
-        # Dossier, fichier protégé ou fichier non texte (PDF, image...)
-        print(f"Erreur : Le fichier {chemin_fichier} n'est pas un fichier texte lisible.")
+        # Fichier introuvable, dossier, fichier protégé ou non texte (PDF, image...)
         return None
 
     return quiz
 
-
-if __name__ == "__main__":
-    # Test rapide de la fonction
-    import json
-    resultat = importer_quiz_depuis_txt("sample_quiz.txt")
-    print(json.dumps(resultat, indent=4, ensure_ascii=False))

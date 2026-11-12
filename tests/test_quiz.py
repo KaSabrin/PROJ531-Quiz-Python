@@ -121,5 +121,15 @@ class TestQuizService(unittest.TestCase):
         self.assertEqual(len(self.storage_service.load_quizzes()), 3)
 
 
+    def test_titre_en_double_refuse(self):
+        """Importer deux fois le même fichier ne crée pas de doublon dans le catalogue."""
+        fichier = Path(__file__).resolve().parent.parent / "exemples" / "quiz_python.txt"
+        premier, _, _ = self.quiz_service.importer_quiz_depuis_fichier(fichier, auteur=self.admin)
+        second, message, _ = self.quiz_service.importer_quiz_depuis_fichier(fichier, auteur=self.admin)
+        self.assertTrue(premier)
+        self.assertFalse(second)
+        self.assertIn("existe déjà", message)
+        self.assertEqual(len(self.storage_service.load_quizzes()), 1)
+
 if __name__ == "__main__":
     unittest.main()

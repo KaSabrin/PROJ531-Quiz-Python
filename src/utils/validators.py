@@ -2,7 +2,7 @@
 
 import re
 
-EMAIL_REGEX = re.compile(r"^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$")
+EMAIL_REGEX = re.compile(r"^[\w\.-]+@([\w-]+\.)+[\w-]{2,}$")
 
 
 def validate_email(email: str) -> bool:

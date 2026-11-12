@@ -170,7 +170,7 @@ class QuizoraGUI:
         # Titre de la page
         lbl_titre = tk.Label(
             card,
-            text="Connexion a votre compte",
+            text="Connexion à votre compte",
             font=("Segoe UI", 15, "bold"),
             bg=self.COLOR_CARD,
             fg=self.COLOR_TEXT,
@@ -179,7 +179,7 @@ class QuizoraGUI:
 
         lbl_desc = tk.Label(
             card,
-            text="Entrez vos identifiants pour acceder a l'espace Quizora",
+            text="Entrez vos identifiants pour accéder à l'espace Quizora",
             font=("Segoe UI", 9),
             bg=self.COLOR_CARD,
             fg=self.COLOR_MUTED,
@@ -287,7 +287,7 @@ class QuizoraGUI:
             succes, message, user = self.auth_service.login(identifiant, mot_de_passe)
             if succes and user is not None:
                 self.current_user = user
-                lbl_feedback.config(text="[OK] Connexion reussie !", fg=self.COLOR_SUCCESS)
+                lbl_feedback.config(text="[OK] Connexion réussie !", fg=self.COLOR_SUCCESS)
                 self.root.after(350, self.afficher_page_dashboard)
             else:
                 lbl_feedback.config(text=f"Erreur : {message}", fg=self.COLOR_ERROR)
@@ -361,7 +361,7 @@ class QuizoraGUI:
 
         btn_aller_inscription = tk.Button(
             card,
-            text="Creer un nouveau compte",
+            text="Créer un nouveau compte",
             font=("Segoe UI", 9, "underline"),
             bg=self.COLOR_CARD,
             fg=self.COLOR_PRIMARY,
@@ -398,7 +398,7 @@ class QuizoraGUI:
         # Titre
         lbl_titre = tk.Label(
             card,
-            text="Inscription a Quizora",
+            text="Inscription à Quizora",
             font=("Segoe UI", 15, "bold"),
             bg=self.COLOR_CARD,
             fg=self.COLOR_TEXT,
@@ -407,7 +407,7 @@ class QuizoraGUI:
 
         lbl_desc = tk.Label(
             card,
-            text="Creez votre compte pour participer aux quiz",
+            text="Créez votre compte pour participer aux quiz",
             font=("Segoe UI", 9),
             bg=self.COLOR_CARD,
             fg=self.COLOR_MUTED,
@@ -420,7 +420,7 @@ class QuizoraGUI:
         # Pseudo
         tk.Label(
             form_frame,
-            text="Pseudo (3 a 20 caracteres) :",
+            text="Pseudo (3 à 30 caractères) :",
             font=("Segoe UI", 9, "bold"),
             bg=self.COLOR_CARD,
             fg=self.COLOR_TEXT,
@@ -462,7 +462,7 @@ class QuizoraGUI:
         # Mot de passe
         tk.Label(
             form_frame,
-            text="Mot de passe (min. 6 car. + 1 chiffre) :",
+            text="Mot de passe (min. 6 car., lettres + chiffres) :",
             font=("Segoe UI", 9, "bold"),
             bg=self.COLOR_CARD,
             fg=self.COLOR_TEXT,
@@ -536,7 +536,7 @@ class QuizoraGUI:
 
             if succes:
                 lbl_feedback.config(
-                    text="[OK] Inscription validee ! Redirection vers la connexion...",
+                    text="[OK] Inscription validée ! Redirection vers la connexion...",
                     fg=self.COLOR_SUCCESS,
                 )
                 self.root.after(1200, self.afficher_page_connexion)
@@ -559,7 +559,7 @@ class QuizoraGUI:
 
         btn_retour = tk.Button(
             card,
-            text="< Retour a la connexion",
+            text="< Retour à la connexion",
             font=("Segoe UI", 9),
             bg=self.COLOR_CARD,
             fg=self.COLOR_MUTED,
@@ -650,11 +650,11 @@ class QuizoraGUI:
         add_info_row("Adresse e-mail", self.current_user.email)
         add_info_row("Role", self.current_user.role.capitalize())
         add_info_row("Identifiant unique", self.current_user.id_utilisateur[:13] + "...")
-        add_info_row("Date de creation", self.current_user.date_creation[:19])
+        add_info_row("Date de création", self.current_user.date_creation[:19])
 
         btn_deconnexion = tk.Button(
             carte_profil,
-            text="Se deconnecter",
+            text="Se déconnecter",
             font=("Segoe UI", 9, "bold"),
             bg=self.COLOR_BORDER,
             fg="#ffffff",
@@ -708,7 +708,7 @@ class QuizoraGUI:
 
         if self.current_user.is_admin():
             self._bouton(
-                actions_frame, "+ Creer un quiz", self.afficher_page_creation_quiz
+                actions_frame, "+ Créer un quiz", self.afficher_page_creation_quiz
             ).pack(side="left", padx=(0, 6), ipady=4)
             self._bouton(
                 actions_frame, "Importer un fichier (.txt)", self.importer_quiz_fichier,
@@ -761,7 +761,7 @@ class QuizoraGUI:
                 desc = q.description if q.description else "Aucune description"
                 tk.Label(
                     item,
-                    text=f"{len(q.questions)} questions | {q.total_points()} points | {desc}",
+                    text=f"{len(q.questions)} question(s) | {q.total_points()} points | {desc}",
                     font=("Segoe UI", 8),
                     bg=self.COLOR_BORDER,
                     fg=self.COLOR_MUTED,
@@ -864,7 +864,7 @@ class QuizoraGUI:
     def afficher_page_creation_quiz(self) -> None:
         """Formulaire graphique de creation manuelle d'un quiz (admin)."""
         self._nettoyer_contenu()
-        self._entete_page("Creer un nouveau quiz")
+        self._entete_page("Créer un nouveau quiz")
 
         questions_data: list[dict] = []
 
@@ -882,7 +882,7 @@ class QuizoraGUI:
 
         tk.Label(
             g,
-            text="Questions ajoutees :",
+            text="Questions ajoutées :",
             font=("Segoe UI", 9, "bold"),
             bg=self.COLOR_CARD,
             fg=self.COLOR_TEXT,
@@ -986,7 +986,7 @@ class QuizoraGUI:
 
         tk.Label(
             d,
-            text="Propositions (cochez la bonne reponse, min. 2) :",
+            text="Propositions (cochez la bonne réponse, min. 2) :",
             font=("Segoe UI", 9, "bold"),
             bg=self.COLOR_CARD,
             fg=self.COLOR_TEXT,
@@ -1033,7 +1033,7 @@ class QuizoraGUI:
         def ajouter_question():
             enonce = entree_enonce.get().strip()
             if not enonce:
-                lbl_q_feedback.config(text="Erreur : L'enonce est vide.", fg=self.COLOR_ERROR)
+                lbl_q_feedback.config(text="Erreur : L'énoncé est vide.", fg=self.COLOR_ERROR)
                 return
             try:
                 points = int(spin_points.get())
@@ -1060,7 +1060,7 @@ class QuizoraGUI:
                 return
             if not bonne_choisie:
                 lbl_q_feedback.config(
-                    text="Erreur : La bonne reponse cochee est vide.", fg=self.COLOR_ERROR
+                    text="Erreur : La bonne réponse cochée est vide.", fg=self.COLOR_ERROR
                 )
                 return
 
@@ -1075,7 +1075,7 @@ class QuizoraGUI:
             spin_points.insert(0, "1")
             bonne_reponse.set(0)
             lbl_q_feedback.config(
-                text=f"[OK] Question {len(questions_data)} ajoutee.", fg=self.COLOR_SUCCESS
+                text=f"[OK] Question {len(questions_data)} ajoutée.", fg=self.COLOR_SUCCESS
             )
             entree_enonce.focus_set()
 
@@ -1196,7 +1196,7 @@ class QuizoraGUI:
             idx = choix.get()
             question = quiz.questions[etat["index"]]
             if idx < 0:
-                lbl_feedback.config(text="Choisissez une reponse.", fg=self.COLOR_ERROR)
+                lbl_feedback.config(text="Choisissez une réponse.", fg=self.COLOR_ERROR)
                 return
 
             etat["valide"] = True
@@ -1204,7 +1204,7 @@ class QuizoraGUI:
                 w.config(state="disabled")
             if question.reponses[idx].est_correct:
                 etat["score"] += question.points
-                lbl_feedback.config(text="[OK] Bonne reponse !", fg=self.COLOR_SUCCESS)
+                lbl_feedback.config(text="[OK] Bonne réponse !", fg=self.COLOR_SUCCESS)
             else:
                 attendue = ", ".join(r.text_reponse for r in question.get_bonnes_reponses())
                 etat["erreurs"].append({
@@ -1213,11 +1213,11 @@ class QuizoraGUI:
                     "attendue": attendue,
                 })
                 lbl_feedback.config(
-                    text=f"Mauvaise reponse. Reponse attendue : {attendue}",
+                    text=f"Mauvaise réponse. Réponse attendue : {attendue}",
                     fg=self.COLOR_ERROR,
                 )
             dernier = etat["index"] == len(quiz.questions) - 1
-            btn_action.config(text="Voir le resultat" if dernier else "Question suivante")
+            btn_action.config(text="Voir le résultat" if dernier else "Question suivante")
 
         afficher_question()
 
@@ -1264,7 +1264,7 @@ class QuizoraGUI:
         if not erreurs:
             tk.Label(
                 interieur,
-                text="Felicitations ! Un sans-faute !",
+                text="Félicitations ! Un sans-faute !",
                 font=("Segoe UI", 11, "bold"),
                 bg=self.COLOR_CARD,
                 fg=self.COLOR_SUCCESS,
@@ -1272,7 +1272,7 @@ class QuizoraGUI:
         else:
             tk.Label(
                 interieur,
-                text="Recapitulatif des erreurs :",
+                text="Récapitulatif des erreurs :",
                 font=("Segoe UI", 10, "bold"),
                 bg=self.COLOR_CARD,
                 fg=self.COLOR_TEXT,
@@ -1283,8 +1283,8 @@ class QuizoraGUI:
                 item.pack(fill="x", pady=4)
                 for texte, couleur in (
                     (err["question"], self.COLOR_TEXT),
-                    (f"Votre reponse : {err['choisie']}", self.COLOR_ERROR),
-                    (f"Reponse attendue : {err['attendue']}", self.COLOR_SUCCESS),
+                    (f"Votre réponse : {err['choisie']}", self.COLOR_ERROR),
+                    (f"Réponse attendue : {err['attendue']}", self.COLOR_SUCCESS),
                 ):
                     tk.Label(
                         item,
@@ -1312,7 +1312,7 @@ class QuizoraGUI:
         stats = self.resultat_service.statistiques_joueur(self.current_user)
         tk.Label(
             card,
-            text=f"Quiz passes : {stats['nb_quiz']}   |   Moyenne : {stats['moyenne']}%"
+            text=f"Quiz passés : {stats['nb_quiz']}   |   Moyenne : {stats['moyenne']}%"
             f"   |   Meilleur score : {stats['meilleur']}%",
             font=("Segoe UI", 10, "bold"),
             bg=self.COLOR_CARD,
@@ -1374,7 +1374,7 @@ class QuizoraGUI:
             w.destroy()
         tk.Label(
             self.header_user_frame,
-            text="Non connecte",
+            text="Non connecté",
             font=("Segoe UI", 9),
             bg=self.COLOR_CARD,
             fg=self.COLOR_MUTED,
@@ -1387,7 +1387,7 @@ class QuizoraGUI:
         if self.current_user:
             tk.Label(
                 self.header_user_frame,
-                text=f"Connecte : {self.current_user.pseudo} ({self.current_user.role})",
+                text=f"Connecté : {self.current_user.pseudo} ({self.current_user.role})",
                 font=("Segoe UI", 9, "bold"),
                 bg=self.COLOR_CARD,
                 fg=self.COLOR_TEXT,

@@ -49,5 +49,12 @@ class TestImportQuiz(unittest.TestCase):
         self.assertIsNone(importer_quiz_depuis_txt(self.test_filename))
         self.assertIsNone(importer_quiz_depuis_txt("tests"))
 
+    def test_fichier_utf8_avec_bom(self):
+        """Un fichier enregistré « UTF-8 avec BOM » (Bloc-notes) garde un TITRE lisible."""
+        with open(self.test_filename, "w", encoding="utf-8-sig") as f:
+            f.write("TITRE: Quiz BOM\nQUESTION: 1 + 1 ?\n- 1\n* 2\n")
+        quiz = importer_quiz_depuis_txt(self.test_filename)
+        self.assertEqual(quiz["titre"], "Quiz BOM")
+
 if __name__ == "__main__":
     unittest.main()

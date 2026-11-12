@@ -42,7 +42,14 @@ class StorageService:
                     return []
                 data = json.loads(content)
                 return data if isinstance(data, list) else []
-        except (json.JSONDecodeError, OSError):
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            # Fichier corrompu : on garde une copie avant qu'il soit réécrit (évite la perte des comptes)
+            sauvegarde = file_path.with_suffix(".corrompu.json")
+            if not sauvegarde.exists():
+                sauvegarde.write_bytes(file_path.read_bytes())
+                print(f"[Erreur stockage] {file_path.name} illisible, copie conservée dans {sauvegarde.name}")
+            return []
+        except OSError:
             return []
 
     def _write_json(self, file_path: Path, data: list[dict]) -> bool:

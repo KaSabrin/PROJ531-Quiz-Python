@@ -46,8 +46,8 @@ class QuizAppCLI:
             self.afficher_banniere()
             print("1.  Se connecter")
             print("2.  S'inscrire (Nouveau compte)")
-            print("3.  A propos & Comptes de demonstration")
-            print("4.  Ouvrir l'interface graphique (Page de connexion GUI)")
+            print("3.  À propos & Comptes de démonstration")
+            print("4.  Ouvrir l'interface graphique")
             print("5.  Quitter")
             print("-" * 60)
 
@@ -62,14 +62,14 @@ class QuizAppCLI:
             elif choix == "4":
                 self.action_ouvrir_gui()
             elif choix == "5":
-                print("\nMerci d'avoir utilise Quizora. A bientot !\n")
+                print("\nMerci d'avoir utilisé Quizora. À bientôt !\n")
                 sys.exit(0)
             else:
                 print("\nOption invalide. Veuillez entrer un nombre entre 1 et 5.")
 
     def action_ouvrir_gui(self) -> None:
         """Ouvre l'interface graphique (page de connexion Tkinter)."""
-        print("\nOuverture de la fenetre graphique Quizora...")
+        print("\nOuverture de la fenêtre graphique Quizora...")
         try:
             from src.gui import lancer_gui
             lancer_gui()
@@ -95,32 +95,32 @@ class QuizAppCLI:
 
     def action_connexion(self) -> None:
         """Gère la saisie des identifiants et la connexion."""
-        print("\n---  CONNEXION ---")
+        print("\n--- CONNEXION ---")
         identifiant = input("Pseudo ou Adresse e-mail : ").strip()
         mot_de_passe = prompt_password("Mot de passe : ")
 
         succes, message, user = self.auth_service.login(identifiant, mot_de_passe)
 
         if succes and user:
-            print(f"\n {message}")
+            print(f"\n{message}")
             if user.is_admin():
                 self.menu_administrateur(user)
             else:
                 self.menu_joueur(user)
         else:
-            print(f"\n Erreur de connexion : {message}")
+            print(f"\nErreur de connexion : {message}")
             input("Appuyez sur [Entrée] pour continuer...")
 
     def action_inscription(self) -> None:
         """Gère le formulaire d'inscription d'un nouvel utilisateur."""
-        print("\n---  CRÉATION D'UN NOUVEAU COMPTE ---")
+        print("\n--- CRÉATION D'UN NOUVEAU COMPTE ---")
         pseudo = input("Choisissez un pseudo (3 à 30 car.) : ").strip()
         email = input("Votre adresse e-mail : ").strip()
         mot_de_passe = prompt_password("Mot de passe (min. 6 car., lettres + chiffres) : ")
         confirmation = prompt_password("Confirmez le mot de passe : ")
 
         if mot_de_passe != confirmation:
-            print("\n Les deux mots de passe ne correspondent pas.")
+            print("\nLes deux mots de passe ne correspondent pas.")
             input("Appuyez sur [Entrée] pour continuer...")
             return
 
@@ -132,9 +132,9 @@ class QuizAppCLI:
         )
 
         if succes and user:
-            print(f"\n {message} Vous pouvez maintenant vous connecter.")
+            print(f"\n{message} Vous pouvez maintenant vous connecter.")
         else:
-            print(f"\n Échec de l'inscription : {message}")
+            print(f"\nÉchec de l'inscription : {message}")
 
         input("Appuyez sur [Entrée] pour continuer...")
 
@@ -164,10 +164,10 @@ class QuizAppCLI:
                 print("\nVous avez été déconnecté avec succès.")
                 break
             else:
-                print(" Choix invalide.")
+                print("Choix invalide.")
     
     def action_passer_quiz(self, user: User) -> None:
-        """Permet à un joueur de choisir et de passer un quiz interactif (Tâche 3.3)."""
+        """Permet à un joueur de choisir et de passer un quiz interactif."""
         quizzes = self.quiz_service.lister_quiz()
         if not quizzes:
             print("\nAucun quiz n'est disponible pour le moment. Demandez à un administrateur d'en créer un.")
@@ -177,12 +177,12 @@ class QuizAppCLI:
         print("CATALOGUE DES QUIZ DISPONIBLES")
         print("=" * 55)
         for idx, q in enumerate(quizzes, 1):
-            print(f"{idx}. {q.titre} ({len(q.questions)} questions - {q.total_points()} points)")
+            print(f"{idx}. {q.titre} ({len(q.questions)} question(s) - {q.total_points()} points)")
             if q.description:
                 print(f"   Description : {q.description}")
         print("-" * 55)
         choix = input(f"Choisissez un quiz (1-{len(quizzes)}) ou 'retour' : ").strip()
-        if choix.lower() == "retour" or not choix.isdigit() or not (1 <= int(choix) <= len(quizzes)):
+        if choix.lower() == "retour" or not choix.isdecimal() or not (1 <= int(choix) <= len(quizzes)):
             return
         quiz = quizzes[int(choix) - 1]
         if not quiz.questions:
@@ -202,7 +202,7 @@ class QuizAppCLI:
             # Saisie de la réponse du joueur
             while True:
                 rep_joueur = input(f"Votre réponse (1-{len(question.reponses)}) : ").strip()
-                if rep_joueur.isdigit() and 1 <= int(rep_joueur) <= len(question.reponses):
+                if rep_joueur.isdecimal() and 1 <= int(rep_joueur) <= len(question.reponses):
                     choix_idx = int(rep_joueur) - 1
                     break
                 print("Saisie invalide, entrez le numéro d'une des options.")
@@ -222,11 +222,11 @@ class QuizAppCLI:
         pourcentage = round((score_obtenu / total_max * 100), 1) if total_max > 0 else 0
 
         succes, message, _ = self.resultat_service.enregistrer_resultat(user, quiz, score_obtenu)
-        print(f"\n{message}" if succes else f"\n[Erreur] {message}")
         
         print("\n" + "=" * 55)
         print(f"FIN DU QUIZ ! Score de {user.pseudo} : {score_obtenu} / {total_max} points ({pourcentage}%)")
         print("=" * 55)
+        print(message if succes else f"[Erreur] {message}")
         if reponses_incorrectes:
             print("\nRécapitulatif des erreurs :")
             for err in reponses_incorrectes:
@@ -271,7 +271,7 @@ class QuizAppCLI:
             print("=" * 50)
             print("1.  Voir mon profil")
             print("2.  Lister les utilisateurs enregistrés")
-            print("3.  Créer un quiz manuellement ")
+            print("3.  Créer un quiz manuellement")
             print("4.  Importer un quiz depuis un fichier texte")
             print("5.  Se déconnecter")
             print("-" * 50)
@@ -288,10 +288,10 @@ class QuizAppCLI:
                 self.action_importer_quiz(user)
             elif choix == "5":
                 self.auth_service.logout()
-                print("\n Déconnexion réussie.")
+                print("\nDéconnexion réussie.")
                 break
             else:
-                print(" Choix invalide.")
+                print("Choix invalide.")
     
     def action_creer_quiz(self, user: User) -> None:
         """Formulaire interactif de création manuelle d'un quiz."""
@@ -319,7 +319,7 @@ class QuizAppCLI:
                 continue
 
             pts_input = input("Nombre de points pour cette question [défaut 1] : ").strip()
-            points = int(pts_input) if pts_input.isdigit() and int(pts_input) > 0 else 1
+            points = int(pts_input) if pts_input.isdecimal() and int(pts_input) > 0 else 1
 
             reponses = []
             print("Saisissez les propositions de réponses (min. 2) :")
@@ -338,7 +338,7 @@ class QuizAppCLI:
 
             while True:
                 choix_bonne = input(f"Numéro de la bonne réponse (1-{len(reponses)}) : ").strip()
-                if choix_bonne.isdigit() and 1 <= int(choix_bonne) <= len(reponses):
+                if choix_bonne.isdecimal() and 1 <= int(choix_bonne) <= len(reponses):
                     reponses[int(choix_bonne) - 1]["est_correct"] = True
                     break
                 print("Choix invalide.")
@@ -365,7 +365,7 @@ class QuizAppCLI:
         input("Appuyez sur [Entrée] pour continuer...")
 
     def action_importer_quiz(self, user: User) -> None:
-        """Importation d'un quiz depuis un fichier texte ."""
+        """Importation d'un quiz depuis un fichier texte."""
         print("\n" + "=" * 50)
         print("IMPORTATION D'UN QUIZ DEPUIS UN FICHIER TEXTE (.TXT)")
         print("=" * 50)
@@ -384,7 +384,7 @@ class QuizAppCLI:
 
     def afficher_profil(self, user: User) -> None:
         """Affiche les informations personnelles de l'utilisateur."""
-        print("\n---  PROFIL UTILISATEUR ---")
+        print("\n--- PROFIL UTILISATEUR ---")
         print(f"Identifiant unique : {user.id_utilisateur}")
         print(f"Pseudo             : {user.pseudo}")
         print(f"E-mail             : {user.email}")
@@ -395,7 +395,7 @@ class QuizAppCLI:
     def lister_utilisateurs(self) -> None:
         """Affiche la liste de tous les utilisateurs enregistrés."""
         users = self.auth_service.list_users()
-        print("\n---  LISTE DES UTILISATEURS DU SYSTÈME ---")
+        print("\n--- LISTE DES UTILISATEURS DU SYSTÈME ---")
         print(f"{'Pseudo':<20} {'Rôle':<10} {'Email':<30}")
         print("-" * 62)
         for u in users:
@@ -410,6 +410,6 @@ def lancer() -> None:
     try:
         app = QuizAppCLI()
         app.menu_principal()
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, EOFError):
         print("\n\nFermeture de l'application...")
         sys.exit(0)

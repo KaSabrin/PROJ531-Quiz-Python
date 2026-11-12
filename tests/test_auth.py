@@ -86,5 +86,10 @@ class TestAuthService(unittest.TestCase):
         self.assertFalse(self.auth.is_authenticated())
 
 
+    def test_register_email_extension_longue(self):
+        """Une adresse avec une extension longue (.online) est acceptée."""
+        success, _, _ = self.auth.register("bob42", "bob@mail.online", "MotDePasse1")
+        self.assertTrue(success)
+
 if __name__ == "__main__":
     unittest.main()

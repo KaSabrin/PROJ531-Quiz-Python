@@ -54,5 +54,5 @@ class ResultatService:
         return {
             "nb_quiz": len(historique),
             "moyenne": round(sum(pourcentages) / len(pourcentages), 1),
-            "meilleur": max(pourcentages),
+            "meilleur": round(max(pourcentages), 1),
         }

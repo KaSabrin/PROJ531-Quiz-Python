@@ -1,5 +1,7 @@
 """Tests unitaires du service de stockage JSON."""
 
+import contextlib
+import io
 import tempfile
 import unittest
 from pathlib import Path
@@ -43,6 +45,15 @@ class TestStorageService(unittest.TestCase):
         self.assertEqual(loaded_users[0].email, "alice@example.com")
         self.assertEqual(loaded_users[0].role, User.ROLE_JOUEUR)
 
+
+    def test_fichier_corrompu_sauvegarde(self):
+        """Un users.json illisible est copié avant d'être réécrit : les comptes ne sont pas perdus."""
+        users_file = Path(self.temp_dir.name) / "users.json"
+        users_file.write_text("[{ contenu abîmé", encoding="utf-8")
+        with contextlib.redirect_stdout(io.StringIO()):  # avertissement attendu
+            self.assertEqual(self.storage.load_users(), [])
+        sauvegarde = Path(self.temp_dir.name) / "users.corrompu.json"
+        self.assertEqual(sauvegarde.read_text(encoding="utf-8"), "[{ contenu abîmé")
 
 if __name__ == "__main__":
     unittest.main()
