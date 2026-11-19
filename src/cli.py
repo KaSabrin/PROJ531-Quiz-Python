@@ -184,15 +184,26 @@ class QuizAppCLI:
         choix = input(f"Choisissez un quiz (1-{len(quizzes)}) ou 'retour' : ").strip()
         if choix.lower() == "retour" or not choix.isdecimal() or not (1 <= int(choix) <= len(quizzes)):
             return
+        
         quiz = quizzes[int(choix) - 1]
+
         if not quiz.questions:
             print(f"\nLe quiz « {quiz.titre} » ne contient aucune question : impossible de le lancer.")
             input("Appuyez sur [Entrée] pour continuer...")
             return
+
+        # Vérifier la validité des questions avant de lancer le quiz
+        for question in quiz.questions:
+            if len(question.reponses) < 2 or len(question.get_bonnes_reponses()) != 1:
+                print("Quiz invalide : une question doit avoir au moins deux réponses et une seule bonne réponse.")
+                input("Appuyez sur [Entrée] pour continuer...")
+                return
+
         print("\n" + "=" * 55)
         print(f"DÉMARRAGE DU QUIZ : {quiz.titre.upper()}")
         print("=" * 55)
         score_obtenu = 0
+
         reponses_incorrectes = []
         for idx_q, question in enumerate(quiz.questions, 1):
             print(f"\nQuestion {idx_q}/{len(quiz.questions)} [{question.points} pt(s)] :")
