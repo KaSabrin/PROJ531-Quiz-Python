@@ -1100,10 +1100,9 @@ class QuizoraGUI:
         else:
             messagebox.showerror("Quizora", message)
 
-    # =========================================================================
     # JOUEUR : PASSAGE D'UN QUIZ, RESULTAT ET HISTORIQUE
-    # =========================================================================
 
+        
     def afficher_page_passage(self, quiz: Quiz) -> None:
         """Lance le passage interactif d'un quiz, question par question."""
         if not quiz.questions:
@@ -1112,7 +1111,17 @@ class QuizoraGUI:
             )
             return
 
+        # Vérifier la validité des questions avant de lancer le quiz
+        for question in quiz.questions:
+            if len(question.reponses) < 2 or len(question.get_bonnes_reponses()) != 1:
+                messagebox.showwarning(
+                    "Quizora",
+                    "Quiz invalide : une question doit avoir au moins deux réponses et une seule bonne réponse."
+                )
+                return
+
         etat = {"index": 0, "score": 0, "erreurs": [], "valide": False}
+
 
         self._nettoyer_contenu()
         self._entete_page(quiz.titre)
