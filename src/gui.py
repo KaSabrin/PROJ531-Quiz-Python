@@ -14,23 +14,24 @@ from src.services.auth_service import AuthService
 from src.services.quiz_service import QuizService
 from src.services.resultat_service import ResultatService
 from src.services.storage_service import StorageService
-
+from pathlib import Path
 
 class QuizoraGUI:
     """Fenetre principale et gestionnaire de pages graphiques pour Quizora."""
 
-    # Palette de couleurs moderne (Slate & Blue)
-    COLOR_BG = "#0f172a"          # Slate 900
-    COLOR_CARD = "#1e293b"        # Slate 800
-    COLOR_BORDER = "#334155"      # Slate 700
-    COLOR_TEXT = "#f8fafc"        # Slate 50
-    COLOR_MUTED = "#94a3b8"       # Slate 400
-    COLOR_PRIMARY = "#2563eb"     # Blue 600
-    COLOR_PRIMARY_HOVER = "#1d4ed8"
-    COLOR_SUCCESS = "#10b981"     # Emerald 500
-    COLOR_ERROR = "#ef4444"       # Red 500
-    COLOR_INPUT_BG = "#0f172a"
-    COLOR_INPUT_FG = "#ffffff"
+    # Palette claire de Quizora
+    COLOR_BG = "#ffffff"
+    COLOR_CARD = "#ffffff"
+    COLOR_BORDER = "#e1e3e8"
+    COLOR_TEXT = "#202124"
+    COLOR_MUTED = "#737373"
+    COLOR_PRIMARY = "#4263eb"
+    COLOR_PRIMARY_HOVER = "#3451cc"
+    COLOR_SUCCESS = "#16875d"
+    COLOR_ERROR = "#c93445"
+    COLOR_INPUT_BG = "#fcfcfd"
+    COLOR_INPUT_FG = "#202124"
+    COLOR_SECONDARY = "#f0f2f9"
 
     def __init__(self, root: Optional[tk.Tk] = None):
         if root is None:
@@ -49,12 +50,12 @@ class QuizoraGUI:
 
         # Configuration de la fenetre
         self.root.title("Quizora - PROJ531 USMB (Interface Graphique)")
-        self.root.geometry("820x680")
-        self.root.minsize(760, 600)
+        self.root.geometry("860x680")
+        self.root.minsize(800, 660)
         self.root.configure(bg=self.COLOR_BG)
 
         # Centrage a l'ecran
-        self._centrer_fenetre(820, 680)
+        self._centrer_fenetre(860, 680)
 
         # Configuration du style ttk
         self._configurer_styles()
@@ -63,12 +64,20 @@ class QuizoraGUI:
         self.main_container = tk.Frame(self.root, bg=self.COLOR_BG)
         self.main_container.pack(fill="both", expand=True)
 
-        # Construction du header global
+        
+        # Le logo reste visible sur toutes les pages.
+        self._charger_logo()
         self._construire_header()
+
+        # Pied de page commun
+        tk.Label(
+            self.main_container, text="Quizora · PROJ531 · USMB",
+            font=("Segoe UI", 9), bg=self.COLOR_BG, fg=self.COLOR_MUTED
+        ).pack(side="bottom", pady=(4, 14))
 
         # Zone dynamique pour les pages (Login / Register / Dashboard)
         self.content_frame = tk.Frame(self.main_container, bg=self.COLOR_BG)
-        self.content_frame.pack(fill="both", expand=True, padx=30, pady=20)
+        self.content_frame.pack(fill="both", expand=True, padx=28, pady=12)
 
         # Affichage initial : Page de connexion
         self.afficher_page_connexion()
@@ -106,41 +115,169 @@ class QuizoraGUI:
         style.configure(
             "Secondary.TButton",
             font=("Segoe UI", 9),
-            background=self.COLOR_BORDER,
-            foreground="#ffffff",
+            background=self.COLOR_SECONDARY,
+            foreground=self.COLOR_TEXT,
             borderwidth=0,
             padding=6,
         )
 
+    def _charger_logo(self) -> None:
+        """Charge et redimensionne le logo Quizora."""
+        chemin = Path(__file__).resolve().parents[1] / "docs" / "logo_quizora.png"
+        self.logo_img = None
+
+        try:
+            image = tk.PhotoImage(master=self.root, file=str(chemin))
+
+            # Limiter la taille du logo
+            facteur = max(
+                1,
+                (image.width() + 249) // 250,
+                (image.height() + 119) // 120
+            )
+
+            self.logo_img = image.subsample(facteur, facteur)
+
+        except tk.TclError:
+            pass
+
+
+    
     def _construire_header(self) -> None:
-        """Affiche le bandeau superieur commun a toutes les pages."""
-        header_frame = tk.Frame(self.main_container, bg=self.COLOR_CARD, height=70)
-        header_frame.pack(fill="x", side="top")
-        header_frame.pack_propagate(False)
-
-        # Titre application
-        titre_label = tk.Label(
-            header_frame,
-            text="QUIZORA",
-            font=("Segoe UI", 16, "bold"),
+        """Affiche le logo à gauche et l'état de connexion à droite."""
+        header = tk.Frame(
+            self.main_container,
             bg=self.COLOR_CARD,
-            fg=self.COLOR_TEXT,
+            height=140
         )
-        titre_label.pack(side="left", padx=25, pady=12)
+        header.pack(side="top", fill="x")
+        header.pack_propagate(False)
 
-        # Sous-titre académique
-        sub_label = tk.Label(
-            header_frame,
-            text="Gestion et Passation de Quiz | PROJ531 - USMB",
-            font=("Segoe UI", 9),
-            bg=self.COLOR_CARD,
-            fg=self.COLOR_MUTED,
+        if self.logo_img is not None:
+            label = tk.Label(
+                header,
+                image=self.logo_img,
+                bg=self.COLOR_CARD,
+                bd=0
+            )
+        else:
+            label = tk.Label(
+                header,
+                text="QUIZORA",
+                font=("Georgia", 22),
+                fg=self.COLOR_PRIMARY,
+                bg=self.COLOR_CARD
+            )
+
+        label.pack(side="left", padx=18, pady=5)
+
+        self.header_user_frame = tk.Frame(
+            header,
+            bg=self.COLOR_CARD
         )
-        sub_label.pack(side="left", pady=16)
+        self.header_user_frame.pack(side="right", padx=22)
 
-        # Zone droite du header (statut utilisateur)
-        self.header_user_frame = tk.Frame(header_frame, bg=self.COLOR_CARD)
-        self.header_user_frame.pack(side="right", padx=25, pady=12)
+        tk.Frame(
+            self.main_container,
+            bg=self.COLOR_BORDER,
+            height=1
+        ).pack(fill="x")
+
+
+    def _fond_arrondi(self, parent, largeur, hauteur, couleur, bordure=None):
+        """Dessine le fond d'un champ ou d'un bouton en gardant les widgets natifs."""
+        canvas = tk.Canvas(parent, width=largeur, height=hauteur,
+                           bg=self.COLOR_BG, highlightthickness=0, bd=0)
+        x, y, r = largeur - 1, hauteur - 1, 9
+        points = [1+r, 1, x-r, 1, x, 1, x, 1+r, x, y-r, x, y,
+                  x-r, y, 1+r, y, 1, y, 1, y-r, 1, 1+r, 1, 1]
+        forme = canvas.create_polygon(points, smooth=True, splinesteps=20,
+                                      fill=couleur, outline=bordure or couleur)
+        return canvas, forme
+
+    def _champ_connexion(self, parent, indication, secret=False):
+        """Crée un vrai champ Tkinter avec un texte indicatif et un œil optionnel."""
+        cadre, forme = self._fond_arrondi(parent, 312, 50, self.COLOR_INPUT_BG, "#d5dae5")
+        cadre.pack(pady=(0, 12))
+        entree = tk.Entry(cadre, font=("Segoe UI", 11), bg=self.COLOR_INPUT_BG,
+                          fg=self.COLOR_MUTED, insertbackground=self.COLOR_TEXT,
+                          relief="flat", bd=0, highlightthickness=0)
+        entree.place(x=13, rely=0.5, anchor="w", width=260 if secret else 286, height=30)
+        indicatif = True
+        masque = secret
+
+        def afficher_indication():
+            nonlocal indicatif
+            indicatif = True
+            entree.config(show="", fg=self.COLOR_MUTED)
+            entree.delete(0, tk.END)
+            entree.insert(0, indication)
+
+        def retirer_indication():
+            nonlocal indicatif
+            if indicatif:
+                entree.delete(0, tk.END)
+                indicatif = False
+            entree.config(fg=self.COLOR_TEXT, show="*" if masque else "")
+
+        def lire():
+            return "" if indicatif else entree.get()
+
+        def remplir(valeur):
+            retirer_indication()
+            entree.delete(0, tk.END)
+            entree.insert(0, valeur)
+
+        def focus_in(event):
+            retirer_indication()
+            cadre.itemconfigure(forme, outline=self.COLOR_PRIMARY)
+
+        def focus_out(event):
+            if not lire():
+                afficher_indication()
+            cadre.itemconfigure(forme, outline="#d5dae5")
+
+        entree.bind("<FocusIn>", focus_in)
+        entree.bind("<FocusOut>", focus_out)
+        afficher_indication()
+        if secret:
+            def basculer():
+                nonlocal masque
+                masque = not masque
+                if not indicatif:
+                    entree.config(show="*" if masque else "")
+                bouton.config(image=self.oeil if masque else self.oeil_barre)
+
+            bouton = tk.Button(cadre, image=self.oeil, command=basculer,
+                               bg=self.COLOR_INPUT_BG, activebackground=self.COLOR_INPUT_BG,
+                               relief="flat", bd=0, cursor="hand2", takefocus=True,
+                               highlightbackground=self.COLOR_INPUT_BG, highlightcolor=self.COLOR_PRIMARY)
+            bouton.place(x=282, rely=0.5, anchor="center", width=30, height=30)
+            bouton.bind("<Return>", lambda event: basculer())
+        return entree, lire, remplir
+
+    def _bouton_connexion(self, parent, texte, commande, largeur=312, hauteur=54, secondaire=False):
+        """Bouton natif entouré d'un fond arrondi, accessible au clavier."""
+        couleur = self.COLOR_SECONDARY if secondaire else self.COLOR_PRIMARY
+        survol = "#e6eafa" if secondaire else self.COLOR_PRIMARY_HOVER
+        fg = self.COLOR_TEXT if secondaire else "#ffffff"
+        cadre, forme = self._fond_arrondi(parent, largeur, hauteur, couleur)
+        bouton = tk.Button(cadre, text=texte, command=commande, bg=couleur, fg=fg,
+                           activebackground=survol, activeforeground=fg, bd=0,
+                           highlightthickness=0, relief="flat", cursor="hand2",
+                           font=("Segoe UI", 9 if secondaire else 12,
+                                 "normal" if secondaire else "bold"))
+        bouton.place(x=7, y=4, width=largeur-14, height=hauteur-8)
+        def colorer(c):
+            cadre.itemconfigure(forme, fill=c, outline=c)
+            bouton.config(bg=c)
+        bouton.bind("<Enter>", lambda event: colorer(survol))
+        bouton.bind("<Leave>", lambda event: colorer(couleur))
+        bouton.bind("<FocusIn>", lambda event: cadre.itemconfigure(forme, outline=self.COLOR_TEXT))
+        bouton.bind("<FocusOut>", lambda event: colorer(couleur))
+        bouton.bind("<Return>", lambda event: bouton.invoke())
+        cadre.bind("<Button-1>", lambda event: bouton.invoke())
+        return cadre
 
     def _nettoyer_contenu(self) -> None:
         """Vide la zone centrale pour afficher une nouvelle page."""
@@ -152,229 +289,65 @@ class QuizoraGUI:
     # =========================================================================
 
     def afficher_page_connexion(self) -> None:
-        """Construit et affiche la page graphique de connexion."""
+        """Affiche un formulaire clair et centré, sans carte superflue."""
         self._nettoyer_contenu()
         self._mettre_a_jour_header_deconnecte()
 
-        # Carte centrale
-        card = tk.Frame(
-            self.content_frame,
-            bg=self.COLOR_CARD,
-            bd=1,
-            relief="solid",
-            highlightbackground=self.COLOR_BORDER,
-            highlightthickness=1,
-        )
-        card.place(relx=0.5, rely=0.5, anchor="center", width=520, height=520)
+        # Petites icônes intégrées : aucune dépendance supplémentaire.
+        self.oeil = tk.PhotoImage(master=self.root, data="iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACvUlEQVR4nL1TPWhTURg93733JSpJa+1gUMRB/KF1cBEVkeBgEUFwSUAcCg4dspi815cqSF+fFkqT3EDNIsWlgz8kOOji3yIIDoo6SFUQpCVIEVw0Fpr03fe5NBJaiwjiWc/h3PNxzwH+B5iZUqmUrFar0vM88dcGqVRKMjOtxwFYw9FqUa1WCwEwANi2vYOIjiilNgkhXkxMTLxra6vVqkyn02aNked5wvf9EADy+fwlIcRAEARNZv5MRD8A7FJKbQQwt7i4mKtUKt+ZmYiIO40IADuOc1AIUQHAROQUCoXnnYlt295nWdZFZk4S0fDk5OTddgBaOccMDw8fsCzrjTFmtFAoXAUA13XjAEaIqCcIgkq5XP4AAI7jnLYs636r1cqWy+WpZDKpyPM8sbCwIOPx+BwR3SyVSnnP81Sj0dgshHgspawz81cAJ4wxqUaj8Xp6eno5m80ORKPRR2EY7ikWix9p5YVRIkrNz88fSCQSqlKpNG3bvkpEB7XWJ1c0DoAzWutjg4ODG2ZmZpYcx7nOzLvr9fpAuxvbAczXajWjlBIAQES9AOq/foXoE4AuAOjq6mIACMPwAxFt7enpEQSAstlsQkr5OQiCc1NTU7eHhoaseDy+F8ATpVTBGPNFSjnRbDZHu7u7b/q+H2QymZ2xWGzOGHNKa/2APM9Tvu8Htm2fjUajt1qt1nGt9VMAyOVyh5VSk0QUM8Zc01rPAEAmk0nEYrHXYRg+LJVK55PJpKLODrmumyOiPDPfCcPwstZ6cXWDR0ZGzjPzFSnlvUgk4gJYGhsb4zWFdF13G4AbSqkty8vLb5n5JTN/I6LDlmXtB9BrjLlQLBafrTuR9pkd8zgE4KgQIkpEryKRyPPx8fH3HVqDlTmtATPTn5b+O/63C28bptNp0dfXRwDQ39/Ps7Oz7Ps+r5viX+Ano3E+WTZHll8AAAAASUVORK5CYII=")
+        self.oeil_barre = tk.PhotoImage(master=self.root, data="iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAADJklEQVR4nK1UT2gcVRj/fW/eZGIgiZuLQdkUK4pukFZ6CKXgUtEeCkJRZjWn4GUpAd3dmU3xIJ0dPIRlM7ttcpHVSxD/7VAVD8F4sRdBKhKxRlK8NA3mz20x3WTd2fe+XnbalWpF8IN3eu/9/rzv+z2gV7ZtG57nCfxf1Q/GzGTbttFoNP6dxLZtAwBc1z1fLBZfBIBsNmsyMz3g/H17MpVKMQDSWt8SQoSFQuGVWq32bb1eh+M4SSI6KaUcEkJcm5+f/zUMQwUAjUbDyGQyKgai2I7v+9p13RMA3pdSriilnmPmAQC3iOg2gCeklA8BuNlqtQpLS0t/MDMREaNPIgHgQqHwrBDis9HR0Wf29/fzlUrlcr98x3GeNk3zbWZOE1GxXC5fiUWQbdtGGIaqWCwetyxr7fDwME9E3zPzhwDeBHDMNM2jURRdqlarG733fNk0za86nU6+Wq1eTqfTkjzPEzs7O8bw8PBNZv6oWq1e6LG/lEgkvmk2m2tSyu+Y+dUois61Wq21er0e5fP5M5ZlrWqtn6pUKr9Rj+EiEdmbm5vHx8fH5e7ubndiYuIty7LOtdttSyn1uhDitBDifBAEUzMzM4PLy8tt13XfY+Ynt7a2zsSz8RiAzTAMlZRS9DqTOjg4+Kndbr8mpfxyaGjoCDMfeJ4nRkZGGAC01htE9EgikRASACmlSoZh/J7L5aZrtdon2WzWVEpdklJetSzrerfbXR0bG/O2t7eLvu9rAH/Ozs4eMU2zppQ6W6/XI/I8T/q+33UcZ9qyrI87nc7pIAiu9ixPmaa50Ol0tGEYq1rrmd7aGBwcvNHtdleCIHgjnU7Lv8zR3NxcgYguMPOnWut3giBo9bc/l8s9PzAw8AWAppTyyt7e3rvJZLJVKpXuxaAP7FEAH0gpx6Ious7MPwBoEtEpIcTjAB5WSh2Noujs4uLiz3fnqJ8xttlrf5KIpgCcEkJYRPQjEV0rl8u/OI5zEsAKEU0vLCx8XSqV7s8lM9ODkh7vua77guM4n8ffz98mPAbMZDIilUoRAExOTvL6+jr7vq9jO/909z9VT9ldIXcAKfqFc0E2GRwAAAAASUVORK5CYII=")
+        form = tk.Frame(self.content_frame, bg=self.COLOR_BG)
+        form.place(relx=0.5, y=36, anchor="n", width=312)
+        tk.Label(form, text="Bienvenue sur Quizora", font=("Segoe UI", 17, "bold"),
+                 bg=self.COLOR_BG, fg=self.COLOR_TEXT).pack(pady=(0, 10))
+        tk.Label(form, text="Connectez-vous à votre compte", font=("Segoe UI", 11),
+                 bg=self.COLOR_BG, fg=self.COLOR_MUTED).pack(pady=(0, 16))
 
-        # Titre de la page
-        lbl_titre = tk.Label(
-            card,
-            text="Connexion à votre compte",
-            font=("Segoe UI", 15, "bold"),
-            bg=self.COLOR_CARD,
-            fg=self.COLOR_TEXT,
-        )
-        lbl_titre.pack(pady=(25, 4))
+        entree_id, lire_id, remplir_id = self._champ_connexion(form, "Pseudo ou adresse e-mail")
+        entree_pwd, lire_pwd, remplir_pwd = self._champ_connexion(form, "Mot de passe", secret=True)
 
-        lbl_desc = tk.Label(
-            card,
-            text="Entrez vos identifiants pour accéder à l'espace Quizora",
-            font=("Segoe UI", 9),
-            bg=self.COLOR_CARD,
-            fg=self.COLOR_MUTED,
-        )
-        lbl_desc.pack(pady=(0, 20))
-
-        # Formulaire
-        form_frame = tk.Frame(card, bg=self.COLOR_CARD)
-        form_frame.pack(fill="x", padx=45)
-
-        # Champ Identifiant
-        lbl_id = tk.Label(
-            form_frame,
-            text="Identifiant (Pseudo ou E-mail) :",
-            font=("Segoe UI", 9, "bold"),
-            bg=self.COLOR_CARD,
-            fg=self.COLOR_TEXT,
-            anchor="w",
-        )
-        lbl_id.pack(fill="x", pady=(0, 4))
-
-        entree_id = tk.Entry(
-            form_frame,
-            font=("Segoe UI", 10),
-            bg=self.COLOR_INPUT_BG,
-            fg=self.COLOR_INPUT_FG,
-            insertbackground="white",
-            relief="flat",
-            highlightthickness=1,
-            highlightbackground=self.COLOR_BORDER,
-        )
-        entree_id.pack(fill="x", ipady=6, pady=(0, 14))
-
-        # Champ Mot de passe
-        lbl_pwd = tk.Label(
-            form_frame,
-            text="Mot de passe :",
-            font=("Segoe UI", 9, "bold"),
-            bg=self.COLOR_CARD,
-            fg=self.COLOR_TEXT,
-            anchor="w",
-        )
-        lbl_pwd.pack(fill="x", pady=(0, 4))
-
-        pwd_frame = tk.Frame(form_frame, bg=self.COLOR_INPUT_BG)
-        pwd_frame.pack(fill="x", pady=(0, 10))
-
-        entree_pwd = tk.Entry(
-            pwd_frame,
-            show="*",
-            font=("Segoe UI", 10),
-            bg=self.COLOR_INPUT_BG,
-            fg=self.COLOR_INPUT_FG,
-            insertbackground="white",
-            relief="flat",
-            highlightthickness=1,
-            highlightbackground=self.COLOR_BORDER,
-        )
-        entree_pwd.pack(side="left", fill="x", expand=True, ipady=6)
-
-        # Bouton Afficher / Masquer
-        def toggle_password():
-            if entree_pwd.cget("show") == "":
-                entree_pwd.config(show="*")
-                btn_toggle.config(text="Afficher")
-            else:
-                entree_pwd.config(show="")
-                btn_toggle.config(text="Masquer")
-
-        btn_toggle = tk.Button(
-            pwd_frame,
-            text="Afficher",
-            font=("Segoe UI", 8),
-            bg=self.COLOR_BORDER,
-            fg=self.COLOR_TEXT,
-            relief="flat",
-            padx=8,
-            command=toggle_password,
-        )
-        btn_toggle.pack(side="right", padx=(4, 0), ipady=5)
-
-        # Message d'erreur ou d'information
-        lbl_feedback = tk.Label(
-            card,
-            text="",
-            font=("Segoe UI", 9),
-            bg=self.COLOR_CARD,
-            fg=self.COLOR_ERROR,
-            wraplength=420,
-        )
-        lbl_feedback.pack(pady=4)
-
-        # Action de connexion
         def tenter_connexion():
-            identifiant = entree_id.get().strip()
-            mot_de_passe = entree_pwd.get()
-
+            identifiant = lire_id().strip()
+            mot_de_passe = lire_pwd()
             if not identifiant or not mot_de_passe:
-                lbl_feedback.config(
-                    text="Erreur : Veuillez renseigner l'identifiant et le mot de passe.",
-                    fg=self.COLOR_ERROR,
-                )
+                afficher_feedback("Veuillez renseigner vos identifiants.")
                 return
-
             succes, message, user = self.auth_service.login(identifiant, mot_de_passe)
             if succes and user is not None:
                 self.current_user = user
-                lbl_feedback.config(text="[OK] Connexion réussie !", fg=self.COLOR_SUCCESS)
-                self.root.after(350, self.afficher_page_dashboard)
+                self.afficher_page_dashboard()
             else:
-                lbl_feedback.config(text=f"Erreur : {message}", fg=self.COLOR_ERROR)
+                afficher_feedback(message)
 
-        # Validation avec la touche Entrée
-        entree_id.bind("<Return>", lambda e: entree_pwd.focus_set())
-        entree_pwd.bind("<Return>", lambda e: tenter_connexion())
+        def afficher_feedback(message):
+            lbl_feedback.config(text=message)
+            if message:
+                lbl_feedback.pack(pady=(8, 0))
+            else:
+                lbl_feedback.pack_forget()
 
-        # Bouton principal Se Connecter
-        btn_connexion = tk.Button(
-            card,
-            text="Se connecter",
-            font=("Segoe UI", 10, "bold"),
-            bg=self.COLOR_PRIMARY,
-            fg="#ffffff",
-            activebackground=self.COLOR_PRIMARY_HOVER,
-            activeforeground="#ffffff",
-            relief="flat",
-            cursor="hand2",
-            command=tenter_connexion,
-        )
-        btn_connexion.pack(fill="x", padx=45, ipady=8, pady=(8, 12))
+        def pre_remplir(pseudo, mdp):
+            remplir_id(pseudo)
+            remplir_pwd(mdp)
+            afficher_feedback("")
 
-        # Comptes de test rapide (Admin / Joueur)
-        demo_frame = tk.Frame(card, bg=self.COLOR_CARD)
-        demo_frame.pack(fill="x", padx=45, pady=(0, 10))
-
-        def pre_remplir(pseudo: str, mdp: str):
-            entree_id.delete(0, tk.END)
-            entree_id.insert(0, pseudo)
-            entree_pwd.delete(0, tk.END)
-            entree_pwd.insert(0, mdp)
-            lbl_feedback.config(text="")
-
-        btn_demo_admin = tk.Button(
-            demo_frame,
-            text="Compte Admin",
-            font=("Segoe UI", 8),
-            bg=self.COLOR_BORDER,
-            fg=self.COLOR_TEXT,
-            relief="flat",
-            cursor="hand2",
-            command=lambda: pre_remplir("admin", "Admin123!"),
-        )
-        btn_demo_admin.pack(side="left", fill="x", expand=True, padx=(0, 4), ipady=4)
-
-        btn_demo_joueur = tk.Button(
-            demo_frame,
-            text="Compte Joueur",
-            font=("Segoe UI", 8),
-            bg=self.COLOR_BORDER,
-            fg=self.COLOR_TEXT,
-            relief="flat",
-            cursor="hand2",
-            command=lambda: pre_remplir("joueur1", "Joueur123!"),
-        )
-        btn_demo_joueur.pack(side="right", fill="x", expand=True, padx=(4, 0), ipady=4)
-
-        # Lien vers inscription
-        sep = tk.Frame(card, bg=self.COLOR_BORDER, height=1)
-        sep.pack(fill="x", padx=45, pady=(8, 10))
-
-        lbl_switch = tk.Label(
-            card,
-            text="Pas encore de compte ?",
-            font=("Segoe UI", 9),
-            bg=self.COLOR_CARD,
-            fg=self.COLOR_MUTED,
-        )
-        lbl_switch.pack()
-
-        btn_aller_inscription = tk.Button(
-            card,
-            text="Créer un nouveau compte",
-            font=("Segoe UI", 9, "underline"),
-            bg=self.COLOR_CARD,
-            fg=self.COLOR_PRIMARY,
-            bd=0,
-            cursor="hand2",
-            activebackground=self.COLOR_CARD,
-            activeforeground=self.COLOR_PRIMARY_HOVER,
-            command=self.afficher_page_inscription,
-        )
-        btn_aller_inscription.pack(pady=(2, 10))
-
-        # Focus automatique
-        entree_id.focus_set()
+        entree_id.bind("<Return>", lambda event: entree_pwd.focus_set())
+        entree_pwd.bind("<Return>", lambda event: tenter_connexion())
+        self._bouton_connexion(form, "Se connecter", tenter_connexion).pack(pady=(0, 12))
+        demo = tk.Frame(form, bg=self.COLOR_BG)
+        demo.pack(fill="x")
+        self._bouton_connexion(demo, "Compte Admin", lambda: pre_remplir("admin", "Admin123!"),
+                               largeur=151, hauteur=36, secondaire=True).pack(side="left")
+        self._bouton_connexion(demo, "Compte Joueur", lambda: pre_remplir("joueur1", "Joueur123!"),
+                               largeur=151, hauteur=36, secondaire=True).pack(side="right")
+        tk.Frame(form, bg=self.COLOR_BORDER, height=1).pack(fill="x", pady=(21, 14))
+        tk.Button(form, text="Créer un nouveau compte", font=("Segoe UI", 11),
+                  bg=self.COLOR_BG, fg=self.COLOR_PRIMARY, bd=0, relief="flat",
+                  highlightbackground=self.COLOR_BG, highlightcolor=self.COLOR_PRIMARY,
+                  activebackground=self.COLOR_BG, activeforeground=self.COLOR_PRIMARY_HOVER,
+                  cursor="hand2", command=self.afficher_page_inscription).pack()
+        lbl_feedback = tk.Label(form, text="", font=("Segoe UI", 9), bg=self.COLOR_BG,
+                                fg=self.COLOR_ERROR, wraplength=300, justify="center")
 
     # =========================================================================
     # PAGE 2 : INSCRIPTION (REGISTER)
@@ -388,12 +361,12 @@ class QuizoraGUI:
         card = tk.Frame(
             self.content_frame,
             bg=self.COLOR_CARD,
-            bd=1,
-            relief="solid",
+            bd=0,
+            relief="flat",
             highlightbackground=self.COLOR_BORDER,
             highlightthickness=1,
         )
-        card.place(relx=0.5, rely=0.5, anchor="center", width=540, height=560)
+        card.place(relx=0.5, y=0, anchor="n", width=540)
 
         # Titre
         lbl_titre = tk.Label(
@@ -431,7 +404,7 @@ class QuizoraGUI:
             font=("Segoe UI", 10),
             bg=self.COLOR_INPUT_BG,
             fg=self.COLOR_INPUT_FG,
-            insertbackground="white",
+            insertbackground=self.COLOR_TEXT,
             relief="flat",
             highlightthickness=1,
             highlightbackground=self.COLOR_BORDER,
@@ -452,7 +425,7 @@ class QuizoraGUI:
             font=("Segoe UI", 10),
             bg=self.COLOR_INPUT_BG,
             fg=self.COLOR_INPUT_FG,
-            insertbackground="white",
+            insertbackground=self.COLOR_TEXT,
             relief="flat",
             highlightthickness=1,
             highlightbackground=self.COLOR_BORDER,
@@ -474,7 +447,7 @@ class QuizoraGUI:
             font=("Segoe UI", 10),
             bg=self.COLOR_INPUT_BG,
             fg=self.COLOR_INPUT_FG,
-            insertbackground="white",
+            insertbackground=self.COLOR_TEXT,
             relief="flat",
             highlightthickness=1,
             highlightbackground=self.COLOR_BORDER,
@@ -496,7 +469,7 @@ class QuizoraGUI:
             font=("Segoe UI", 10),
             bg=self.COLOR_INPUT_BG,
             fg=self.COLOR_INPUT_FG,
-            insertbackground="white",
+            insertbackground=self.COLOR_TEXT,
             relief="flat",
             highlightthickness=1,
             highlightbackground=self.COLOR_BORDER,
@@ -619,8 +592,8 @@ class QuizoraGUI:
         carte_profil = tk.Frame(
             corps,
             bg=self.COLOR_CARD,
-            bd=1,
-            relief="solid",
+            bd=0,
+            relief="flat",
             highlightbackground=self.COLOR_BORDER,
             highlightthickness=1,
             width=280,
@@ -656,8 +629,8 @@ class QuizoraGUI:
             carte_profil,
             text="Se déconnecter",
             font=("Segoe UI", 9, "bold"),
-            bg=self.COLOR_BORDER,
-            fg="#ffffff",
+            bg=self.COLOR_SECONDARY,
+            fg=self.COLOR_TEXT,
             relief="flat",
             cursor="hand2",
             command=self.deconnecter,
@@ -668,8 +641,8 @@ class QuizoraGUI:
         carte_principale = tk.Frame(
             corps,
             bg=self.COLOR_CARD,
-            bd=1,
-            relief="solid",
+            bd=0,
+            relief="flat",
             highlightbackground=self.COLOR_BORDER,
             highlightthickness=1,
         )
@@ -737,7 +710,7 @@ class QuizoraGUI:
             for idx, q in enumerate(quizzes, 1):
                 item = tk.Frame(
                     scrollable_frame,
-                    bg=self.COLOR_BORDER,
+                    bg=self.COLOR_SECONDARY,
                     bd=0,
                     padx=12,
                     pady=8,
@@ -753,7 +726,7 @@ class QuizoraGUI:
                     item,
                     text=f"{idx}. {q.titre}",
                     font=("Segoe UI", 10, "bold"),
-                    bg=self.COLOR_BORDER,
+                    bg=self.COLOR_SECONDARY,
                     fg=self.COLOR_TEXT,
                     anchor="w",
                 ).pack(fill="x")
@@ -763,8 +736,10 @@ class QuizoraGUI:
                     item,
                     text=f"{len(q.questions)} question(s) | {q.total_points()} points | {desc}",
                     font=("Segoe UI", 8),
-                    bg=self.COLOR_BORDER,
+                    bg=self.COLOR_SECONDARY,
                     fg=self.COLOR_MUTED,
+                    wraplength=350,
+                    justify="left",
                     anchor="w",
                 ).pack(fill="x")
 
@@ -774,15 +749,15 @@ class QuizoraGUI:
 
     def _bouton(self, parent, texte: str, commande, secondaire: bool = False) -> tk.Button:
         """Cree un bouton plat au style de l'application."""
-        bg = self.COLOR_BORDER if secondaire else self.COLOR_PRIMARY
+        bg = self.COLOR_SECONDARY if secondaire else self.COLOR_PRIMARY
         return tk.Button(
             parent,
             text=texte,
             font=("Segoe UI", 9, "bold"),
             bg=bg,
-            fg="#ffffff",
-            activebackground=self.COLOR_PRIMARY_HOVER,
-            activeforeground="#ffffff",
+            fg=self.COLOR_TEXT if secondaire else "#ffffff",
+            activebackground="#e6eafa" if secondaire else self.COLOR_PRIMARY_HOVER,
+            activeforeground=self.COLOR_TEXT if secondaire else "#ffffff",
             relief="flat",
             cursor="hand2",
             padx=10,
@@ -804,7 +779,7 @@ class QuizoraGUI:
             font=("Segoe UI", 10),
             bg=self.COLOR_INPUT_BG,
             fg=self.COLOR_INPUT_FG,
-            insertbackground="white",
+            insertbackground=self.COLOR_TEXT,
             relief="flat",
             highlightthickness=1,
             highlightbackground=self.COLOR_BORDER,
@@ -817,8 +792,8 @@ class QuizoraGUI:
         return tk.Frame(
             parent,
             bg=self.COLOR_CARD,
-            bd=1,
-            relief="solid",
+            bd=0,
+            relief="flat",
             highlightbackground=self.COLOR_BORDER,
             highlightthickness=1,
         )
@@ -894,6 +869,7 @@ class QuizoraGUI:
             bg=self.COLOR_INPUT_BG,
             fg=self.COLOR_TEXT,
             selectbackground=self.COLOR_PRIMARY,
+            selectforeground="#ffffff",
             relief="flat",
             highlightthickness=1,
             highlightbackground=self.COLOR_BORDER,
@@ -1011,7 +987,7 @@ class QuizoraGUI:
                 font=("Segoe UI", 10),
                 bg=self.COLOR_INPUT_BG,
                 fg=self.COLOR_INPUT_FG,
-                insertbackground="white",
+                insertbackground=self.COLOR_TEXT,
                 relief="flat",
                 highlightthickness=1,
                 highlightbackground=self.COLOR_BORDER,
@@ -1100,10 +1076,9 @@ class QuizoraGUI:
         else:
             messagebox.showerror("Quizora", message)
 
-    # =========================================================================
     # JOUEUR : PASSAGE D'UN QUIZ, RESULTAT ET HISTORIQUE
-    # =========================================================================
 
+        
     def afficher_page_passage(self, quiz: Quiz) -> None:
         """Lance le passage interactif d'un quiz, question par question."""
         if not quiz.questions:
@@ -1112,7 +1087,17 @@ class QuizoraGUI:
             )
             return
 
+        # Vérifier la validité des questions avant de lancer le quiz
+        for question in quiz.questions:
+            if len(question.reponses) < 2 or len(question.get_bonnes_reponses()) != 1:
+                messagebox.showwarning(
+                    "Quizora",
+                    "Quiz invalide : une question doit avoir au moins deux réponses et une seule bonne réponse."
+                )
+                return
+
         etat = {"index": 0, "score": 0, "erreurs": [], "valide": False}
+
 
         self._nettoyer_contenu()
         self._entete_page(quiz.titre)
@@ -1279,7 +1264,7 @@ class QuizoraGUI:
                 anchor="w",
             ).pack(fill="x", pady=(0, 6))
             for err in erreurs:
-                item = tk.Frame(interieur, bg=self.COLOR_BORDER, padx=12, pady=8)
+                item = tk.Frame(interieur, bg=self.COLOR_SECONDARY, padx=12, pady=8)
                 item.pack(fill="x", pady=4)
                 for texte, couleur in (
                     (err["question"], self.COLOR_TEXT),
@@ -1290,7 +1275,7 @@ class QuizoraGUI:
                         item,
                         text=texte,
                         font=("Segoe UI", 9),
-                        bg=self.COLOR_BORDER,
+                        bg=self.COLOR_SECONDARY,
                         fg=couleur,
                         anchor="w",
                         justify="left",
