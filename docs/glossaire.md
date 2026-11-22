@@ -7,7 +7,7 @@ Ce glossaire définit les termes méthodologiques et techniques utilisés tout a
 ## 1. Identité du Produit & Organisation
 
 - **Quizora :** Nom officiel de l'application logicielle développée dans le cadre de l'UE PROJ531. Quizora désigne la plateforme globale de gestion, de stockage sécurisé et de passation interactive de quiz en Python.
-- **Équipe Quizora :** Collectif des 4 étudiants (Bilal Draoui PO, Sabrine Kawiche, Chadi Kharchoufa, Gabrien Vaz) en charge de la conception, du développement et de la livraison de l'application.
+- **Équipe Quizora :** Collectif des 4 étudiants (Bilal Draoui PO, Sabrin Kaaouiche, Chadi Kharchoufa, Gabrien Vaz) en charge de la conception, du développement et de la livraison de l'application.
 
 ---
 

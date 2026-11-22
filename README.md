@@ -23,10 +23,10 @@ Le projet est conduit par une équipe de 4 étudiants conformément aux rôles S
 
 | Membre | Rôle Scrum | Responsabilités principales |
 | :--- | :--- | :--- |
-| **Bilal Draoui** | **Product Owner (PO)** & Développeur | Gestion du produit, interface avec le commanditaire, priorisation du backlog, validation des livrables et des critères d'acceptation. |
-| **Sabrine Kawiche** | Développeuse | Modélisation conceptuelle des données (MCD), gestion du dépôt GitHub, développement des modèles de données. |
-| **Chadi Kharchoufa** | Développeur | Décomposition WBS, planification temporelle Gantt, conception du module de sécurité et hachage. |
-| **Gabrien Vaz** | Développeur | Conception des services applicatifs, persistance des données JSON, développement des suites de tests unitaires. |
+| **Bilal Draoui** | **Product Owner (PO)** & Développeur | Suivi du backlog, avancement du projet, validation des fonctionnalités, interface avec le commanditaire ; contribue aussi au développement. |
+| **Sabrin Kaaouiche** | Développeuse | MCD, comptes, interface console, création des quiz, scores et historique, amélioration de l'interface graphique. |
+| **Chadi Kharchoufa** | Développeur | Planification (WBS, Gantt), sécurité des mots de passe, importation des quiz, tests. |
+| **Gabrien Vaz** | Développeur | Tableau Trello, stockage JSON, passage des quiz, tests. |
 
 Tableau de suivi Kanban (Trello) : [Tableau Trello PROJ531-Quiz-Python](https://trello.com/b/zFAmvu0D/proj531-quiz-python)
 
@@ -161,7 +161,7 @@ Conformément aux exigences de livraison logicielle sans régression, la conform
 python -m unittest discover tests -v
 ```
 
-La suite compte **35 tests** (sécurité, authentification, stockage, quiz, import, historique des scores). Tous les tests doivent être validés avant toute fusion vers la branche principale `main` (voir [CONTRIBUTING.md](CONTRIBUTING.md)).
+La suite compte **39 tests** (sécurité, authentification, stockage, quiz, import, historique des scores, console et interface graphique). Tous les tests doivent être validés avant toute fusion vers la branche principale `main` (voir [CONTRIBUTING.md](CONTRIBUTING.md)).
 
 ---
 
