@@ -3,7 +3,7 @@
 **Module :** PROJ531 - Gestion de projet informatique  
 **Équipe :** Groupe Quizora (4 membres)  
 - **Product Owner :** Bilal Draoui  
-- **Développeurs / Collaborateurs :** Sabrine Kawiche, Chadi Kharchoufa, Gabrien Vaz  
+- **Développeurs / Collaborateurs :** Sabrin Kaaouiche, Chadi Kharchoufa, Gabrien Vaz  
 
 **Statut du sprint :** **Sprint 4 - Finitions & Soutenance (En cours)**
 
@@ -23,8 +23,8 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 
 | Tâche Trello | Responsable | Description | Temps estimé | Temps réel | Statut |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| **T08.1 - Enregistrer les résultats par utilisateur et par quiz (US07)** | Sabrine Kawiche & Gabrien Vaz | Enregistrement du score dans `data/results.json` à la fin d'un quiz (service `ResultatService`). | 2h00 | ~2h15 | **Terminé** |
-| **T08.2 - Développer la consultation de l'historique (US07)** | Sabrine Kawiche & Gabrien Vaz | Affichage de l'historique du joueur dans le menu console, avec moyenne et meilleur score. | 1h30 | ~1h30 | **Terminé** |
+| **T08.1 - Enregistrer les résultats par utilisateur et par quiz (US07)** | Sabrin Kaaouiche & Gabrien Vaz | Enregistrement du score dans `data/results.json` à la fin d'un quiz (service `ResultatService`). | 2h00 | ~2h15 | **Terminé** |
+| **T08.2 - Développer la consultation de l'historique (US07)** | Sabrin Kaaouiche & Gabrien Vaz | Affichage de l'historique du joueur dans le menu console, avec moyenne et meilleur score. | 1h30 | ~1h30 | **Terminé** |
 | **Tests unitaires de l'historique** | Chadi Kharchoufa | Fichier `tests/test_resultat.py` (5 tests) : persistance, scores incohérents, quiz vide, filtrage et tri par joueur, statistiques. | 1h00 | ~1h00 | **Terminé** |
 | **Chasse aux bugs et robustesse** | Chadi Kharchoufa & Bilal Draoui | Relecture de l'ensemble du code, correction des anomalies relevées et nettoyage du code inutilisé (voir section 3.2). | 1h30 | ~2h00 | **Terminé** |
 | **Rapport final : plan et rassemblement des livrables** | Bilal Draoui & Équipe | Plan du rapport selon les critères du sujet et rassemblement des éléments à y référencer (WBS, PBS, Gantt, Trello, MCD, architecture, comptes rendus). La rédaction complète est réalisée en séance 5. | 2h00 | ~1h30 | **Terminé** |
@@ -37,7 +37,7 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 ## 3. Travail réalisé pendant la séance
 
 ### 3.1 Historique des scores (US07)
-- **Première version (Sabrine Kawiche) :** à la fin de `action_passer_quiz`, un objet `Resultat` (joueur, quiz, score, score maximal, date) est créé et ajouté à `data/results.json` grâce aux méthodes `load_results()` / `save_results()` du `StorageService`, prévues depuis le Sprint 2. L'option 3 de l'espace joueur est branchée sur une méthode `action_consulter_historique`.
+- **Première version (Sabrin Kaaouiche) :** à la fin de `action_passer_quiz`, un objet `Resultat` (joueur, quiz, score, score maximal, date) est créé et ajouté à `data/results.json` grâce aux méthodes `load_results()` / `save_results()` du `StorageService`, prévues depuis le Sprint 2. L'option 3 de l'espace joueur est branchée sur une méthode `action_consulter_historique`.
 - **Correctif (Bilal Draoui) :** cette méthode était appelée par le menu mais n'existait pas encore, ce qui faisait planter l'application (`AttributeError`) dès qu'un joueur choisissait l'option 3. Elle a été ajoutée.
 - **Service dédié (Chadi Kharchoufa) :** la logique a ensuite été regroupée dans un service `src/services/resultat_service.py` (`ResultatService`) :
   - `enregistrer_resultat` : ajoute le résultat à `data/results.json` et refuse un score négatif, supérieur au barème ou obtenu sur un quiz vide ;
@@ -81,8 +81,8 @@ Le Sprint 3 a livré le cœur du jeu (création, import et passation de quiz). E
 ## 4. Suivi de projet & Organisation Kanban (Trello)
 - Le **PBS** (Product Breakdown Structure) du projet a été ajouté dans `docs/PBS_Quizora.png`.
 - En fin de séance, le tableau Trello compte **38 cartes** dans la colonne **Terminé**, dont :
-  - **T08.1** - Enregistrer les résultats par utilisateur et par quiz (Sabrine Kawiche, Gabrien Vaz) ;
-  - **T08.2** - Développer la consultation de l'historique (Sabrine Kawiche, Gabrien Vaz) ;
+  - **T08.1** - Enregistrer les résultats par utilisateur et par quiz (Sabrin Kaaouiche, Gabrien Vaz) ;
+  - **T08.2** - Développer la consultation de l'historique (Sabrin Kaaouiche, Gabrien Vaz) ;
   - **US11** - Créer l'interface graphique (Bilal Draoui) ;
   - **Rédiger le README.md** (Bilal Draoui).
 

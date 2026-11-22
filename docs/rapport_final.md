@@ -6,7 +6,7 @@
 | :--- | :--- |
 | **Module** | PROJ531 - Gestion de projet informatique |
 | **Établissement** | Université Savoie Mont Blanc |
-| **Équipe** | Bilal Draoui (Product Owner), Sabrine Kawiche, Chadi Kharchoufa, Gabrien Vaz |
+| **Équipe** | Bilal Draoui (Product Owner), Sabrin Kaaouiche, Chadi Kharchoufa, Gabrien Vaz |
 | **Période** | Du 13 octobre au 9 novembre 2026 (5 séances, 4 sprints) |
 | **Dépôt GitHub** | https://github.com/KaSabrin/PROJ531-Quiz-Python |
 | **Tableau Trello** | https://trello.com/b/zFAmvu0D/proj531-quiz-python |
@@ -50,10 +50,10 @@ Le sujet impose également une organisation de type Scrum : un Product Owner, de
 
 | Membre | Rôle | Principales responsabilités |
 | :--- | :--- | :--- |
-| Bilal Draoui | Product Owner et développeur | Priorisation du backlog, validation des livrables, communication avec l'enseignant, README, interface graphique, comptes rendus |
-| Sabrine Kawiche | Développeuse | Modélisation du MCD, gestion du dépôt GitHub, création manuelle de quiz, sauvegarde des scores |
-| Chadi Kharchoufa | Développeur | WBS et Gantt, sécurité des mots de passe, import de quiz depuis un fichier texte, service des résultats et ses tests |
-| Gabrien Vaz | Développeur | Tableau Trello, stockage JSON, passation de quiz côté joueur, historique des scores |
+| Bilal Draoui | Product Owner et développeur | Suivi du backlog, avancement du projet, validation des fonctionnalités, communication avec l'enseignant, README, comptes rendus |
+| Sabrin Kaaouiche | Développeuse | MCD, comptes, interface console, création manuelle de quiz, scores et historique, amélioration de l'interface graphique |
+| Chadi Kharchoufa | Développeur | Planification (WBS, Gantt), sécurité des mots de passe, import de quiz depuis un fichier texte, tests |
+| Gabrien Vaz | Développeur | Tableau Trello, stockage JSON, passation de quiz côté joueur, tests |
 
 Le dépôt GitHub a été créé en début de projet et chaque membre y a été ajouté comme collaborateur avec les droits d'écriture.
 
@@ -72,7 +72,7 @@ Nous avons suivi une démarche **agile inspirée de Scrum** : le travail a été
 | Sprint 1 - Cadrage et conception | 12/10 - 15/10 | Dépôt GitHub, README, MCD, WBS, Gantt, Trello | `mcd_quizora.png`, `mcd_documentation.md`, `wbs_projet_quiz_python.png`, `Gantt_projet_quiz.gan` |
 | Sprint 2 - Authentification et stockage | 19/10 - 22/10 | Architecture du code, comptes utilisateurs, hachage des mots de passe, stockage JSON, menu console | `src/models/`, `src/services/auth_service.py`, `src/security.py`, `storage_service.py`, 15 tests |
 | Sprint 3 - Cœur du jeu | 26/10 - 30/10 | Création manuelle de quiz, import depuis un fichier texte, passation de quiz, page de connexion graphique | `quiz_service.py`, `import_service.py`, `src/gui.py` |
-| Sprint 4 - Scores, finitions et soutenance | 02/11 - 06/11 | Historique des scores, chasse aux bugs, interface graphique complète, rapport, soutenance | `resultat_service.py`, quiz d'exemple, 35 tests, présent rapport |
+| Sprint 4 - Scores, finitions et soutenance | 02/11 - 06/11 | Historique des scores, chasse aux bugs, interface graphique complète, rapport, soutenance | `resultat_service.py`, quiz d'exemple, 39 tests, présent rapport |
 
 Les livrables de planification sont disponibles dans `docs/` :
 
@@ -118,7 +118,7 @@ Plusieurs notions ont dû être apprises pendant le projet :
 | **Découpage en tâches de deux jours au plus** (séance 1) | Découpage en quatre sprints progressifs et en tâches courtes dans le WBS et le Gantt. |
 | **Stockage des mots de passe** (séance 2) | Hachage SHA-256 avec un sel aléatoire de 16 octets propre à chaque utilisateur. |
 | **Conflit Git sur `src/cli.py`** (séance 4) : deux membres avaient modifié la même ligne du menu joueur. | Conflit résolu en conservant la version de la coéquipière ; la relecture a aussi révélé qu'une méthode appelée n'existait pas encore, ce qui faisait planter l'application. La méthode a été ajoutée. |
-| **Anomalies découvertes en fin de projet** (séance 4) : boucle infinie à la création d'un quiz, plantage à l'import d'un fichier non texte, barème `[1 pt]` mal lu, tests d'import jamais exécutés | Corrections et ajout de tests de non-régression ; la suite passe de 19 à 35 tests. |
+| **Anomalies découvertes en fin de projet** (séance 4) : boucle infinie à la création d'un quiz, plantage à l'import d'un fichier non texte, barème `[1 pt]` mal lu, tests d'import jamais exécutés | Corrections et ajout de tests de non-régression ; la suite passe de 19 à 39 tests (les 4 derniers, sur les quiz invalides dans la console et la GUI, viennent de la Pull Request n°2). |
 | **Commits non reliés aux comptes GitHub** : l'adresse e-mail utilisée dans Git n'était pas enregistrée sur le compte GitHub. | Ajout et vérification de l'adresse dans les paramètres GitHub ; les commits ont alors été rattachés automatiquement au bon compte. |
 | **Dépassement du planning** : le Gantt prévoyait une fin le 06/11. | Le rapport et la répétition de la soutenance ont été finalisés lors d'une cinquième séance (09/11). |
 
@@ -161,7 +161,7 @@ Le MCD comporte cinq entités : **Utilisateur**, **Quiz**, **Question**, **Répo
 
 ### D.4 Validation
 
-La validation repose sur **35 tests unitaires automatisés**, exécutés avec `python -m unittest discover tests` avant chaque envoi sur GitHub :
+La validation repose sur **39 tests unitaires automatisés**, exécutés avec `python -m unittest discover tests` avant chaque envoi sur GitHub :
 
 | Fichier | Tests | Ce qui est vérifié |
 | :--- | :---: | :--- |

@@ -3,7 +3,7 @@
 **Module :** PROJ531 - Gestion de projet informatique  
 **Équipe :** Groupe Quizora (4 membres)  
 - **Product Owner :** Bilal Draoui  
-- **Développeurs / Collaborateurs :** Sabrine Kawiche, Chadi Kharchoufa, Gabrien Vaz  
+- **Développeurs / Collaborateurs :** Sabrin Kaaouiche, Chadi Kharchoufa, Gabrien Vaz  
 
 **Statut du sprint :** **Sprint 4 - Prolongation (Rapport final & Soutenance en cours)**
 
@@ -69,7 +69,7 @@ Le 02/11/2026, après la séance 4, deux évolutions ont été intégrées sur l
 
 ## 7. Suivi de projet & Organisation Kanban (Trello)
 - Les cartes de la séance 5 ont été créées sur le tableau : **T05.1** Nettoyage du dépôt GitHub, **T05.2** Vérification de la version livrée, **T05.3** Soutenance : répétition, **T05.4** Rapport final : rédaction complète, **T05.5** Compléter les temps réels du compte rendu 4 (colonne **À faire (Sprint actuel)**).
-- La carte **Chasse aux bugs et robustesse** (Chadi Kharchoufa, Sabrine Kawiche) est dans la colonne **En cours**.
+- La carte **Chasse aux bugs et robustesse** (Chadi Kharchoufa, Sabrin Kaaouiche) est dans la colonne **En cours**.
 - La colonne **Terminé** regroupe 31 cartes des sprints précédents.
 
 Ci-dessous, la capture d'écran du tableau Trello à la fin de la séance 5 :

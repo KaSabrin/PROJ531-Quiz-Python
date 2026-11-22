@@ -3,7 +3,7 @@
 **Module :** PROJ531 - Gestion de projet informatique  
 **Équipe :** Groupe Quizora (4 membres)  
 - **Product Owner :** Bilal Draoui  
-- **Développeurs / Collaborateurs :** Sabrine Kawiche, Chadi Kharchoufa, Gabrien Vaz  
+- **Développeurs / Collaborateurs :** Sabrin Kaaouiche, Chadi Kharchoufa, Gabrien Vaz  
 
 ---
 
@@ -16,8 +16,8 @@ L'objectif de cette première séance était d'effectuer le cadrage complet du p
 
 | Tâche WBS / Gantt | Responsable | Description | Temps estimé | Temps réel | Statut |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| **1.1 Initialisation Git & README** | Bilal Draoui & Sabrine Kawiche | Création du dépôt GitHub, configuration des accès pour l'équipe, premier fichier README. | 1h30 | 1h15 | **Terminé** |
-| **1.2 Conception du MCD** | Sabrine Kawiche & Bilal Draoui | Modélisation Entité-Association sur Looping (`mcd_quizora.png`) : Utilisateur, Quiz, Question, Réponse, Résultat. | 2h00 | 2h30 | **Terminé** |
+| **1.1 Initialisation Git & README** | Bilal Draoui & Sabrin Kaaouiche | Création du dépôt GitHub, configuration des accès pour l'équipe, premier fichier README. | 1h30 | 1h15 | **Terminé** |
+| **1.2 Conception du MCD** | Sabrin Kaaouiche & Bilal Draoui | Modélisation Entité-Association sur Looping (`mcd_quizora.png`) : Utilisateur, Quiz, Question, Réponse, Résultat. | 2h00 | 2h30 | **Terminé** |
 | **1.3 Découpage WBS & Planning Gantt** | Chadi Kharchoufa | Élaboration du WBS (4 axes) et planification des 4 sprints sur GanttProject (`Gantt_projet_quiz.gan`). | 2h00 | 2h15 | **Terminé** |
 | **1.4 Configuration Trello** | Gabrien Vaz & Équipe | Création du tableau Kanban avec colonnes Backlog, À faire, En cours, En revue, Terminé. | 1h00 | 0h45 | **Terminé** |
 
