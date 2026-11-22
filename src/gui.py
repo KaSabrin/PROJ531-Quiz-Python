@@ -687,6 +687,14 @@ class QuizoraGUI:
                 actions_frame, "Importer un fichier (.txt)", self.importer_quiz_fichier,
                 secondaire=True,
             ).pack(side="left", ipady=4)
+
+            # Une seconde ligne evite de comprimer les boutons sur petits ecrans.
+            utilisateurs_frame = tk.Frame(carte_principale, bg=self.COLOR_CARD)
+            utilisateurs_frame.pack(fill="x", padx=20, pady=(0, 10))
+            self._bouton(
+                utilisateurs_frame, "Lister les utilisateurs enregistres",
+                self.afficher_page_utilisateurs, secondaire=True,
+            ).pack(side="left", ipady=4)
         else:
             self._bouton(
                 actions_frame, "Mon historique de scores", self.afficher_page_historique,
@@ -742,6 +750,74 @@ class QuizoraGUI:
                     justify="left",
                     anchor="w",
                 ).pack(fill="x")
+
+    def afficher_page_utilisateurs(self) -> None:
+        """Affiche la liste des comptes, accessible aux administrateurs seulement."""
+        if self.current_user is None or not self.current_user.is_admin():
+            messagebox.showwarning("Quizora", "Acces reserve aux administrateurs.")
+            return
+
+        utilisateurs = self.auth_service.list_users()
+        self._nettoyer_contenu()
+        self._entete_page("Utilisateurs enregistres")
+
+        carte = self._carte(self.content_frame)
+        carte.pack(fill="both", expand=True)
+
+        tk.Label(
+            carte,
+            text=f"Total : {len(utilisateurs)} utilisateur(s) enregistre(s)",
+            font=("Segoe UI", 10),
+            bg=self.COLOR_CARD,
+            fg=self.COLOR_MUTED,
+            anchor="w",
+        ).pack(fill="x", padx=20, pady=(18, 12))
+
+        # On n'affiche aucune information de mot de passe (meme pas le hash).
+        tableau_frame = tk.Frame(carte, bg=self.COLOR_CARD)
+        tableau_frame.pack(fill="both", expand=True, padx=20, pady=(0, 20))
+
+        style = ttk.Style()
+        style.configure(
+            "Quizora.Users.Treeview",
+            background=self.COLOR_INPUT_BG,
+            fieldbackground=self.COLOR_INPUT_BG,
+            foreground=self.COLOR_TEXT,
+            rowheight=28,
+            font=("Segoe UI", 9),
+        )
+        style.configure(
+            "Quizora.Users.Treeview.Heading",
+            background=self.COLOR_SECONDARY,
+            foreground=self.COLOR_TEXT,
+            font=("Segoe UI", 9, "bold"),
+        )
+
+        colonnes = ("pseudo", "role", "email")
+        tableau = ttk.Treeview(
+            tableau_frame, columns=colonnes, show="headings",
+            style="Quizora.Users.Treeview",
+        )
+        for identifiant, titre, largeur in (
+            ("pseudo", "Pseudo", 150),
+            ("role", "Role", 95),
+            ("email", "Adresse e-mail", 260),
+        ):
+            tableau.heading(identifiant, text=titre)
+            tableau.column(identifiant, width=largeur, anchor="w", minwidth=80)
+
+        for utilisateur in utilisateurs:
+            tableau.insert(
+                "", tk.END,
+                values=(utilisateur.pseudo, utilisateur.role, utilisateur.email),
+            )
+
+        scrollbar = ttk.Scrollbar(
+            tableau_frame, orient="vertical", command=tableau.yview,
+        )
+        tableau.configure(yscrollcommand=scrollbar.set)
+        tableau.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
 
     # =========================================================================
     # OUTILS COMMUNS (boutons, champs, zones defilantes)
