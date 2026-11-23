@@ -2,16 +2,15 @@
 
 **Application de création et de passation de quiz en Python**
 
-| Projet | Quizora |
-| :--- | :--- |
+| Information | Détail |
+|---|---|
+| **Projet** | Quizora |
 | **Module** | PROJ531 - Gestion de projet informatique |
 | **Établissement** | Université Savoie Mont Blanc |
 | **Équipe** | Bilal Draoui (Product Owner), Sabrin Kaaouiche, Chadi Kharchoufa, Gabrien Vaz |
-| **Période** | Du 13 octobre au 9 novembre 2026 (5 séances, 4 sprints) |
+| **Période** | Du 13 octobre au 16 novembre 2026 (5 séances, 4 sprints) |
 | **Dépôt GitHub** | https://github.com/KaSabrin/PROJ531-Quiz-Python |
 | **Tableau Trello** | https://trello.com/b/zFAmvu0D/proj531-quiz-python |
-
----
 
 ## Introduction
 
@@ -30,7 +29,7 @@ Le sujet demande de réaliser une application Python permettant de créer des qu
 Nous avons identifié les exigences suivantes :
 
 | Type | Exigence du sujet | Interprétation de l'équipe |
-| :--- | :--- | :--- |
+|---|---|---|
 | Minimum | Création de compte | Inscription et connexion sécurisées, avec deux rôles : joueur et administrateur |
 | Minimum | Historique des scores individuels | Chaque passage de quiz est enregistré et consultable par le joueur |
 | Minimum | Création de quiz par un administrateur, directement ou depuis un fichier texte | Formulaire de création interactif et import d'un fichier `.txt` au format défini par l'équipe |
@@ -49,13 +48,13 @@ Le sujet impose également une organisation de type Scrum : un Product Owner, de
 ### B.1 Organisation de l'équipe
 
 | Membre | Rôle | Principales responsabilités |
-| :--- | :--- | :--- |
+|---|---|---|
 | Bilal Draoui | Product Owner et développeur | Suivi du backlog, avancement du projet, validation des fonctionnalités, communication avec l'enseignant, README, comptes rendus |
 | Sabrin Kaaouiche | Développeuse | MCD, comptes, interface console, création manuelle de quiz, scores et historique, amélioration de l'interface graphique |
 | Chadi Kharchoufa | Développeur | Planification (WBS, Gantt), sécurité des mots de passe, import de quiz depuis un fichier texte, tests |
 | Gabrien Vaz | Développeur | Tableau Trello, stockage JSON, passation de quiz côté joueur, tests |
 
-Le dépôt GitHub a été créé en début de projet et chaque membre y a été ajouté comme collaborateur avec les droits d'écriture.
+Tous les membres avaient accès au dépôt GitHub. Nous avons partagé le rôle de Scrum Master : Gabrien suivait Trello, Chadi le planning et Sabrin la communication et les blocages.
 
 ### B.2 Ressources du projet
 
@@ -68,24 +67,24 @@ Le dépôt GitHub a été créé en début de projet et chaque membre y a été 
 Nous avons suivi une démarche **agile inspirée de Scrum** : le travail a été découpé en quatre sprints successifs, chacun livrant une partie fonctionnelle de l'application, avec des tâches ne dépassant pas deux jours.
 
 | Sprint | Dates prévues | Contenu | Livrables |
-| :--- | :--- | :--- | :--- |
-| Sprint 1 - Cadrage et conception | 12/10 - 15/10 | Dépôt GitHub, README, MCD, WBS, Gantt, Trello | `mcd_quizora.png`, `mcd_documentation.md`, `wbs_projet_quiz_python.png`, `Gantt_projet_quiz.gan` |
-| Sprint 2 - Authentification et stockage | 19/10 - 22/10 | Architecture du code, comptes utilisateurs, hachage des mots de passe, stockage JSON, menu console | `src/models/`, `src/services/auth_service.py`, `src/security.py`, `storage_service.py`, 15 tests |
-| Sprint 3 - Cœur du jeu | 26/10 - 30/10 | Création manuelle de quiz, import depuis un fichier texte, passation de quiz, page de connexion graphique | `quiz_service.py`, `import_service.py`, `src/gui.py` |
-| Sprint 4 - Scores, finitions et soutenance | 02/11 - 06/11 | Historique des scores, chasse aux bugs, interface graphique complète, rapport, soutenance | `resultat_service.py`, quiz d'exemple, 39 tests, présent rapport |
+|---|---|---|---|
+| **Sprint 1 - Cadrage et conception** | 12/10 - 15/10 | Dépôt GitHub, README, MCD, WBS, Gantt, Trello | `mcd_quizora.png`, `mcd_documentation.md`, `wbs_projet_quiz_python.png`, `Gantt_projet_quiz.gan` |
+| **Sprint 2 - Authentification et stockage** | 19/10 - 22/10 | Architecture du code, comptes utilisateurs, hachage des mots de passe, stockage JSON, menu console | `src/models/`, `src/services/auth_service.py`, `src/security.py`, `storage_service.py`, 15 tests |
+| **Sprint 3 - Cœur du jeu** | 26/10 - 30/10 | Création manuelle de quiz, import depuis un fichier texte, passation de quiz, page de connexion graphique | `quiz_service.py`, `import_service.py`, `src/gui.py` |
+| **Sprint 4 - Scores, finitions et soutenance** | 02/11 - 06/11 | Historique des scores, chasse aux bugs, interface graphique complète, rapport, soutenance | `resultat_service.py`, quiz d'exemple, 39 tests, présent rapport |
 
 Les livrables de planification sont disponibles dans `docs/` :
 
-- **WBS** (`wbs_projet_quiz_python.png`) : décomposition des travaux en quatre axes, un par sprint ;
+- **WBS** (`wbs_projet_quiz_python.png`) : décomposition du travail en six grands axes : cadrage et conception, comptes et données, gestion des quiz, passage des quiz et résultats, qualité et options, documentation et rendus.
 - **PBS** (`PBS_Quizora.png`) : décomposition du produit en ses composants ;
-- **Gantt** (`Gantt_projet_quiz.gan` et `.png`) : planification des tâches dans le temps, avec des tâches de deux jours au plus ;
+- **Gantt** (`Gantt_projet_quiz.gan`) : planification initiale du projet en quatre sprints, du 12 octobre au 6 novembre 2026. Nous avons décomposé les grandes tâches en sous-tâches afin que chacune ne dépasse pas deux jours, conformément aux consignes du professeur. Le projet s'est ensuite prolongé jusqu'au 16 novembre pour les corrections, les tests et la finalisation des livrables.
 - **MCD** (`mcd_quizora.png` et `mcd_documentation.md`) : modèle Entité-Association des données.
 
 ### B.4 Suivi de l'avancement
 
 - **Trello :** un tableau Kanban (Backlog, À faire, En cours, À vérifier, Terminé) a servi à définir les user stories (US01 à US07, puis US11 pour l'interface graphique), à les découper en tâches, à les attribuer et à suivre leur avancement. Les captures du tableau aux sprints 2, 3 et 4 sont jointes aux comptes rendus.
 - **Comptes rendus de séance :** un compte rendu a été déposé sur GitHub à la fin de chacune des cinq séances (`docs/comptes-rendus/`). Il indique les tâches réalisées, leur responsable, le temps estimé et le temps réellement passé, les décisions prises et les difficultés rencontrées.
-- **GitHub :** l'historique du dépôt compte plus de **80 commits** des quatre membres entre le 13 octobre et le 12 novembre 2026. Il permet de retracer qui a réalisé chaque modification.
+- **GitHub :** l'historique du dépôt compte **96 commits** des quatre membres entre le 13 octobre et le 12 novembre 2026. Il permet de retracer qui a réalisé chaque modification.
 
 ### B.5 Démarche d'amélioration continue
 
@@ -113,14 +112,14 @@ Plusieurs notions ont dû être apprises pendant le projet :
 ### C.2 Difficultés rencontrées et solutions apportées
 
 | Difficulté | Solution |
-| :--- | :--- |
-| **Périmètre du MCD** (séance 1) : fallait-il enregistrer chaque réponse du joueur ou seulement son score ? | Conformément au minimum demandé (historique des scores), l'entité `Résultat` a été liée à `Utilisateur` et à `Quiz`, sans enregistrer chaque réponse. |
-| **Découpage en tâches de deux jours au plus** (séance 1) | Découpage en quatre sprints progressifs et en tâches courtes dans le WBS et le Gantt. |
-| **Stockage des mots de passe** (séance 2) | Hachage SHA-256 avec un sel aléatoire de 16 octets propre à chaque utilisateur. |
-| **Conflit Git sur `src/cli.py`** (séance 4) : deux membres avaient modifié la même ligne du menu joueur. | Conflit résolu en conservant la version de la coéquipière ; la relecture a aussi révélé qu'une méthode appelée n'existait pas encore, ce qui faisait planter l'application. La méthode a été ajoutée. |
-| **Anomalies découvertes en fin de projet** (séance 4) : boucle infinie à la création d'un quiz, plantage à l'import d'un fichier non texte, barème `[1 pt]` mal lu, tests d'import jamais exécutés | Corrections et ajout de tests de non-régression ; la suite passe de 19 à 39 tests (les 4 derniers, sur les quiz invalides dans la console et la GUI, viennent de la Pull Request n°2). |
-| **Commits non reliés aux comptes GitHub** : l'adresse e-mail utilisée dans Git n'était pas enregistrée sur le compte GitHub. | Ajout et vérification de l'adresse dans les paramètres GitHub ; les commits ont alors été rattachés automatiquement au bon compte. |
-| **Dépassement du planning** : le Gantt prévoyait une fin le 06/11. | Le rapport et la répétition de la soutenance ont été finalisés lors d'une cinquième séance (09/11). |
+|---|---|
+| **Périmètre du MCD (séance 1) :** fallait-il enregistrer chaque réponse du joueur ou seulement son score ? | Conformément au minimum demandé (historique des scores), l'entité `Résultat` a été liée à `Utilisateur` et à `Quiz`, sans enregistrer chaque réponse. |
+| **Découpage en tâches de deux jours au plus (séance 1)** | Découpage en quatre sprints progressifs et en tâches courtes dans le WBS et le Gantt. |
+| **Stockage des mots de passe (séance 2)** | Hachage SHA-256 avec un sel aléatoire de 16 octets propre à chaque utilisateur. |
+| **Conflit Git sur `src/cli.py` (séance 4) :** deux membres avaient modifié la même ligne du menu joueur. | Conflit résolu en conservant la version de la coéquipière ; la relecture a aussi révélé qu'une méthode appelée n'existait pas encore, ce qui faisait planter l'application. La méthode a été ajoutée. |
+| **Anomalies découvertes en fin de projet (séance 4) :** boucle infinie à la création d'un quiz, plantage à l'import d'un fichier non texte, barème `[1 pt]` mal lu, tests d'import jamais exécutés | Corrections et ajout de tests de non-régression ; la suite passe de 19 à 39 tests (les 4 derniers, sur les quiz invalides dans la console et la GUI, viennent de la Pull Request n°2). |
+| **Commits non reliés aux comptes GitHub :** l'adresse e-mail utilisée dans Git n'était pas enregistrée sur le compte GitHub. | Ajout et vérification de l'adresse dans les paramètres GitHub ; les commits ont alors été rattachés automatiquement au bon compte. |
+| **Dépassement du planning :** le Gantt prévoyait une fin le 06/11. | 5e séance le 09/11 pour le rapport et la soutenance ; corrections et finitions poursuivies jusqu'au 16/11. |
 
 ### C.3 Prise d'initiatives et cohésion de l'équipe
 
@@ -132,26 +131,26 @@ Au-delà du minimum demandé, l'équipe a pris l'initiative de réaliser une int
 
 ### D.1 Architecture logicielle
 
-L'application suit une **architecture en couches**, qui sépare l'interface, la logique métier et le stockage. Le schéma détaillé est disponible dans `docs/architecture_technique_quizora.pdf`.
+L'application suit une architecture en couches, qui sépare l'interface, la logique métier et le stockage. Le schéma détaillé est disponible dans `docs/architecture_technique_quizora.pdf`.
 
 | Couche | Fichiers | Rôle |
-| :--- | :--- | :--- |
+|---|---|---|
 | Présentation | `main.py`, `gui_main.py`, `src/cli.py`, `src/gui.py` | Deux interfaces au choix : console ou fenêtre graphique Tkinter |
 | Services métier | `src/services/` : `auth_service.py`, `quiz_service.py`, `import_service.py`, `resultat_service.py`, `storage_service.py` | Inscription et connexion, création et import de quiz, scores et historique, lecture et écriture des fichiers |
 | Sécurité | `src/security.py` | Hachage et vérification des mots de passe |
 | Modèles | `src/models/` : `User`, `Quiz`, `Question`, `Reponse`, `Resultat` | Entités du MCD, avec conversion vers et depuis JSON (`to_dict` / `from_dict`) |
 | Persistance | `data/users.json`, `data/quizzes.json`, `data/results.json` | Données locales, créées automatiquement au premier lancement |
 
-Grâce à cette séparation, la console et l'interface graphique utilisent **exactement les mêmes services** : l'interface graphique a pu être ajoutée sans modifier la logique métier, et cette logique est testée indépendamment de l'interface. Le code source compte environ 2 750 lignes, et les tests environ 440 lignes.
+Grâce à cette séparation, la console et l'interface graphique utilisent exactement les mêmes services : l'interface graphique a pu être ajoutée sans modifier la logique métier, et cette logique est testée indépendamment de l'interface. Le code source compte environ 2 750 lignes, et les tests environ 440 lignes.
 
 ### D.2 Modèle de données
 
-Le MCD comporte cinq entités : **Utilisateur**, **Quiz**, **Question**, **Réponse** et **Résultat**. Un utilisateur crée des quiz (0,n) et obtient des résultats (0,n) ; un quiz contient au moins une question (1,n) ; une question propose au moins deux réponses (2,n) ; un résultat concerne un utilisateur et un quiz. Le détail des attributs et des cardinalités est dans `docs/mcd_documentation.md`.
+Le MCD comporte cinq entités : Utilisateur, Quiz, Question, Réponse et Résultat. Un utilisateur crée des quiz (0,n) et obtient des résultats (0,n) ; un quiz contient au moins une question (1,n) ; une question propose au moins deux réponses (2,n) ; un résultat concerne un utilisateur et un quiz. Le détail des attributs et des cardinalités est dans `docs/mcd_documentation.md`.
 
 ### D.3 Choix techniques et justifications
 
 | Choix | Solutions envisagées | Justification |
-| :--- | :--- | :--- |
+|---|---|---|
 | **Stockage en fichiers JSON** | Base de données SQLite, fichiers CSV | Format lisible, natif en Python, sans installation ; adapté au volume de données d'un projet pédagogique. |
 | **Bibliothèque standard uniquement** | Frameworks d'interface ou de sécurité externes | Installation immédiate (un simple `git clone`), aucun problème de version entre les postes des membres. |
 | **SHA-256 avec sel aléatoire et comparaison en temps constant** | Stockage en clair, hachage sans sel | Les mots de passe ne sont jamais stockés en clair ; le sel empêche l'utilisation de tables de hachage précalculées. |
@@ -164,13 +163,15 @@ Le MCD comporte cinq entités : **Utilisateur**, **Quiz**, **Question**, **Répo
 La validation repose sur **39 tests unitaires automatisés**, exécutés avec `python -m unittest discover tests` avant chaque envoi sur GitHub :
 
 | Fichier | Tests | Ce qui est vérifié |
-| :--- | :---: | :--- |
-| `test_security.py` | 4 | Format du hachage, unicité grâce au sel, vérification correcte ou refusée |
-| `test_auth.py` | 9 | Inscription valide, refus des doublons, des e-mails invalides et des mots de passe faibles, connexion et déconnexion |
-| `test_storage.py` | 2 | Création automatique des fichiers, sauvegarde et rechargement des utilisateurs |
-| `test_quiz.py` | 6 | Création de quiz par un administrateur, refus pour un joueur, import depuis un fichier, quiz de démonstration |
-| `test_import.py` | 4 | Lecture du format texte, barème `[1 pt]`, fichier introuvable, fichier non texte |
-| `test_resultat.py` | 5 | Enregistrement des scores, refus des scores incohérents, historique propre à chaque joueur, statistiques |
+|---|---:|---|
+| `test_security.py` | 4 | Hachage, sel aléatoire et vérification du mot de passe |
+| `test_auth.py` | 10 | Inscription, connexion et contrôle des comptes |
+| `test_storage.py` | 3 | Création des fichiers, sauvegarde et rechargement |
+| `test_quiz.py` | 7 | Création, validation et importation des quiz |
+| `test_import.py` | 5 | Format `.txt`, barèmes et fichiers invalides |
+| `test_resultat.py` | 6 | Scores, historique des joueurs et statistiques |
+| `test_cli.py` | 2 | Refus des quiz invalides dans l'interface console |
+| `test_gui.py` | 2 | Vérifications des quiz invalides dans la GUI |
 
 Des parcours complets ont également été testés manuellement en console et en interface graphique : connexion de l'administrateur, import d'un quiz, connexion d'un joueur, passation du quiz et consultation de l'historique.
 
@@ -183,7 +184,7 @@ Des parcours complets ont également été testés manuellement en console et en
 Toutes les exigences minimales du cahier des charges sont satisfaites :
 
 | Exigence | Résultat |
-| :--- | :--- |
+|---|---|
 | Création de compte | Réalisé : inscription, connexion, rôles joueur et administrateur, mots de passe hachés |
 | Historique des scores individuels | Réalisé : enregistrement automatique, historique avec moyenne et meilleur score |
 | Création de quiz par l'administrateur, directement | Réalisé, en console et en interface graphique |
@@ -197,8 +198,8 @@ Côté gestion de projet, tous les livrables demandés sont présents dans le d�
 ### E.2 Évaluation critique
 
 - **Utilisation de Git :** l'équipe a principalement travaillé directement sur la branche `main`, sans branche par fonctionnalité ni Pull Request relue. Cela reste gérable pour quatre personnes, mais c'est à l'origine du conflit et du bug de la séance 4. Certains messages de commit (« Update cli.py ») ne décrivent pas le changement effectué.
-- **Planning :** le Gantt prévoyait une fin le 06/11 ; une séance supplémentaire a été nécessaire pour finaliser le rapport et la soutenance. La fin du Sprint 4 était trop chargée (historique, corrections, interface graphique, rapport).
-- **Tests :** la logique métier est bien couverte, mais l'interface graphique n'est testée que manuellement.
+- **Planning :** le Gantt prévoyait une fin le 06/11. Une 5e séance a eu lieu le 09/11 pour terminer le rapport et préparer la soutenance. Les corrections se sont poursuivies jusqu'au 16/11, car le dernier sprint était trop chargé (scores, GUI, tests et documentation).
+- **Tests :** les 39 tests automatisés couvrent les services, le stockage, la sécurité, la CLI et la GUI. Les parcours complets dans l'interface graphique ont aussi été testés manuellement.
 - **Sécurité :** SHA-256 avec sel est correct pour un projet pédagogique, mais un algorithme volontairement lent (PBKDF2, bcrypt) serait préférable en conditions réelles.
 - **Points forts :** une architecture modulaire qui a permis d'ajouter l'interface graphique sans toucher à la logique métier, une application installable sans aucune dépendance, et une documentation complète.
 
@@ -211,7 +212,7 @@ Côté gestion de projet, tous les livrables demandés sont présents dans le d�
 ### E.4 Documentation réalisée
 
 | Document | Emplacement |
-| :--- | :--- |
+|---|---|
 | README (objectif, installation, utilisation) | `README.md` |
 | Comptes rendus des 5 séances | `docs/comptes-rendus/` |
 | WBS, PBS, Gantt | `docs/wbs_projet_quiz_python.png`, `docs/PBS_Quizora.png`, `docs/Gantt_projet_quiz.gan` |
